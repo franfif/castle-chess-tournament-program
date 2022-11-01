@@ -37,7 +37,7 @@ class BaseView:
                     else:
                         print(f'Please enter a number between {mini} and {maxi}.')
 
-    def select_from_list(self, lst, proposition_zero=None, cancel_allowed=True):
+    def select_from_list(self, lst, proposition_zero=None, cancel_allowed=False):
         """
         Display a list of propositions and get a number from the manager
         :param lst: list of strings to display

@@ -26,8 +26,7 @@ class TournamentView:
             if player in tournament_players:
                 proposition += " [[ Selected ]]"
             menu.append(proposition)
-        proposition_zero = 'Add a new player'
-        return self.base_view.select_from_list(menu, proposition_zero)
+        return self.base_view.select_from_list(menu, proposition_zero='Add a new player', cancel_allowed=True)
 
     def prompt_for_tournament_name(self):
         return self.base_view.prompt_for_text('name of the tournament')
@@ -56,7 +55,7 @@ class TournamentView:
         winners = []
         for match in matches:
             print('Who won?')
-            winner_index = self.base_view.select_from_list(match, "Tie Game", cancel_allowed=False)
+            winner_index = self.base_view.select_from_list(match, proposition_zero='Tie Game')
             if winner_index == -1:
                 winner_index = None
             winners.append(match[winner_index])
@@ -68,7 +67,7 @@ class TournamentView:
         else:
             print("How would you like to order the players?")
             choices = ['ranking', 'alphabetical']
-            choice = self.base_view.select_from_list(choices, cancel_allowed=False)
+            choice = self.base_view.select_from_list(choices)
             order = choices[choice]
             print(f"Players in the tournament in {order} order:")
             if order == 'ranking':
