@@ -26,7 +26,7 @@ class PlayerController:
             self.view.display_player(player)
 
     def change_ranking(self):
-        player = self.view.select_player(self.players)
+        player = self.view.select_player_ranking(self.players)
         new_ranking = self.view.get_new_ranking(player.ranking, player.get_full_name())
         player.ranking = new_ranking
 
