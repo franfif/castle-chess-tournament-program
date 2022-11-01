@@ -54,7 +54,8 @@ class BaseView:
         while True:
             try:
                 pick = input(f'Enter a number between {1 if proposition_zero is None else 0} '
-                             f'and {len(lst)} to select a proposition or hit Return to stop: ')
+                             f'and {len(lst)} to select a proposition'
+                             f'{" or hit Return to stop: " if cancel_allowed else ": "}')
                 if pick == '' and cancel_allowed:
                     return None
                 pick = int(pick) - 1
