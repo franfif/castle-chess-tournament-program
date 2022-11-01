@@ -69,24 +69,24 @@ class TournamentController:
     def display_players(self):
         self.view.show_players(self.tournament.get_tournament_players())
 
-
-control = PlayerController()
-control.create_player(TestPlayer().get_data())
-control.create_player(TestPlayer().get_data())
-control.create_player(TestPlayer().get_data())
-control.create_player(TestPlayer().get_data())
-control.create_player(TestPlayer().get_data())
-control.create_player(TestPlayer().get_data())
-control.create_player(TestPlayer().get_data())
-control.create_player(TestPlayer().get_data())
-
-
-# print(control.players)
-test = TournamentController(control)
-# test.player_controller = control
-test.tournament_players = [control.players[0],
-                           control.players[3],
-                           control.players[6]]
-
-test.add_remove_tournament_players()
-test.display_players()
+#
+# control = PlayerController()
+# control.create_player(TestPlayer().get_data())
+# control.create_player(TestPlayer().get_data())
+# control.create_player(TestPlayer().get_data())
+# control.create_player(TestPlayer().get_data())
+# control.create_player(TestPlayer().get_data())
+# control.create_player(TestPlayer().get_data())
+# control.create_player(TestPlayer().get_data())
+# control.create_player(TestPlayer().get_data())
+#
+#
+# # print(control.players)
+# test = TournamentController(control)
+# # test.player_controller = control
+# test.tournament_players = [control.players[0],
+#                            control.players[3],
+#                            control.players[6]]
+#
+# test.add_remove_tournament_players()
+# test.display_players()
