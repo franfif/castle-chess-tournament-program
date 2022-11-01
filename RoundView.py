@@ -34,7 +34,7 @@ class RoundView:
         return results
 
 
-from TestPlayer import TestPlayer
+from TestModel import TestPlayer
 from Player import Player
 PAIRINGS = [(Player(*TestPlayer().get_data()), Player(*TestPlayer().get_data())),
             (Player(*TestPlayer().get_data()), Player(*TestPlayer().get_data()))]

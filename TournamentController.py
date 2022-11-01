@@ -1,4 +1,4 @@
-from TestPlayer import TestPlayer
+from TestModel import TestPlayer
 from TournamentView import TournamentView
 from Tournament import Tournament
 from PlayerController import PlayerController
