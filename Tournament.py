@@ -13,6 +13,7 @@ class Tournament:
         self.players = []
         self.time_control = time_control
         self.description = description
+        self.round_started = False
 
     def add_player(self, player):
         self.players.append(TournamentPlayer(player))
@@ -21,8 +22,10 @@ class Tournament:
         player_to_remove = next(x for x in self.players if x.player == player)
         self.players.remove(player_to_remove)
 
-    def get_tournament_players(self):
-        return list(map(lambda x: x.player, self.players))
+    def get_tournament_players(self, players=None):
+        if players is None:
+            players = self.players
+        return list(map(lambda x: x.player, players))
 
     def reset_description(self, new_description):
         self.description = new_description
@@ -31,13 +34,22 @@ class Tournament:
         self.description += '\n' + new_line
 
     def start_new_round(self):
-        this_round = len(self.rounds)
-        if this_round < self.number_of_rounds:
+        this_round_number = len(self.rounds)
+        if this_round_number < self.number_of_rounds:
             round_name = 'Round ' + str(len(self.rounds) + 1)
-            pairs = self.define_pairings(this_round)
+            pairs = self.define_pairings(this_round_number)
             self.rounds.append(Round(round_name, pairs))
             self.save_pairs(pairs)
+            self.round_started = True
             return pairs
+
+    def end_round(self, scores):
+        this_round = self.rounds[-1]
+        this_round.add_results(scores)
+        self.round_started = False
+
+    def get_round_pairs(self, round_index=-1):
+        return self.rounds[round_index].get_pairs()
 
     def define_pairings(self, round_number):
         if round_number == 0:
