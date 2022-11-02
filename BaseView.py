@@ -17,10 +17,15 @@ class BaseView:
             except ValueError:
                 print('Please enter a date in the format mm/dd/yyyy.')
 
-    def prompt_for_number(self, number_type, mini=None, maxi=None):
+    def prompt_for_number(self, number_type, mini=None, maxi=None, default=None):
+        instructions = f'Enter the {number_type}' \
+                      f' (default = {default}): ' if default else ': '
         while True:
             try:
-                number = int(input(f'Enter the {number_type}: '))
+                number = input(instructions)
+                if number == '' and default is not None:
+                    return default
+                number = int(number)
                 if (maxi is None or number <= maxi) and (mini is None or mini <= number):
                     return number
                 else:
