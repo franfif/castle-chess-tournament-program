@@ -122,10 +122,6 @@ class TournamentController:
     def exit(self):
         return 'Leaving tournament'
 
-    def check_number_of_rounds(self):
-        if self.tournament.number_of_rounds >= len(self.tournament.players):
-            number_of_rounds = self.tournament.adjust_number_of_rounds()
-            self.view.notify_change_number_of_rounds(number_of_rounds)
 #
 # control = PlayerController()
 # control.create_player(TestPlayer().get_data())
