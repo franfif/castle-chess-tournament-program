@@ -14,14 +14,15 @@ class Round:
     def add_results(self, results):
         """
         Add results for each match/pairing in the round
-        :param results: list of
-        :return:
-
+        :param results: list of lists of 2 scores
+        :return: None
         """
-        pass
+        for i, match in enumerate(self.matches):
+            match[0][1] = results[i][0]
+            match[1][1] = results[i][1]
 
-    def get_pairings(self):
-        pass
+    def get_pairs(self):
+        return list(map(lambda x: [x[0][0].player, x[1][0].player], self.matches))
 
     def add_end_time(self):
         self.end_time = datetime.datetime.now()
