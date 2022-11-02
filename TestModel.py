@@ -39,7 +39,5 @@ class TestTournament:
                 self.venue,
                 self.date,
                 self.number_of_rounds,
-                self.rounds,
-                self.players,
                 self.time_control,
                 self.description)
