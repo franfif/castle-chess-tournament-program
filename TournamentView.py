@@ -43,7 +43,7 @@ class TournamentView:
         return first_day, last_day
 
     def prompt_for_number_rounds(self):
-        return self.base_view.prompt_for_number("number of rounds", mini=MINIMUM_OF_ROUNDS)
+        return self.base_view.prompt_for_number("number of rounds", mini=MINIMUM_OF_ROUNDS, default=DEFAULT_NUM_ROUNDS)
 
     def prompt_for_time_control(self):
         return self.base_view.select_from_list(TIME_CONTROLS)
