@@ -1,6 +1,9 @@
 from BaseView import BaseView
+
+
 MINIMUM_OF_ROUNDS = 1
 TIME_CONTROLS = ['Bullet', 'Blitz', 'Rapid']
+DEFAULT_NUM_ROUNDS = 4
 
 
 class TournamentView:
@@ -49,17 +52,16 @@ class TournamentView:
         return self.base_view.prompt_for_text("tournament description")
 
     def display_pairings(self, pairs):
-        pass
+        for player1, player2 in pairs:
+            print(player1.get_full_name(), ' - ', player2.get_full_name())
 
-    def prompt_for_winners(self, matches):
-        winners = []
-        for match in matches:
-            print('Who won?')
-            winner_index = self.base_view.select_from_list(match, proposition_zero='Tie Game')
-            if winner_index == -1:
-                winner_index = None
-            winners.append(match[winner_index])
-        return winners
+    def prompt_for_winner_index(self, pair):
+        pair_of_names = list(map(lambda x: x.get_full_name(), pair))
+        print('Who won?')
+        winner_index = self.base_view.select_from_list(pair_of_names, proposition_zero='Tie Game')
+        if winner_index == -1:
+            return None
+        return winner_index
 
     def show_players(self, players):
         if len(players) == 0:
