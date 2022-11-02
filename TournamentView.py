@@ -83,15 +83,15 @@ class TournamentView:
         else:
             for round in rounds:
                 print(round.name)
-                for match in round:
+                for match in round.matches:
                     player1 = match[0][0]
                     score1 = match[0][1]
                     player2 = match[1][0]
                     score2 = match[1][1]
-                    match_report = player1.get_full_name() + '  '
+                    match_report = player1.player.get_full_name() + '  '
                     if score1 == 0.5:
                         match_report += '-TIE-'
                     else:
-                        match_report += score1 + ' - ' + score2
-                    match_report += player2.get_full_name()
+                        match_report += str(score1) + ' - ' + str(score2)
+                    match_report += '  ' + player2.player.get_full_name()
                     print(match_report)
