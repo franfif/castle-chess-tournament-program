@@ -1,12 +1,75 @@
 # from Tournament import Tournament
 # from Player import Player
-# from TestPlayer import TestPlayer
+from TestModel import TestPlayer, TestTournament
 # from PlayerView import PlayerView
 from PlayerController import PlayerController
+from BaseView import BaseView
 from TournamentController import TournamentController
+from Menu import Menu
 
-player_control = PlayerController()
 
+MENU_INITIAL = ['Create tournament',
+                'Add players',
+                'Edit players',
+                'View reports']
+
+
+class App:
+    def __init__(self):
+        self.player_control = PlayerController()
+        self.view = BaseView()
+        self.tournament = None
+
+    def run(self):
+        next_action = None
+        while next_action is None:
+            menu = self.new_menu()
+            menu_names = list(map(lambda x: x.name, menu))
+            to_do = self.view.select_from_list(menu_names)
+            next_action = menu[to_do].function()
+        print(next_action)
+
+    def new_menu(self):
+        menu = []
+        if self.tournament is None:
+            menu.append(Menu('Create tournament', self.create_tournament))
+        else:
+            menu.append(Menu(f'Continue tournament {self.tournament.tournament.name}', self.continue_tournament))
+
+        menu.append(Menu('Create players', self.create_player))
+
+        if len(self.player_control.players) > 0:
+            menu.append(Menu('Edit players', self.edit_players))
+
+        menu.append(Menu('View reports', self.view_reports))
+
+        menu.append(Menu('Exit', self.exit))
+        return menu
+
+    def create_player(self):
+        self.player_control.create_player(TestPlayer().get_data())
+
+    def create_tournament(self):
+        self.tournament = TournamentController(self.player_control, TestTournament().get_data())
+
+    def continue_tournament(self):
+        self.tournament.run()
+
+    def edit_players(self):
+        print('Edit players')
+
+    def view_reports(self):
+        print('view reports')
+
+    @staticmethod
+    def exit():
+        return 'Thank you for playing! See you next time!'
+
+
+app = App()
+# print(TestTournament().get_data())
+# app.tournament = (TournamentController(app.player_control, TestTournament().get_data()))
+app.run()
 
 # tournament_control = TournamentController(player_control)
 # tournament_control.add_remove_tournament_players()
