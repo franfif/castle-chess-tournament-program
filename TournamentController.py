@@ -1,28 +1,29 @@
-from TestModel import TestPlayer
 from TournamentView import TournamentView
 from Tournament import Tournament
-from PlayerController import PlayerController
+from Menu import Menu
+from BaseView import BaseView
 
 
 class TournamentController:
-    def __init__(self, player_controller):
+    def __init__(self, player_controller, tournament_info=None):
         self.player_controller = player_controller
         self.view = TournamentView()
+        self.base_view = BaseView()
         self.all_players = self.player_controller.players
-        # When tests are over, uncomment next line
-        # self.tournament = self.create_tournament()
-        # When tests are done, comment out next line
-        self.tournament = Tournament('name', 'venue', '11/11/1111', 3, 1, 'description')
+        # When tests are over, remove next 3 lines
+        if tournament_info is not None:
+            self.tournament = Tournament(*tournament_info)
+        else:
+            self.tournament = Tournament(*self.get_tournament_info())
 
-    # For the Tournament control
-    def create_tournament(self):
+    def get_tournament_info(self):
         name = self.view.prompt_for_tournament_name()
         venue = self.view.prompt_for_venue()
         date_range = self.view.prompt_for_date_range()
         number_of_rounds = self.view.prompt_for_number_rounds()
         time_control = self.view.prompt_for_time_control()
         description = self.view.prompt_for_description()
-        return Tournament(name, venue, date_range, number_of_rounds, time_control, description)
+        return name, venue, date_range, number_of_rounds, time_control, description
 
     def add_remove_tournament_players(self):
         while True:
@@ -42,33 +43,89 @@ class TournamentController:
                 self.tournament.add_player(self.all_players[index])
 
     def start_round(self):
+        self.check_number_of_rounds()
+        # get TournamentPlayers pairs from Tournament
         pairs = self.tournament.start_new_round()
-        self.view.display_pairings(pairs)
+        # get Players pairs from Tournament
+        view_pairs = list(map(self.tournament.get_tournament_players, pairs))
+        # display pairs of Players
+        self.view.display_pairings(view_pairs)
 
     def end_round(self):
-        # end the last round created
-        current_round = self.tournament.rounds[-1]
-        current_round.add_end_time()
-        # get winner indexes from tournament manager
-        winners = self.view.prompt_for_winners(current_round)
-        ended_round = []
+        # get the current round's pairs
+        pairs = self.tournament.get_round_pairs()
         # attribute points to each match in the round
-        for i, match in enumerate(current_round):
-            ended_round.append(self.attribute_score(match, winners[i]))
-        self.tournament.rounds[-1] = ended_round
+        scores = []
+        for i, pair in enumerate(pairs):
+            # for each pair, get the winner index from view
+            winner_index = self.view.prompt_for_winner_index(pair)
+            # collect scores for each pairs
+            scores.append(self.attribute_score(winner_index))
+        # apply scores to round to end the round
+        self.tournament.end_round(scores)
 
     @staticmethod
-    def attribute_score(match, winner):
-        if winner is not None:
-            match[winner][1] = 1
-        else:
-            match[0][1] = 0.5
-            match[1][1] = 0.5
-        return match
+    def attribute_score(winner_index):
+        # default is a tie
+        score = [0.5, 0.5]
+        if winner_index is not None:
+            # winner_index is either 0 or 1
+            score[winner_index] = 1
+            # 1 - winner_index is either 1 or 0, respectively
+            score[1 - winner_index] = 0
+        return score
 
     def display_players(self):
         self.view.show_players(self.tournament.get_tournament_players())
 
+    def run(self):
+        next_action = None
+        while next_action is None:
+            menu = self.new_menu()
+            menu_names = list(map(lambda x: x.name, menu))
+            to_do = self.base_view.select_from_list(menu_names)
+            next_action = menu[to_do].function()
+        return True
+
+    def new_menu(self):
+        menu = [Menu('Edit tournament information', self.edit_tournament_info)]
+
+        if len(self.tournament.rounds) == 0:
+            menu.append(Menu('Add/Remove tournament players', self.add_remove_tournament_players))
+
+        if len(self.tournament.players) >= 2:
+            if not self.tournament.round_started:
+                menu.append(Menu('Start round', self.start_round))
+            else:
+                menu.append(Menu(f'End round', self.end_round))
+
+        if len(self.tournament.players) > 0:
+            menu.append(Menu('Show players', self.display_players))
+
+        menu.append(Menu('Show all rounds', self.show_rounds))
+        menu.append(Menu('Show all matches', self.show_matches))
+
+        menu.append(Menu('Exit', self.exit))
+        return menu
+
+    def edit_tournament_info(self):
+        # ask to change description, name, venue, etc.
+        pass
+
+    def show_rounds(self):
+        # display all rounds
+        self.view.display_rounds(self.tournament.rounds)
+
+    def show_matches(self):
+        print('Showing matches')
+
+    def exit(self):
+        return 'Leaving tournament'
+
+    def check_number_of_rounds(self):
+        if self.tournament.number_of_rounds >= len(self.tournament.players):
+            number_of_rounds = self.tournament.adjust_number_of_rounds()
+            self.view.notify_change_number_of_rounds(number_of_rounds)
 #
 # control = PlayerController()
 # control.create_player(TestPlayer().get_data())
