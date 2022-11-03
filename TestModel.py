@@ -28,7 +28,7 @@ class TestTournament:
         self.venue = 'Venue ' + names.get_full_name()
         self.date = (random_date("01/01/2022", "06/30/2022", random.random()),
                      random_date("07/01/2022", "12/31/2022", random.random()))
-        self.number_of_rounds = random.randint(4, 12)
+        self.number_of_rounds = random.randint(1, 3)
         self.rounds = []
         self.players = []
         self.time_control = random.choice([0, 1, 2])
