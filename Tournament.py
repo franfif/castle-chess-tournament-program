@@ -58,7 +58,7 @@ class Tournament:
                 self.rounds.append(Round(round_name, pairs))
                 self.save_pairs(pairs)
                 self.round_started = True
-            return pairs
+            return self.get_tournament_players(pairs)
 
     def end_round(self, scores):
         this_round = self.rounds[-1]
@@ -66,7 +66,8 @@ class Tournament:
         self.round_started = False
 
     def get_round_pairs(self, round_index=-1):
-        return self.rounds[round_index].get_pairs()
+        pairs = self.rounds[round_index].get_pairs()
+        return self.get_tournament_players(pairs)
 
     def define_pairings(self, round_number):
         if round_number == 0:
