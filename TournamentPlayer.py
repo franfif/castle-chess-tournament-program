@@ -4,8 +4,8 @@ class TournamentPlayer:
         self.points = 0
         self.pairs = []
 
-    def has_already_played(self, other_player):
-        return other_player in self.pairs
+    def has_never_played(self, other_player):
+        return other_player not in self.pairs
 
     def is_now_playing(self, other_player):
         self.pairs.append(other_player)
