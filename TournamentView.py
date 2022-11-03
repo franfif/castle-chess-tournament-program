@@ -83,9 +83,9 @@ class TournamentView:
         if len(rounds) == 0:
             print('There is no round to show')
         else:
-            for round in rounds:
-                print(round.name)
-                for match in round.matches:
+            for rnd in rounds:
+                print(rnd.name)
+                for match in rnd.matches:
                     player1 = match[0][0]
                     score1 = match[0][1]
                     player2 = match[1][0]
