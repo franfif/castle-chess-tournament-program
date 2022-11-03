@@ -24,7 +24,13 @@ class Round:
             self.matches[i][1][1] = results[i][1]
 
     def get_pairs(self):
-        return list(map(lambda x: [x[0][0].player, x[1][0].player], self.matches))
+        return list(map(lambda x: [x[0][0], x[1][0]], self.matches))
+
+    def get_matches_info(self):
+        info = []
+        for [player1, score1], [player2, score2] in self.matches:
+            info.append([player1.player, score1, player2.player, score2])
+        return info
 
     def add_end_time(self):
         self.end_time = datetime.datetime.now()
