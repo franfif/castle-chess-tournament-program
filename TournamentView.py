@@ -97,3 +97,9 @@ class TournamentView:
                         match_report += str(score1) + ' - ' + str(score2)
                     match_report += '  ' + player2.player.get_full_name()
                     print(match_report)
+
+    def notice_no_more_pairings(self):
+        print('All the players payed against each other, there is no more match to play in this tournament.')
+
+    def notice_tournament_over(self):
+        print('The tournament is now over.')

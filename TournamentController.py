@@ -45,10 +45,14 @@ class TournamentController:
     def start_round(self):
         # get TournamentPlayers pairs from Tournament
         pairs = self.tournament.start_new_round()
-        # get Players pairs from Tournament
-        view_pairs = list(map(self.tournament.get_tournament_players, pairs))
-        # display pairs of Players
-        self.view.display_pairings(view_pairs)
+        if pairs:
+            # get Players pairs from Tournament
+            view_pairs = list(map(self.tournament.get_tournament_players, pairs))
+            # display pairs of Players
+            self.view.display_pairings(view_pairs)
+        else:
+            self.view.notice_no_more_pairings()
+            self.end_tournament()
 
     def end_round(self):
         # get the current round's pairs
@@ -62,6 +66,10 @@ class TournamentController:
             scores.append(self.attribute_score(winner_index))
         # apply scores to round to end the round
         self.tournament.end_round(scores)
+
+    def end_tournament(self):
+        self.tournament.number_of_rounds = len(self.tournament.rounds)
+        self.view.notice_tournament_over()
 
     @staticmethod
     def attribute_score(winner_index):
