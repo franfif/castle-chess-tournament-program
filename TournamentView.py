@@ -84,18 +84,17 @@ class TournamentView:
         else:
             for rnd in rounds:
                 print(rnd.name)
-                for match in rnd.matches:
-                    player1 = match[0][0]
-                    score1 = match[0][1]
-                    player2 = match[1][0]
-                    score2 = match[1][1]
-                    match_report = player1.player.get_full_name() + '  '
-                    if score1 == 0.5:
-                        match_report += '-TIE-'
-                    else:
-                        match_report += str(score1) + ' - ' + str(score2)
-                    match_report += '  ' + player2.player.get_full_name()
-                    print(match_report)
+                for match_info in rnd.get_matches_info():
+                    self.display_match(*match_info)
+
+    def display_match(self, player1, score1, player2, score2):
+        match_report = player1.get_full_name() + '  '
+        if score1 == score2:
+            match_report += '-TIE-'
+        else:
+            match_report += str(score1) + ' - ' + str(score2)
+        match_report += '  ' + player2.get_full_name()
+        print(match_report)
 
     def notice_no_more_pairings(self):
         print('All the players payed against each other, there is no more match to play in this tournament.')
