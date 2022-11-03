@@ -89,7 +89,7 @@ class TournamentController:
             menu_names = list(map(lambda x: x.name, menu))
             to_do = self.base_view.select_from_list(menu_names)
             next_action = menu[to_do].function()
-        return True
+        return
 
     def new_menu(self):
         menu = [Menu('Edit tournament information', self.edit_tournament_info)]
@@ -124,7 +124,7 @@ class TournamentController:
         print('Showing matches')
 
     def exit(self):
-        return 'Leaving tournament'
+        return True
 
 #
 # control = PlayerController()
