@@ -36,11 +36,12 @@ class Tournament:
     def start_new_round(self):
         this_round_number = len(self.rounds)
         if this_round_number < self.number_of_rounds:
-            round_name = 'Round ' + str(len(self.rounds) + 1)
             pairs = self.define_pairings(this_round_number)
-            self.rounds.append(Round(round_name, pairs))
-            self.save_pairs(pairs)
-            self.round_started = True
+            if pairs:
+                round_name = 'Round ' + str(len(self.rounds) + 1)
+                self.rounds.append(Round(round_name, pairs))
+                self.save_pairs(pairs)
+                self.round_started = True
             return pairs
 
     def end_round(self, scores):
