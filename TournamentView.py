@@ -82,14 +82,15 @@ class TournamentView:
         if len(rounds) == 0:
             print('There is no round to show')
         else:
+            print(' ## ROUNDS ##')
             for rnd in rounds:
-                print(rnd.name)
+                print(f'# {rnd.name} #')
                 for match_info in rnd.get_matches_info():
                     self.display_match(*match_info)
 
     def display_match(self, player1, score1, player2, score2):
         match_report = player1.get_full_name() + '  '
-        if score1 == score2:
+        if score1 == 0.5:
             match_report += '-TIE-'
         else:
             match_report += str(score1) + ' - ' + str(score2)
