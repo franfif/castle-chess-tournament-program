@@ -93,10 +93,10 @@ class TournamentController:
             menu.append(Menu('Add/Remove tournament players', self.add_remove_tournament_players))
 
         if len(self.tournament.players) >= 2:
-            if not self.tournament.round_started:
-                menu.append(Menu('Start round', self.start_round))
-            else:
+            if self.tournament.round_started:
                 menu.append(Menu(f'End round', self.end_round))
+            elif len(self.tournament.rounds) < self.tournament.number_of_rounds:
+                menu.append(Menu('Start round', self.start_round))
 
         if len(self.tournament.players) > 0:
             menu.append(Menu('Show players', self.display_players))
