@@ -27,10 +27,21 @@ class Tournament:
         player_to_remove = next(x for x in self.players if x.player == player)
         self.players.remove(player_to_remove)
 
-    def get_tournament_players(self, players=None):
-        if players is None:
-            players = self.players
-        return list(map(lambda x: x.player, players))
+    def get_tournament_players(self, list_of_players=None):
+        """
+        Gets through a list of TournamentPlayers and returns a list of corresponding Players
+        :param list_of_players: list of TournamentPlayers. Default is the tournament's full list of TournamentPlayers
+        :return: list of Players
+        """
+        if list_of_players is None:
+            list_of_players = self.players
+        try:
+            new_list = []
+            for i in list_of_players:
+                new_list.append(self.get_tournament_players(i))
+            return new_list
+        except TypeError:
+            return list(map(lambda x: x.player, list_of_players))
 
     def reset_description(self, new_description):
         self.description = new_description
