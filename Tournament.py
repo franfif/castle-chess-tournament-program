@@ -58,7 +58,7 @@ class Tournament:
             return self.next_round_pairing()
 
     def first_round_pairing(self):
-        tournament_players = list(self.players)
+        tournament_players = self.players.copy()
         tournament_players.sort(key=lambda x: x.player.ranking, reverse=True)
         half = len(tournament_players) // 2
         first_half = tournament_players[:half]
@@ -67,21 +67,45 @@ class Tournament:
         return pairs
 
     def next_round_pairing(self):
-        tournament_players = list(self.players)
+        tournament_players = self.players.copy()
         tournament_players.sort(key=lambda x: (x.points, x.player.ranking), reverse=True)
-        if tournament_players[0].has_already_played(tournament_players[1]):
-            pass
-            # start again with [0] and [2]
-        else:
-            pass
-            # pair [0] and [1]
-            # remove [0] and [1] from ranked_players
-            # start again with new ranked_players
+        # show order
+        print('show order in next_round_pairing')
+        for i, x in enumerate(tournament_players):
+            print(i, x.player.get_full_name(), x.points, x.player.ranking)
+
+        def get_all_pairs(players_left, new_pairs):
+            def get_next_adversary(p1, *players):
+                print(f'p1: {p1}')
+                print(f'players: {players}')
+                if not players:
+                    return None
+                p2, *other_players = players
+                if p1.has_never_played(p2):
+                    return p2
+                else:
+                    return get_next_adversary(p1, *other_players)
+
+            if not players_left:
+                return new_pairs
+            else:
+                player1 = players_left[0]
+                player2 = get_next_adversary(*players_left)
+                players_left.remove(player1)
+                print(f'player1: {player1}')
+                print(f'player2: {player2}')
+                if player2 is not None:
+                    players_left.remove(player2)
+                    new_pairs.append([player1, player2])
+                return get_all_pairs(players_left, new_pairs)
+
+        return get_all_pairs(tournament_players, [])
 
     def save_pairs(self, pairs):
         for player1, player2 in pairs:
-            player1.is_now_playing(player2)
-            player2.is_now_playing(player1)
+            if player2 is not None:
+                player1.is_now_playing(player2)
+                player2.is_now_playing(player1)
 
     # def already_done(self, possible_pair):
     #     for pair in self.pairs:
