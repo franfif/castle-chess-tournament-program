@@ -73,12 +73,9 @@ class TournamentController:
 
     @staticmethod
     def attribute_score(winner_index):
-        # default is a tie
         score = [0.5, 0.5]
         if winner_index is not None:
-            # winner_index is either 0 or 1
             score[winner_index] = 1
-            # 1 - winner_index is either 1 or 0, respectively
             score[1 - winner_index] = 0
         return score
 
