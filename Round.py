@@ -17,9 +17,11 @@ class Round:
         :param results: list of lists of 2 scores
         :return: None
         """
-        for i, match in enumerate(self.matches):
-            match[0][1] = results[i][0]
-            match[1][1] = results[i][1]
+        for i, [[player1, _], [player2, _]] in enumerate(self.matches):
+            player1.points += results[i][0]
+            player2.points += results[i][1]
+            self.matches[i][0][1] = results[i][0]
+            self.matches[i][1][1] = results[i][1]
 
     def get_pairs(self):
         return list(map(lambda x: [x[0][0].player, x[1][0].player], self.matches))
