@@ -27,7 +27,7 @@ class App:
             menu_names = list(map(lambda x: x.name, menu))
             to_do = self.view.select_from_list(menu_names)
             next_action = menu[to_do].function()
-        print(next_action)
+        print('Thank you for playing! See you next time!')
 
     def new_menu(self):
         menu = [Menu('Create tournament', self.create_tournament)]
@@ -59,7 +59,7 @@ class App:
 
     @staticmethod
     def exit():
-        return 'Thank you for playing! See you next time!'
+        return True
 
 
 app = App()
