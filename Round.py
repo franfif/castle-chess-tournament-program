@@ -13,7 +13,7 @@ class Round:
 
     def add_results(self, results):
         """
-        Add results for each match/pairing in the round
+        Add results for each match in the round and update TournamentPlayers' points
         :param results: list of lists of 2 scores
         :return: None
         """
