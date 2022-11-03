@@ -2,13 +2,7 @@ from TestModel import TestPlayer, TestTournament
 from PlayerController import PlayerController
 from BaseView import BaseView
 from TournamentController import TournamentController
-from Menu import Menu
-
-
-MENU_INITIAL = ['Create tournament',
-                'Add players',
-                'Edit players',
-                'View reports']
+from Option import Option
 
 
 class App:
@@ -27,19 +21,19 @@ class App:
         print('Thank you for playing! See you next time!')
 
     def new_menu(self):
-        menu = [Menu('Create tournament', self.create_tournament)]
+        menu = [Option('Create tournament', self.create_tournament)]
 
         for tournament in self.tournaments:
-            menu.append(Menu(f'Continue tournament {tournament.tournament.name}', tournament.run))
+            menu.append(Option(f'Continue tournament {tournament.tournament.name}', tournament.run))
 
-        menu.append(Menu('Create players', self.create_player))
+        menu.append(Option('Create players', self.create_player))
 
         if len(self.player_control.players) > 0:
-            menu.append(Menu('Edit players', self.edit_players))
+            menu.append(Option('Edit players', self.edit_players))
 
-        menu.append(Menu('View reports', self.view_reports))
+        menu.append(Option('View reports', self.view_reports))
 
-        menu.append(Menu('Exit', self.exit))
+        menu.append(Option('Exit', self.exit))
         return menu
 
     def create_player(self):

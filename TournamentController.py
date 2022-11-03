@@ -1,6 +1,6 @@
 from TournamentView import TournamentView
 from Tournament import Tournament
-from Menu import Menu
+from Option import Option
 from BaseView import BaseView
 
 
@@ -88,24 +88,24 @@ class TournamentController:
         return
 
     def new_menu(self):
-        menu = [Menu('Edit tournament information', self.edit_tournament_info)]
+        menu = [Option('Edit tournament information', self.edit_tournament_info)]
 
         if len(self.tournament.rounds) == 0:
-            menu.append(Menu('Add/Remove tournament players', self.add_remove_tournament_players))
+            menu.append(Option('Add/Remove tournament players', self.add_remove_tournament_players))
 
         if len(self.tournament.players) >= 2:
             if self.tournament.round_started:
-                menu.append(Menu(f'End round', self.end_round))
+                menu.append(Option(f'End round', self.end_round))
             elif len(self.tournament.rounds) < self.tournament.number_of_rounds:
-                menu.append(Menu('Start round', self.start_round))
+                menu.append(Option('Start round', self.start_round))
 
         if len(self.tournament.players) > 0:
-            menu.append(Menu('Show players', self.display_players))
+            menu.append(Option('Show players', self.display_players))
 
-        menu.append(Menu('Show all rounds', self.show_rounds))
-        menu.append(Menu('Show all matches', self.show_matches))
+        menu.append(Option('Show all rounds', self.show_rounds))
+        menu.append(Option('Show all matches', self.show_matches))
 
-        menu.append(Menu('Exit', self.exit))
+        menu.append(Option('Exit', self.exit))
         return menu
 
     def edit_tournament_info(self):
@@ -121,25 +121,3 @@ class TournamentController:
 
     def exit(self):
         return True
-
-#
-# control = PlayerController()
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-#
-#
-# # print(control.players)
-# test = TournamentController(control)
-# # test.player_controller = control
-# test.tournament_players = [control.players[0],
-#                            control.players[3],
-#                            control.players[6]]
-#
-# test.add_remove_tournament_players()
-# test.display_players()
