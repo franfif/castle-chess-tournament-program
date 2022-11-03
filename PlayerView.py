@@ -34,8 +34,3 @@ class PlayerView:
         players_to_select = list(map(lambda x: f'{x.get_full_name()} [ Ranking: {x.ranking} ]', players))
         pick = self.base_view.select_from_list(players_to_select)
         return players[pick]
-
-# from Player import Player
-# from TestPlayer import TestPlayer
-# view = PlayerView()
-# view.display_player(Player(*TestPlayer().get_data()))

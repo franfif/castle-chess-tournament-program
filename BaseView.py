@@ -85,24 +85,3 @@ class BaseView:
               f'Gender: {player.gender} - '
               f'Ranking: {player.ranking} ]')
 
-# base_view = BaseView()
-# lst = ['a', 'b', 'c', 'd', 'e']
-# while True:
-#     print('test 1')
-#     index = base_view.select_from_list(lst, 'bla')
-#     if index is None:
-#         break
-#     elif 0 <= index <= len(lst):
-#         print('==> ' + lst[index])
-#     elif index == -1:
-#         print('==> prop 0')
-#
-# while True:
-#     print('test 2')
-#     index = base_view.select_from_list(lst)
-#     if index is None:
-#         break
-#     elif 0 <= index <= len(lst):
-#         print('==> ' + lst[index])
-#     elif index == -1:
-#         print('==> prop 0')

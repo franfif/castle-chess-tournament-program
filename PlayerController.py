@@ -25,20 +25,3 @@ class PlayerController:
         player = self.view.select_player_ranking(self.players)
         new_ranking = self.view.get_new_ranking(player.ranking, player.get_full_name())
         player.ranking = new_ranking
-
-
-# Ask for Player attribute
-# Create Player()
-# Change Ranking
-# from TestPlayer import TestPlayer
-# view = PlayerView()
-# control = PlayerController(view)
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.create_player(TestPlayer().get_data())
-# control.show_players()
-# control.change_ranking()
-# control.show_players()
