@@ -19,6 +19,11 @@ class Tournament:
         self.players.append(TournamentPlayer(player))
 
     def remove_player(self, player):
+        """
+        Remove an instance of TournamentPlayer from the tournament
+        :param player: instance of Player
+        :return: Nothing
+        """
         player_to_remove = next(x for x in self.players if x.player == player)
         self.players.remove(player_to_remove)
 

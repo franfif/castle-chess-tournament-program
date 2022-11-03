@@ -14,10 +14,9 @@ class TournamentView:
         """
         Ask manager to select a player to add to or remove from the list
         of players in the tournament, or to create a new player and add it to
-        the tournament.
-        An empty answer stops the process
-        :param all_players: a list of all players saved in the system
-        :param tournament_players: a list of players part of the tournament
+        the tournament. An empty answer stops the process
+        :param all_players: a list of all Players saved in the system
+        :param tournament_players: a list of Players part of the tournament
         :return : the index of player in all_players to add to or remove from
         the players in tournament.
         If return -1, create a new player.
