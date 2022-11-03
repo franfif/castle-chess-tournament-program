@@ -18,7 +18,7 @@ class App:
     def __init__(self):
         self.player_control = PlayerController()
         self.view = BaseView()
-        self.tournament = None
+        self.tournaments = []
 
     def run(self):
         next_action = None
@@ -30,11 +30,10 @@ class App:
         print(next_action)
 
     def new_menu(self):
-        menu = []
-        if self.tournament is None:
-            menu.append(Menu('Create tournament', self.create_tournament))
-        else:
-            menu.append(Menu(f'Continue tournament {self.tournament.tournament.name}', self.continue_tournament))
+        menu = [Menu('Create tournament', self.create_tournament)]
+
+        for tournament in self.tournaments:
+            menu.append(Menu(f'Continue tournament {tournament.tournament.name}', tournament.run))
 
         menu.append(Menu('Create players', self.create_player))
 
@@ -50,10 +49,7 @@ class App:
         self.player_control.create_player(TestPlayer().get_data())
 
     def create_tournament(self):
-        self.tournament = TournamentController(self.player_control, TestTournament().get_data())
-
-    def continue_tournament(self):
-        self.tournament.run()
+        self.tournaments.append(TournamentController(self.player_control, TestTournament().get_data()))
 
     def edit_players(self):
         print('Edit players')
