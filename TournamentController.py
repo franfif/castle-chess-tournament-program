@@ -43,7 +43,6 @@ class TournamentController:
                 self.tournament.add_player(self.all_players[index])
 
     def start_round(self):
-        self.check_number_of_rounds()
         # get TournamentPlayers pairs from Tournament
         pairs = self.tournament.start_new_round()
         # get Players pairs from Tournament
