@@ -33,7 +33,7 @@ class App:
 
         menu.append(Option('View reports', self.view_reports))
 
-        menu.append(Option('Exit', self.exit))
+        menu.append(Option('Save and Exit', self.exit))
         return menu
 
     def create_player(self):
@@ -48,8 +48,8 @@ class App:
     def view_reports(self):
         print('view reports')
 
-    @staticmethod
-    def exit():
+    def exit(self):
+        self.player_control.save_players_to_db()
         return True
 
 
