@@ -18,8 +18,8 @@ class BaseView:
                 print('Please enter a date in the format mm/dd/yyyy.')
 
     def prompt_for_number(self, number_type, mini=None, maxi=None, default=None):
-        instructions = f'Enter the {number_type}' \
-                      f' (default = {default}): ' if default else ': '
+        instructions = f'Enter the {number_type}'
+        instructions += f' (default = {default}): ' if default else ': '
         while True:
             try:
                 number = input(instructions)
