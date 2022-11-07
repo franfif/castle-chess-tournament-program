@@ -71,17 +71,5 @@ class BaseView:
             except ValueError:
                 continue
 
-    def order_alphabetically(self, players):
-        players.sort(key=lambda x: (x.last_name, x.first_name))
-        return players
 
-    def order_by_ranking(self, players):
-        players.sort(key=lambda x: x.ranking, reverse=True)
-        return players
-
-    def full_display_player(self, player):
-        print(f'{player.get_full_name()}  [ '
-              f'DoB: {player.date_of_birth} - '
-              f'Gender: {player.gender} - '
-              f'Ranking: {player.ranking} ]')
 

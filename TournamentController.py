@@ -76,7 +76,7 @@ class TournamentController:
         return score
 
     def display_players(self):
-        self.view.show_players(self.tournament.get_tournament_players())
+        self.player_controller.display_players(self.tournament.get_tournament_players())
 
     def run(self):
         next_action = None

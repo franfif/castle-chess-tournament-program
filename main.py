@@ -43,7 +43,7 @@ class App:
         self.tournaments.append(TournamentController(self.player_control, TestTournament().get_data()))
 
     def edit_players(self):
-        print('Edit players')
+        self.player_control.edit_players()
 
     def view_reports(self):
         print('view reports')

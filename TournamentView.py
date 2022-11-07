@@ -62,22 +62,6 @@ class TournamentView:
             return None
         return winner_index
 
-    def show_players(self, players):
-        if len(players) == 0:
-            print("No players to show.")
-        else:
-            print("How would you like to order the players?")
-            choices = ['ranking', 'alphabetical']
-            choice = self.base_view.select_from_list(choices)
-            order = choices[choice]
-            print(f"Players in the tournament in {order} order:")
-            if order == 'ranking':
-                players = self.base_view.order_by_ranking(players)
-            else:
-                players = self.base_view.order_alphabetically(players)
-            for player in players:
-                self.base_view.full_display_player(player)
-
     def display_rounds(self, rounds):
         if len(rounds) == 0:
             print('There is no round to show')
