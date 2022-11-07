@@ -14,13 +14,13 @@ class App:
     def run(self):
         next_action = None
         while next_action is None:
-            menu = self.new_menu()
+            menu = self.new_app_menu()
             menu_names = list(map(lambda x: x.name, menu))
             to_do = self.view.select_from_list(menu_names)
             next_action = menu[to_do].function()
         print('Thank you for playing! See you next time!')
 
-    def new_menu(self):
+    def new_app_menu(self):
         menu = [Option('Create tournament', self.create_tournament)]
 
         for tournament in self.tournaments:
