@@ -53,7 +53,9 @@ class PlayerView:
         players_to_select = []
         for player in players:
             players_to_select.append(self.full_info_player(player))
-        pick = self.base_view.select_from_list(players_to_select)
+        pick = self.base_view.select_from_list(players_to_select, cancel_allowed=True)
+        if pick is None:
+            return None
         return players[pick]
 
     def prompt_for_order_preference(self, choices):
