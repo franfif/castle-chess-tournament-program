@@ -8,7 +8,7 @@ from Option import Option
 class PlayerController:
     def __init__(self):
         self.view = PlayerView()
-        self.base_view = BaseView
+        self.base_view = BaseView()
         self.player_DB_Table = TableDB('players')
         self.players = self.get_players_from_db()
 
@@ -53,11 +53,14 @@ class PlayerController:
         next_action = None
         while next_action is None:
             player = self.view.select_player_full_info(players)
-            while next_action is None:
+            if player is None:
+                break
+            next_player = None
+            while next_player is None:
                 menu = self.edit_player_options()
                 menu_names = list(map(lambda x: x.name, menu))
                 to_do = self.base_view.select_from_list(menu_names)
-                next_action = menu[to_do].function(player)
+                next_player = menu[to_do].function(player)
         return
 
     def edit_player_options(self):
@@ -70,29 +73,33 @@ class PlayerController:
         return options
 
     def update_first_name(self, player):
-        new_first_name = self.view.get_new_ranking(player.ranking, player.get_full_name())
-        player.ranking = new_ranking
+        new_first_name = self.view.get_new_first_name(player.get_full_name())
+        player.first_name = new_first_name
         self.save_players_to_db()
 
     def update_last_name(self, player):
-        new_ranking = self.view.get_new_ranking(player.ranking, player.get_full_name())
-        player.ranking = new_ranking
+        new_last_name = self.view.get_new_last_name(player.get_full_name())
+        player.last_name = new_last_name
         self.save_players_to_db()
 
     def update_date_of_birth(self, player):
-        new_ranking = self.view.get_new_ranking(player.ranking, player.get_full_name())
-        player.ranking = new_ranking
+        new_date_of_birth = self.view.get_new_date_of_birth(player.get_full_name(), player.date_of_birth)
+        player.date_of_birth = new_date_of_birth
         self.save_players_to_db()
 
     def update_gender(self, player):
-        new_ranking = self.view.get_new_ranking(player.ranking, player.get_full_name())
-        player.ranking = new_ranking
+        new_gender = self.view.get_new_gender(player.get_full_name(), player.gender)
+        player.gender = new_gender
         self.save_players_to_db()
 
     def update_ranking(self, player):
         new_ranking = self.view.get_new_ranking(player.ranking, player.get_full_name())
         player.ranking = new_ranking
         self.save_players_to_db()
+
+    def exit(self, _=None):
+        self.save_players_to_db()
+        return True
 
     def save_players_to_db(self):
         serialized_players = []
