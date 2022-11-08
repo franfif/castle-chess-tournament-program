@@ -62,6 +62,9 @@ class PlayerView:
         print('How would you like to order the players?')
         return self.base_view.select_from_list(choices)
 
+    def show_player(self, player):
+        print(self.full_info_player(player))
+
     def show_players(self, players):
         for player in players:
             print(self.full_info_player(player))
