@@ -2,7 +2,7 @@ from Player import Player
 from PlayerView import PlayerView
 from TableDB import TableDB
 from BaseView import BaseView
-from Option import Option
+from SinglePlayerController import SinglePlayerController
 
 
 class PlayerController:
@@ -23,7 +23,7 @@ class PlayerController:
     def create_player(self, player_info=None):
         if player_info is None:
             player_info = self.get_player_info()
-        player = Player(*player_info)
+        player = SinglePlayerController(Player(*player_info))
         self.players.append(player)
         self.save_players_to_db()
 
@@ -52,50 +52,12 @@ class PlayerController:
             players = self.players
         next_action = None
         while next_action is None:
-            player = self.view.select_player_full_info(players)
-            if player is None:
+            player_names = list(map(lambda x: x.player.get_full_name(), players))
+            pick = self.base_view.select_from_list(player_names, cancel_allowed=True)
+            if pick is None:
                 break
-            next_player = None
-            while next_player is None:
-                menu = self.edit_player_options()
-                menu_names = list(map(lambda x: x.name, menu))
-                to_do = self.base_view.select_from_list(menu_names)
-                next_player = menu[to_do].function(player)
+            players[pick].edit_player()
         return
-
-    def edit_player_options(self):
-        options = [Option('Change first name', self.update_first_name),
-                   Option('Change last name', self.update_last_name),
-                   Option('Change date of birth', self.update_date_of_birth),
-                   Option('Change gender', self.update_gender),
-                   Option('Change ranking', self.update_ranking),
-                   Option('Back to all players', self.exit)]
-        return options
-
-    def update_first_name(self, player):
-        new_first_name = self.view.get_new_first_name(player.get_full_name())
-        player.first_name = new_first_name
-        self.save_players_to_db()
-
-    def update_last_name(self, player):
-        new_last_name = self.view.get_new_last_name(player.get_full_name())
-        player.last_name = new_last_name
-        self.save_players_to_db()
-
-    def update_date_of_birth(self, player):
-        new_date_of_birth = self.view.get_new_date_of_birth(player.get_full_name(), player.date_of_birth)
-        player.date_of_birth = new_date_of_birth
-        self.save_players_to_db()
-
-    def update_gender(self, player):
-        new_gender = self.view.get_new_gender(player.get_full_name(), player.gender)
-        player.gender = new_gender
-        self.save_players_to_db()
-
-    def update_ranking(self, player):
-        new_ranking = self.view.get_new_ranking(player.ranking, player.get_full_name())
-        player.ranking = new_ranking
-        self.save_players_to_db()
 
     def exit(self, _=None):
         self.save_players_to_db()
@@ -105,11 +67,12 @@ class PlayerController:
         serialized_players = []
         for player in self.players:
             serialized_player = {
-                'first_name': player.first_name,
-                'last_name': player.last_name,
-                'date_of_birth': player.date_of_birth,
-                'gender': player.gender,
-                'ranking': player.ranking,
+                'first_name': player.player.first_name,
+                'last_name': player.player.last_name,
+                'date_of_birth': player.player.date_of_birth,
+                'gender': player.player.gender,
+                'ranking': player.player.ranking,
+                'id': player.player.id
             }
             serialized_players.append(serialized_player)
         self.player_DB_Table.insert_multiple(serialized_players)
@@ -118,12 +81,12 @@ class PlayerController:
         serialized_players = self.player_DB_Table.get_all_items()
         players = []
         for serialized_player in serialized_players:
-            player = Player(
-                first_name=serialized_player['first_name'],
-                last_name=serialized_player['last_name'],
-                date_of_birth=serialized_player['date_of_birth'],
-                gender=serialized_player['gender'],
-                ranking=serialized_player['ranking']
-            )
+            player = SinglePlayerController(Player(first_name=serialized_player['first_name'],
+                                                   last_name=serialized_player['last_name'],
+                                                   date_of_birth=serialized_player['date_of_birth'],
+                                                   gender=serialized_player['gender'],
+                                                   ranking=serialized_player['ranking'],
+                                                   player_id=serialized_player['id'])
+                                            )
             players.append(player)
         return players
