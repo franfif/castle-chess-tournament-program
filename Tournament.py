@@ -137,28 +137,3 @@ class Tournament:
         return serialized_rounds
 
 
-
-    # def already_done(self, possible_pair):
-    #     for pair in self.pairs:
-    #         if pair == possible_pair:
-    #             return True
-    #     return False
-
-# TESTS
-        # print('players')
-        # for player in self.players:
-        #     print(player.get_full_name())
-        # print('ranked players')
-        # for player in ranked_players:
-        #     print(player.get_full_name())
-        # print('first half')
-        # for player in first_half:
-        #     print(player.get_full_name())
-        # print('second half')
-        # for player in second_half:
-        #     print(player.get_full_name())
-        # print('pairs')
-        # for pair in pairs:
-        #     print(pair[0].get_full_name(),
-        #           pair[1].get_full_name())
-        #
