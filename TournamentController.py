@@ -122,3 +122,48 @@ class TournamentController:
 
     def exit(self):
         return True
+
+    def serialize_tournament(self):
+        serialized_tournament = {
+            'name': self.tournament.name,
+            'venue': self.tournament.venue,
+            'date': self.tournament.date,
+            'number_of_rounds': self.tournament.number_of_rounds,
+            'rounds': self.tournament.serialize_rounds(),
+            # 'rounds': list(map(lambda x: x.serialize_round, self.tournament.rounds)),
+            'players': list(map(lambda x: x.id, self.tournament.players)),
+            'time_control': self.tournament.time_control,
+            'description': self.tournament.description,
+            'round_started': self.tournament.round_started,
+            'id': self.tournament.id
+        }
+        return serialized_tournament
+
+    def get_tournament_from_db(self, serialized_tournament):
+        rounds = []
+        for serialized_round in serialized_tournament['rounds']:
+            rounds.append(self.get_round_from_db(serialized_round))
+        tournament = Tournament(name=serialized_tournament['name'],
+                                venue=serialized_tournament['venue'],
+                                date=serialized_tournament['date'],
+                                number_of_rounds=serialized_tournament['number_of_rounds'],
+                                time_control=serialized_tournament['time_control'],
+                                description=serialized_tournament['description'],
+                                rounds=rounds,
+                                players=[x.player for x in self.player_controller.players
+                                         if x.player.id in serialized_tournament['players']],
+                                round_started=serialized_tournament['round_started'],
+                                tournament_id=serialized_tournament['id'])
+        return tournament
+
+    def get_round_from_db(self, serialized_round):
+        matches = []
+        for [[player1_id, score1], [player2_id, score2]] in serialized_round['matches']:
+            player1 = next(x.player for x in self.player_controller.players if x.player.id == player1_id)
+            player2 = next(x.player for x in self.player_controller.players if x.player.id == player2_id)
+            matches.append(([player1, score1], [player2, score2]))
+        rnd = Round(name=serialized_round['name'],
+                    matches=matches,
+                    start_time=serialized_round['start_time'],
+                    end_time=serialized_round['end_time'])
+        return rnd

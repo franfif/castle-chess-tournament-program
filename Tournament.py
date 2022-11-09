@@ -130,20 +130,12 @@ class Tournament:
 
         return get_all_pairs(tournament_players, [])
 
-    def save_rounds_to_db(self):
+    def serialize_rounds(self):
         serialized_rounds = []
         for rnd in self.rounds:
             serialized_rounds.append(rnd.serialize_round())
         return serialized_rounds
 
-    def deserialize_rounds(self, serialized_rounds):
-        for rnd in serialized_rounds:
-
-            self.rounds.append(Round(name=rnd['name'],
-                                     matches=rnd['matches'],
-                                     start_time=rnd['start_time'],
-                                     end_time=rnd['end_time']
-                                     ))
 
 
     # def already_done(self, possible_pair):

@@ -67,35 +67,7 @@ class App:
         serialized_tournaments = self.tournament_DB_Table.get_all_items()
         tournaments = []
         for serialized_tournament in serialized_tournaments:
-            rounds = []
-            for rnd in serialized_tournament['rounds']:
-                matches = []
-                for [[player1_id, score1], [player2_id, score2]] in rnd['matches']:
-                    player1 = list(filter(lambda x: x.player.id == player1_id, self.player_control.players))
-                    player1 = player1[0].player
-                    player2 = list(filter(lambda x: x.player.id == player2_id, self.player_control.players))
-                    player2 = player2[0].player
-                    matches.append(([player1, score1], [player2, score2]))
-                rounds.append(Round(name=rnd['name'],
-                                    matches=matches,
-                                    start_time=rnd['start_time'],
-                                    end_time=rnd['end_time']
-                                    ))
-            tournament = TournamentController(
-                self.player_control,
-                (
-                    serialized_tournament['name'],
-                    serialized_tournament['venue'],
-                    serialized_tournament['date'],
-                    serialized_tournament['number_of_rounds'],
-                    serialized_tournament['time_control'],
-                    serialized_tournament['description'],
-                    rounds,
-                    [x.player for x in self.player_control.players if x.player.id in serialized_tournament['players']],
-                    serialized_tournament['round_started']
-                )
-            )
-            tournaments.append(tournament)
+            tournaments.append(TournamentController(self.player_control, serialized_tournament))
         return tournaments
 
 
