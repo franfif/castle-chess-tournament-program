@@ -11,9 +11,11 @@ class TournamentController:
         self.view = TournamentView()
         self.base_view = BaseView()
         self.all_players = list(map(lambda x: x.player, self.player_controller.players))
-        # When tests are over, remove next 3 lines
         if tournament_info is not None:
-            self.tournament = Tournament(*tournament_info)
+            if isinstance(tournament_info, tuple):
+                self.tournament = Tournament(*tournament_info)
+            else:
+                self.tournament = self.get_tournament_from_db(tournament_info)
         else:
             self.tournament = Tournament(*self.get_tournament_info())
 
