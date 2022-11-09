@@ -4,16 +4,20 @@ from TournamentPlayer import TournamentPlayer
 
 class Tournament:
     def __init__(self, name, venue, date, number_of_rounds,
-                 time_control, description):
+                 time_control, description, rounds=[], players=[], round_started=False, tournament_id=None):
         self.name = name
         self.venue = venue
         self.date = date
         self.number_of_rounds = number_of_rounds
-        self.rounds = []
-        self.players = []
+        self.rounds = rounds
+        self.players = players
         self.time_control = time_control
         self.description = description
-        self.round_started = False
+        self.round_started = round_started
+        if tournament_id is None:
+            self.id = self.__hash__()
+        else:
+            self.id = tournament_id
 
     def add_player(self, player):
         self.players.append(TournamentPlayer(player))
@@ -55,14 +59,15 @@ class Tournament:
             pairs = self.define_pairings(this_round_number)
             if pairs:
                 round_name = 'Round ' + str(len(self.rounds) + 1)
-                self.rounds.append(Round(round_name, pairs))
-                self.save_pairs(pairs)
+                self.rounds.append(Round(name=round_name, pairings=pairs))
+                self.save_rounds_to_db()
                 self.round_started = True
             return self.get_tournament_players(pairs)
 
     def end_round(self, scores):
         this_round = self.rounds[-1]
         this_round.add_results(scores)
+        # Should I save rounds to db at this point?
         self.round_started = False
 
     def get_round_pairs(self, round_index=-1):
@@ -111,11 +116,21 @@ class Tournament:
 
         return get_all_pairs(tournament_players, [])
 
-    def save_pairs(self, pairs):
-        for player1, player2 in pairs:
-            if player2 is not None:
-                player1.is_now_playing(player2)
-                player2.is_now_playing(player1)
+    def save_rounds_to_db(self):
+        serialized_rounds = []
+        for rnd in self.rounds:
+            serialized_rounds.append(rnd.serialize_round())
+        return serialized_rounds
+
+    def deserialize_rounds(self, serialized_rounds):
+        for rnd in serialized_rounds:
+
+            self.rounds.append(Round(name=rnd['name'],
+                                     matches=rnd['matches'],
+                                     start_time=rnd['start_time'],
+                                     end_time=rnd['end_time']
+                                     ))
+
 
     # def already_done(self, possible_pair):
     #     for pair in self.pairs:
