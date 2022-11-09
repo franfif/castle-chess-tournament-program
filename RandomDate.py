@@ -1,4 +1,3 @@
-import random
 import time
 
 
@@ -21,6 +20,3 @@ def str_time_prop(start, end, time_format, prop):
 
 def random_date(start, end, prop):
     return str_time_prop(start, end, '%m/%d/%Y', prop)
-
-
-# print(random_date("1/1/1930", "1/1/2009", random.random()))

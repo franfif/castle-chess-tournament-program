@@ -1,5 +1,4 @@
 from Round import Round
-from TournamentPlayer import TournamentPlayer
 
 
 class Tournament:

@@ -4,7 +4,6 @@ from BaseView import BaseView
 from TournamentController import TournamentController
 from Option import Option
 from TableDB import TableDB
-from Round import Round
 
 
 class App:
