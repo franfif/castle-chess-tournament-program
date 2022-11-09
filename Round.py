@@ -20,9 +20,9 @@ class Round:
         :param results: list of lists of 2 scores
         :return: None
         """
-        for i in enumerate(self.matches):
-            self.matches[i][0][1] = results[i][0]
-            self.matches[i][1][1] = results[i][1]
+        for i, match in enumerate(self.matches):
+            match[0][1] = results[i][0]
+            match[1][1] = results[i][1]
 
     def get_pairs(self):
         return list(map(lambda x: [x[0][0], x[1][0]], self.matches))
@@ -42,7 +42,7 @@ class Round:
             if player == match[0][0]:
                 points += match[0][1]
             if player == match[1][0]:
-                points += match [1][1]
+                points += match[1][1]
         return points
 
     def have_never_played(self, player1, player2):
