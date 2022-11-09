@@ -20,7 +20,7 @@ class Tournament:
             self.id = tournament_id
 
     def add_player(self, player):
-        self.players.append(TournamentPlayer(player))
+        self.players.append(player)
 
     def remove_player(self, player):
         """
@@ -28,8 +28,7 @@ class Tournament:
         :param player: instance of Player
         :return: Nothing
         """
-        player_to_remove = next(x for x in self.players if x.player == player)
-        self.players.remove(player_to_remove)
+        self.players.remove(player)
 
     def get_tournament_players(self, list_of_players=None):
         """
@@ -45,7 +44,7 @@ class Tournament:
                 new_list.append(self.get_tournament_players(i))
             return new_list
         except TypeError:
-            return list(map(lambda x: x.player, list_of_players))
+            return list_of_players
 
     def reset_description(self, new_description):
         self.description = new_description
@@ -82,7 +81,9 @@ class Tournament:
 
     def first_round_pairing(self):
         tournament_players = self.players.copy()
-        tournament_players.sort(key=lambda x: x.player.ranking, reverse=True)
+        tournament_players.sort(key=lambda x: x.ranking, reverse=True)
+        for player in tournament_players:
+            print(f'Player: {player.get_full_name()}, ranking: {player.ranking}')
         half = len(tournament_players) // 2
         first_half = tournament_players[:half]
         second_half = tournament_players[half:]
@@ -91,14 +92,26 @@ class Tournament:
 
     def next_round_pairing(self):
         tournament_players = self.players.copy()
-        tournament_players.sort(key=lambda x: (x.points, x.player.ranking), reverse=True)
+
+        def get_all_points(player):
+            points = 0
+            for rnd in self.rounds:
+                points += rnd.get_round_points(player)
+            return points
+
+        tournament_players.sort(key=lambda x: (get_all_points(x), x.ranking), reverse=True)
+        for player in tournament_players:
+            print(f'Player: {player.get_full_name()}, points: {get_all_points(player)}, ranking: {player.ranking}')
 
         def get_all_pairs(players_left, new_pairs):
             def get_next_adversary(p1, *players):
                 if not players:
                     return None
                 p2, *other_players = players
-                if p1.has_never_played(p2):
+                never_played = True
+                for rnd in self.rounds:
+                    never_played = never_played and rnd.have_never_played(p1, p2)
+                if never_played:
                     return p2
                 else:
                     return get_next_adversary(p1, *other_players)
