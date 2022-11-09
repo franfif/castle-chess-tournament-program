@@ -59,8 +59,8 @@ class Tournament:
             if pairs:
                 round_name = 'Round ' + str(len(self.rounds) + 1)
                 self.rounds.append(Round(name=round_name, pairings=pairs))
-                self.save_rounds_to_db()
                 self.round_started = True
+                # self.serialize_round()
             return self.get_tournament_players(pairs)
 
     def end_round(self, scores):
