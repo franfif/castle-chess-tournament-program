@@ -2,6 +2,7 @@ from TournamentView import TournamentView
 from Tournament import Tournament
 from Option import Option
 from BaseView import BaseView
+from Round import Round
 
 
 class TournamentController:
