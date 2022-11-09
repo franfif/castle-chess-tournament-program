@@ -65,6 +65,7 @@ class Tournament:
 
     def end_round(self, scores):
         this_round = self.rounds[-1]
+        this_round.add_end_time()
         this_round.add_results(scores)
         # Should I save rounds to db at this point?
         self.round_started = False
