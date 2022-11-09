@@ -81,6 +81,7 @@ class TournamentController:
     def run(self):
         next_action = None
         while next_action is None:
+            self.base_view.display_title('Tournament ' + self.tournament.name)
             menu = self.new_menu()
             menu_names = list(map(lambda x: x.name, menu))
             to_do = self.base_view.select_from_list(menu_names)
