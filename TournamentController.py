@@ -9,7 +9,7 @@ class TournamentController:
         self.player_controller = player_controller
         self.view = TournamentView()
         self.base_view = BaseView()
-        self.all_players = self.player_controller.players
+        self.all_players = list(map(lambda x: x.player, self.player_controller.players))
         # When tests are over, remove next 3 lines
         if tournament_info is not None:
             self.tournament = Tournament(*tournament_info)
