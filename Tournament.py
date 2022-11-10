@@ -2,13 +2,17 @@ from Round import Round
 
 
 class Tournament:
-    def __init__(self, name, venue, date, number_of_rounds,
-                 time_control, description, rounds=[], players=[], round_started=False, tournament_id=None):
+    def __init__(self, name, venue, date_range, number_of_rounds,
+                 time_control, description, rounds=None, players=None, round_started=False, tournament_id=None):
         self.name = name
         self.venue = venue
-        self.date = date
+        self.date_range = date_range
         self.number_of_rounds = number_of_rounds
+        if rounds is None:
+            rounds = []
         self.rounds = rounds
+        if players is None:
+            players = []
         self.players = players
         self.time_control = time_control
         self.description = description
@@ -81,10 +85,10 @@ class Tournament:
     def next_round_pairing(self):
         tournament_players = self.players.copy()
 
-        def get_all_points(player):
+        def get_all_points(player_to_probe):
             points = 0
             for rnd in self.rounds:
-                points += rnd.get_round_points(player)
+                points += rnd.get_round_points(player_to_probe)
             return points
 
         tournament_players.sort(key=lambda x: (get_all_points(x), x.ranking), reverse=True)
