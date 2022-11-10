@@ -83,19 +83,22 @@ class SingleTournamentController:
     def display_players(self):
         self.players_control.display_players(self.tournament.players)
 
-    def run(self):
+    def generic_tournament_menu(self, get_menu_options):
         next_action = None
         while next_action is None:
             self.base_view.display_title('Tournament ' + self.tournament.name)
-            menu = self.run_tournament_options()
+            menu = get_menu_options()
             menu_names = list(map(lambda x: x.name, menu))
             to_do = self.base_view.select_from_list(menu_names)
             next_action = menu[to_do].function()
             self.tournaments_control.save_tournaments_to_db()
         return
 
+    def run(self):
+        self.generic_tournament_menu(self.run_tournament_options)
+
     def run_tournament_options(self):
-        options = [Option('Edit tournament information', self.edit_tournament_info)]
+        options = [Option('Edit tournament information', self.edit_tournament)]
 
         if len(self.tournament.rounds) == 0:
             options.append(Option('Add/Remove tournament players', self.add_remove_tournament_players))
@@ -115,15 +118,8 @@ class SingleTournamentController:
         options.append(Option('Save and exit tournament', self.exit))
         return options
 
-    def edit_tournament_info(self):
-        menu = self.edit_tournament_options()
-        menu_names = list(map(lambda x: x.name, menu))
-        next_action = None
-        while next_action is None:
-            to_do = self.base_view.select_from_list(menu_names)
-            next_action = menu[to_do].function()
-            self.tournaments_control.save_tournaments_to_db()
-        return
+    def edit_tournament(self):
+        self.generic_tournament_menu(self.edit_tournament_options)
 
     def edit_tournament_options(self):
         options = [Option('Change tournament name', self.update_tournament_name),
@@ -133,6 +129,15 @@ class SingleTournamentController:
                    Option('Change time control', self.update_time_control),
                    Option('Change description', self.update_description),
                    Option('Save and go back', self.exit)]
+        return options
+
+    def run_reports(self):
+        self.generic_tournament_menu(self.report_options)
+
+    def report_options(self):
+        options = [Option('Show players', self.display_players),
+                   Option('Show rounds', self.show_rounds),
+                   Option('Back to tournament reports', self.exit)]
         return options
 
     def update_tournament_name(self):
