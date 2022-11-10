@@ -2,6 +2,7 @@
 <h1 align="center">
   <img alt="castle chess logo" src="img/CastleChessLogo.png" width="224px"/><br/>
 </h1>
+
 ## Introduction
 Manage a chess tournament efficiently with this standalone offline program. It uses the Python3 language and runs on the console.
 
