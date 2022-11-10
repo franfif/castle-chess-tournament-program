@@ -40,9 +40,10 @@ class PlayersController:
     def edit_players(self, players=None):
         if players is None:
             players = self.players
+        player_names = list(map(lambda x: self.view.full_info_player(x.player), players))
+
         next_action = None
         while next_action is None:
-            player_names = list(map(lambda x: self.view.full_info_player(x.player), players))
             pick = self.base_view.select_from_list(player_names, cancel_allowed=True)
             if pick is None:
                 break
