@@ -6,7 +6,7 @@ class BaseView:
         text = ''
         while len(text) < 1:
             text = input(f'Enter the {text_type}: ')
-        return text.capitalize()
+        return text
 
     def prompt_for_date(self, date_type):
         while True:
