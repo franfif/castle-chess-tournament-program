@@ -39,5 +39,4 @@ class ReportController:
             self.generic_report_menu(options)
 
     def exit(self):
-        pass
-
+        return True
