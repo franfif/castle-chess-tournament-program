@@ -105,7 +105,7 @@ class SingleTournamentController:
 
         if len(self.tournament.players) >= 2:
             if self.tournament.round_started:
-                options.append(Option(f'End round', self.end_round))
+                options.append(Option('End round', self.end_round))
             elif len(self.tournament.rounds) < self.tournament.number_of_rounds:
                 options.append(Option('Start round', self.start_round))
 
