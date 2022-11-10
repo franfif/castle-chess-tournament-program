@@ -73,5 +73,3 @@ class BaseView:
 
     def display_title(self, title):
         print(f'~~~~~~~~~\n{title}\n~~~~~~~~~')
-
-
