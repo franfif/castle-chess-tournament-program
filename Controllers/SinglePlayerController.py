@@ -8,7 +8,6 @@ class SinglePlayerController:
     def __init__(self, player=None):
         self.view = PlayerView()
         self.base_view = BaseView()
-        # When tests are over, remove next 3 lines
         if player is not None:
             self.player = player
         else:
