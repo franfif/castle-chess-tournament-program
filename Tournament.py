@@ -39,12 +39,6 @@ class Tournament:
         except TypeError:
             return list_of_players
 
-    def reset_description(self, new_description):
-        self.description = new_description
-
-    def increment_description(self, new_line):
-        self.description += '\n' + new_line
-
     def start_new_round(self):
         this_round_number = len(self.rounds)
         if this_round_number < self.number_of_rounds:
