@@ -1,15 +1,15 @@
 from TestModel import TestPlayer, TestTournament
-from PlayerController import PlayerController
+from PlayersController import PlayersController
+from TournamentsController import TournamentsController
 from BaseView import BaseView
 from Option import Option
 
 
 class App:
     def __init__(self):
-        self.player_control = PlayerController()
+        self.players_control = PlayersController()
+        self.tournaments_control = TournamentsController(self.players_control)
         self.view = BaseView()
-        self.tournament_DB_Table = TableDB('tournaments')
-        self.tournaments = self.get_tournaments_from_db()
 
     def run(self):
         next_action = None
@@ -23,12 +23,12 @@ class App:
     def new_app_menu(self):
         menu = [Option('Create tournament', self.create_tournament)]
 
-        for tournament in self.tournaments:
+        for tournament in self.tournaments_control.tournaments:
             menu.append(Option(f'Continue tournament {tournament.tournament.name}', tournament.run))
 
         menu.append(Option('Create players', self.create_player))
 
-        if len(self.player_control.players) > 0:
+        if len(self.players_control.players) > 0:
             menu.append(Option('Edit players', self.edit_players))
 
         menu.append(Option('View reports', self.view_reports))
@@ -37,21 +37,20 @@ class App:
         return menu
 
     def create_player(self):
-        self.player_control.create_player(TestPlayer().get_data())
+        self.players_control.create_player(TestPlayer().get_data())
 
     def create_tournament(self):
-        self.tournaments.append(TournamentController(self.player_control, TestTournament().get_data()))
-        self.save_tournaments_to_db()
+        self.tournaments_control.create_tournament(TestTournament().get_data())
 
     def edit_players(self):
-        self.player_control.edit_players()
+        self.players_control.edit_players()
 
     def view_reports(self):
         print('view reports')
 
     def exit(self):
-        self.player_control.save_players_to_db()
-        self.save_tournaments_to_db()
+        self.players_control.save_players_to_db()
+        self.tournaments_control.save_tournaments_to_db()
         return True
 
 
