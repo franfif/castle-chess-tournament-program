@@ -2,7 +2,7 @@ from Models.Tournament import Tournament
 from Views.TournamentView import TournamentView
 from DB.TableDB import TableDB
 from Views.BaseView import BaseView
-from SingleTournamentController import SingleTournamentController
+from Controllers.SingleTournamentController import SingleTournamentController
 
 
 class TournamentsController:

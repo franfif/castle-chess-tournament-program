@@ -2,7 +2,7 @@ from Models.Player import Player
 from Views.PlayerView import PlayerView
 from DB.TableDB import TableDB
 from Views.BaseView import BaseView
-from SinglePlayerController import SinglePlayerController
+from Controllers.SinglePlayerController import SinglePlayerController
 
 
 class PlayersController:

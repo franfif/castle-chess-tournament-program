@@ -1,4 +1,4 @@
-from Round import Round
+from Models.Round import Round
 
 
 class Tournament:
