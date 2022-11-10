@@ -5,7 +5,7 @@ from BaseView import BaseView
 from SinglePlayerController import SinglePlayerController
 
 
-class PlayerController:
+class PlayersController:
     def __init__(self):
         self.view = PlayerView()
         self.base_view = BaseView()
@@ -59,10 +59,6 @@ class PlayerController:
             players[pick].edit_player()
         return
 
-    def exit(self, _=None):
-        self.save_players_to_db()
-        return True
-
     def save_players_to_db(self):
         serialized_players = []
         for player in self.players:
@@ -86,7 +82,6 @@ class PlayerController:
                                                    date_of_birth=serialized_player['date_of_birth'],
                                                    gender=serialized_player['gender'],
                                                    ranking=serialized_player['ranking'],
-                                                   player_id=serialized_player['id'])
-                                            )
+                                                   player_id=serialized_player['id']))
             players.append(player)
         return players

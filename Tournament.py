@@ -22,19 +22,9 @@ class Tournament:
         self.players.append(player)
 
     def remove_player(self, player):
-        """
-        Remove an instance of TournamentPlayer from the tournament
-        :param player: instance of Player
-        :return: Nothing
-        """
         self.players.remove(player)
 
     def get_tournament_players(self, list_of_players=None):
-        """
-        Gets through a list of TournamentPlayers and returns a list of corresponding Players
-        :param list_of_players: list of TournamentPlayers. Default is the tournament's full list of TournamentPlayers
-        :return: list of Players
-        """
         if list_of_players is None:
             list_of_players = self.players
         try:
@@ -59,14 +49,12 @@ class Tournament:
                 round_name = 'Round ' + str(len(self.rounds) + 1)
                 self.rounds.append(Round(name=round_name, pairings=pairs))
                 self.round_started = True
-                # self.serialize_round()
             return self.get_tournament_players(pairs)
 
     def end_round(self, scores):
         this_round = self.rounds[-1]
         this_round.add_end_time()
         this_round.add_results(scores)
-        # Should I save rounds to db at this point?
         self.round_started = False
 
     def get_round_pairs(self, round_index=-1):
@@ -134,5 +122,3 @@ class Tournament:
         for rnd in self.rounds:
             serialized_rounds.append(rnd.serialize_round())
         return serialized_rounds
-
-

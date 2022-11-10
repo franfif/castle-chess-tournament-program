@@ -1,9 +1,7 @@
 from TestModel import TestPlayer, TestTournament
 from PlayerController import PlayerController
 from BaseView import BaseView
-from TournamentController import TournamentController
 from Option import Option
-from TableDB import TableDB
 
 
 class App:
@@ -55,19 +53,6 @@ class App:
         self.player_control.save_players_to_db()
         self.save_tournaments_to_db()
         return True
-
-    def save_tournaments_to_db(self):
-        serialized_tournaments = []
-        for tournament in self.tournaments:
-            serialized_tournaments.append(tournament.serialize_tournament())
-        self.tournament_DB_Table.insert_multiple(serialized_tournaments)
-
-    def get_tournaments_from_db(self):
-        serialized_tournaments = self.tournament_DB_Table.get_all_items()
-        tournaments = []
-        for serialized_tournament in serialized_tournaments:
-            tournaments.append(TournamentController(self.player_control, serialized_tournament))
-        return tournaments
 
 
 app = App()

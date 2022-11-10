@@ -46,28 +46,22 @@ class SinglePlayerController:
     def update_first_name(self):
         new_first_name = self.view.get_new_first_name(self.player.get_full_name())
         self.player.first_name = new_first_name
-        # self.save_player_to_db()
 
     def update_last_name(self):
         new_last_name = self.view.get_new_last_name(self.player.get_full_name())
         self.player.last_name = new_last_name
-        # self.save_players_to_db()
 
     def update_date_of_birth(self):
         new_date_of_birth = self.view.get_new_date_of_birth(self.player.get_full_name(), self.player.date_of_birth)
         self.player.date_of_birth = new_date_of_birth
-        # self.save_players_to_db()
 
     def update_gender(self):
         new_gender = self.view.get_new_gender(self.player.get_full_name(), self.player.gender)
         self.player.gender = new_gender
-        # self.save_players_to_db()
 
     def update_ranking(self):
         new_ranking = self.view.get_new_ranking(self.player.ranking, self.player.get_full_name())
         self.player.ranking = new_ranking
-        # self.save_players_to_db()
 
     def exit(self):
-        # self.save_players_to_db()
         return True
