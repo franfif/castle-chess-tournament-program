@@ -13,7 +13,7 @@ class PlayersController:
         self.players = self.get_players_from_db()
 
     def create_player(self, player_info=None):
-        player = SinglePlayerController(Player(*player_info))
+        player = SinglePlayerController(player_info)
         self.players.append(player)
         self.save_players_to_db()
 

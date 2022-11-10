@@ -14,7 +14,7 @@ class TournamentsController:
         self.tournaments = self.get_tournaments_from_db()
 
     def create_tournament(self, tournament_info=None):
-        tournament = SingleTournamentController(self.players_control, self, Tournament(*tournament_info))
+        tournament = SingleTournamentController(self.players_control, self, tournament_info)
         self.tournaments.append(tournament)
         self.save_tournaments_to_db()
 

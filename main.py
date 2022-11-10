@@ -1,4 +1,4 @@
-from Tests.TestModel import TestPlayer, TestTournament
+# from Tests.TestModel import TestPlayer, TestTournament
 from Controllers.PlayersController import PlayersController
 from Controllers.TournamentsController import TournamentsController
 from Views.BaseView import BaseView
@@ -50,10 +50,10 @@ class App:
         return menu
 
     def create_player(self):
-        self.players_control.create_player(TestPlayer().get_data())
+        self.players_control.create_player()
 
     def create_tournament(self):
-        self.tournaments_control.create_tournament(TestTournament().get_data())
+        self.tournaments_control.create_tournament()
 
     def edit_players(self):
         self.players_control.edit_players()
