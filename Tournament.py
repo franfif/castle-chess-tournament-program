@@ -61,6 +61,9 @@ class Tournament:
         this_round.add_results(scores)
         self.round_started = False
 
+    def has_ended(self):
+        return len(self.rounds) == self.number_of_rounds and not self.round_started
+
     def get_round_pairs(self, round_index=-1):
         pairs = self.rounds[round_index].get_pairs()
         return self.get_tournament_players(pairs)
