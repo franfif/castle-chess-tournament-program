@@ -37,7 +37,9 @@ class App:
     def app_options(self):
         menu = [Option('Create tournament', self.create_tournament)]
 
-        for tournament in self.tournaments_control.tournaments:
+        ongoing_tournaments = list(filter(lambda x: not x.tournament.has_ended(),
+                                          self.tournaments_control.tournaments))
+        for tournament in ongoing_tournaments:
             menu.append(Option(f'Continue tournament {tournament.tournament.name}', tournament.run))
 
         menu.append(Option('Create players', self.create_player))
@@ -46,6 +48,11 @@ class App:
             menu.append(Option('Edit players', self.edit_players))
 
         menu.append(Option('View reports', self.view_reports))
+
+        archived_tournaments = list(filter(lambda x: x.tournament.has_ended(),
+                                           self.tournaments_control.tournaments))
+        if len(archived_tournaments) > 0:
+            menu.append(Option('Archived tournaments', self.edit_archived_tournaments))
 
         menu.append(Option('Save and Exit', self.exit))
         return menu
@@ -61,6 +68,18 @@ class App:
 
     def view_reports(self):
         self.reports.run_reports()
+
+    def edit_archived_tournaments(self):
+        self.generic_app_menu(self.archived_tournaments_options)
+
+    def archived_tournaments_options(self):
+        archived_tournaments = list(filter(lambda x: x.tournament.has_ended(),
+                                           self.tournaments_control.tournaments))
+        options = []
+        for tournament in archived_tournaments:
+            options.append(Option(f'Tournament {tournament.tournament.name}', tournament.run))
+        options.append(Option('Back', self.exit))
+        return options
 
     def exit(self):
         self.players_control.save_players_to_db()
