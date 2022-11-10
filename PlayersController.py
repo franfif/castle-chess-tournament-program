@@ -19,7 +19,7 @@ class PlayersController:
 
     def display_players(self, players=None):
         if players is None:
-            players = self.players
+            players = list(map(lambda x: x.player, self.players))
         if len(players) == 0:
             self.view.notice_no_players_to_show()
         else:

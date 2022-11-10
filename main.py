@@ -3,6 +3,7 @@ from PlayersController import PlayersController
 from TournamentsController import TournamentsController
 from BaseView import BaseView
 from Option import Option
+from ReportController import ReportController
 
 
 class App:
@@ -10,6 +11,7 @@ class App:
         self.players_control = PlayersController()
         self.tournaments_control = TournamentsController(self.players_control)
         self.view = BaseView()
+        self.reports = ReportController(self.players_control, self.tournaments_control)
 
     def run(self):
         next_action = None
@@ -46,7 +48,7 @@ class App:
         self.players_control.edit_players()
 
     def view_reports(self):
-        print('view reports')
+        self.reports.run_reports()
 
     def exit(self):
         self.players_control.save_players_to_db()
