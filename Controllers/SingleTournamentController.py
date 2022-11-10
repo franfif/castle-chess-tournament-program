@@ -38,6 +38,7 @@ class SingleTournamentController:
             elif index == -1:
                 # create new player and add it to tournament players
                 self.players_control.create_player()
+                self.all_players = list(map(lambda x: x.player, self.players_control.players))
                 self.tournament.add_player(self.all_players[index])
             elif self.all_players[index] in self.tournament.players:
                 # remove player
