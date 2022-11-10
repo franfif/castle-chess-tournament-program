@@ -1,7 +1,7 @@
-from PlayerView import PlayerView
-from BaseView import BaseView
-from Player import Player
-from Option import Option
+from Views.PlayerView import PlayerView
+from Views.BaseView import BaseView
+from Models.Player import Player
+from Models.Option import Option
 
 
 class SinglePlayerController:

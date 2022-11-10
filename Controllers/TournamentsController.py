@@ -1,7 +1,7 @@
-from Tournament import Tournament
-from TournamentView import TournamentView
-from TableDB import TableDB
-from BaseView import BaseView
+from Models.Tournament import Tournament
+from Views.TournamentView import TournamentView
+from DB.TableDB import TableDB
+from Views.BaseView import BaseView
 from SingleTournamentController import SingleTournamentController
 
 

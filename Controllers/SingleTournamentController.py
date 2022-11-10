@@ -1,8 +1,8 @@
-from TournamentView import TournamentView
-from Tournament import Tournament
-from Option import Option
-from BaseView import BaseView
-from Round import Round
+from Views.TournamentView import TournamentView
+from Models.Tournament import Tournament
+from Models.Option import Option
+from Views.BaseView import BaseView
+from Models.Round import Round
 
 
 class SingleTournamentController:

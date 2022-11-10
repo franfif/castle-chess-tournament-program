@@ -1,4 +1,4 @@
-from BaseView import BaseView
+from Views.BaseView import BaseView
 
 
 MINIMUM_OF_ROUNDS = 1

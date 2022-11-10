@@ -1,4 +1,4 @@
-from BaseView import BaseView
+from Views.BaseView import BaseView
 
 GENDERS = ['F', 'M', 'X', 'f', 'm', 'x']
 RANKING_MIN_MAX = [1, 3000]

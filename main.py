@@ -1,9 +1,9 @@
-from TestModel import TestPlayer, TestTournament
-from PlayersController import PlayersController
-from TournamentsController import TournamentsController
-from BaseView import BaseView
-from Option import Option
-from ReportController import ReportController
+from Tests.TestModel import TestPlayer, TestTournament
+from Controllers.PlayersController import PlayersController
+from Controllers.TournamentsController import TournamentsController
+from Views.BaseView import BaseView
+from Models.Option import Option
+from Controllers.ReportController import ReportController
 
 
 class App:

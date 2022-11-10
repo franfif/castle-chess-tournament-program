@@ -1,7 +1,7 @@
-from Player import Player
-from PlayerView import PlayerView
-from TableDB import TableDB
-from BaseView import BaseView
+from Models.Player import Player
+from Views.PlayerView import PlayerView
+from DB.TableDB import TableDB
+from Views.BaseView import BaseView
 from SinglePlayerController import SinglePlayerController
 
 
