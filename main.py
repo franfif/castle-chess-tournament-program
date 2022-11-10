@@ -22,15 +22,19 @@ class App:
     #         next_action = menu[to_do].function()
 
     def run(self):
+        self.generic_app_menu(self.app_options)
+        print('Thank you for playing! See you next time!')
+
+    def generic_app_menu(self, get_menu_options):
         next_action = None
         while next_action is None:
-            menu = self.new_app_menu()
+            menu = get_menu_options()
             menu_names = list(map(lambda x: x.name, menu))
             to_do = self.view.select_from_list(menu_names)
             next_action = menu[to_do].function()
-        print('Thank you for playing! See you next time!')
+        return
 
-    def new_app_menu(self):
+    def app_options(self):
         menu = [Option('Create tournament', self.create_tournament)]
 
         for tournament in self.tournaments_control.tournaments:
