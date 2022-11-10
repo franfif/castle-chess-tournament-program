@@ -112,7 +112,7 @@ class SingleTournamentController:
         options.append(Option('Show all rounds', self.show_rounds))
         options.append(Option('Show all matches', self.show_matches))
 
-        options.append(Option('Exit', self.exit))
+        options.append(Option('Save and exit tournament', self.exit))
         return options
 
     def edit_tournament_info(self):
