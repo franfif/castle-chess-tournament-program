@@ -12,12 +12,33 @@ class PlayersController:
         self.player_DB_Table = TableDB('players')
         self.players = self.get_players_from_db()
 
-    def create_player(self, player_info=None):
-        player = SinglePlayerController(player_info)
-        self.players.append(player)
+    def create_player(self):
+        self.players.append(SinglePlayerController())
         self.save_players_to_db()
 
-    def display_players(self, players=None):
+    def edit_players(self, players=None):
+        next_action = None
+        while next_action is None:
+            if players is None:
+                players = self.players
+            player_info = list(map(lambda x: self.view.full_info_player(x.player), players))
+            pick = self.base_view.select_from_list(player_info, cancel_allowed=True)
+            if pick is None:
+                break
+            players[pick].edit_player_menu()
+            self.save_players_to_db()
+        return
+
+    #
+    # Display Methods
+    #
+    def show_players(self, players=None):
+        """
+        Get a list of players and fetch the order preference from the view.
+        Call view to show the players in the given order
+        :param players: a list of SinglePlayerControllers
+        :return : Nothing
+        """
         if players is None:
             players = list(map(lambda x: x.player, self.players))
         if len(players) == 0:
@@ -29,50 +50,35 @@ class PlayersController:
                 players = self.order_alphabetically(players)
             self.view.show_players(players)
 
-    def order_by_ranking(self, players):
+    @staticmethod
+    def order_by_ranking(players):
         players.sort(key=lambda x: x.ranking, reverse=True)
         return players
 
-    def order_alphabetically(self, players):
+    @staticmethod
+    def order_alphabetically(players):
         players.sort(key=lambda x: (x.last_name, x.first_name))
         return players
 
-    def edit_players(self, players=None):
-        next_action = None
-        while next_action is None:
-            if players is None:
-                players = self.players
-            player_info = list(map(lambda x: self.view.full_info_player(x.player), players))
-            pick = self.base_view.select_from_list(player_info, cancel_allowed=True)
-            if pick is None:
-                break
-            players[pick].edit_player()
-            self.save_players_to_db()
-        return
-
+    #
+    # Database Linking Method
+    #
     def save_players_to_db(self):
+        """
+        Fetch serialized players and send them to the tableDB manager
+        """
         serialized_players = []
         for player in self.players:
-            serialized_player = {
-                'first_name': player.player.first_name,
-                'last_name': player.player.last_name,
-                'date_of_birth': player.player.date_of_birth,
-                'gender': player.player.gender,
-                'ranking': player.player.ranking,
-                'id': player.player.id
-            }
-            serialized_players.append(serialized_player)
+            serialized_players.append(player.serialize_player())
         self.player_DB_Table.insert_multiple(serialized_players)
 
     def get_players_from_db(self):
+        """
+        Fetch serialized players from TinyDB file and create SinglePlayerControllers
+        :return: list of SinglePlayerControllers
+        """
         serialized_players = self.player_DB_Table.get_all_items()
         players = []
         for serialized_player in serialized_players:
-            player = SinglePlayerController(Player(first_name=serialized_player['first_name'],
-                                                   last_name=serialized_player['last_name'],
-                                                   date_of_birth=serialized_player['date_of_birth'],
-                                                   gender=serialized_player['gender'],
-                                                   ranking=serialized_player['ranking'],
-                                                   player_id=serialized_player['id']))
-            players.append(player)
+            players.append(SinglePlayerController(serialized_player))
         return players

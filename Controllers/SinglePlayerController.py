@@ -9,7 +9,7 @@ class SinglePlayerController:
         self.view = PlayerView()
         self.base_view = BaseView()
         if player is not None:
-            self.player = player
+            self.player = self.deserialize_player(player)
         else:
             self.player = Player(*self.get_player_info())
 
@@ -21,10 +21,10 @@ class SinglePlayerController:
         ranking = self.view.prompt_for_ranking()
         return first_name, last_name, date_of_birth, gender, ranking
 
-    def display_player(self):
-        self.view.show_player(self)
-
-    def edit_player(self):
+    #
+    # Edit Player Menu
+    #
+    def edit_player_menu(self):
         next_action = None
         while next_action is None:
             menu = self.edit_player_options()
@@ -42,6 +42,9 @@ class SinglePlayerController:
                    Option('Save and go back', self.exit)]
         return options
 
+    #
+    # Edit Player Methods
+    #
     def update_first_name(self):
         new_first_name = self.view.get_new_first_name(self.player.get_full_name())
         self.player.first_name = new_first_name
@@ -62,5 +65,30 @@ class SinglePlayerController:
         new_ranking = self.view.get_new_ranking(self.player.ranking, self.player.get_full_name())
         self.player.ranking = new_ranking
 
-    def exit(self):
+    @staticmethod
+    def exit():
         return True
+
+    #
+    # Serialization - Deserialization Methods
+    #
+    def serialize_player(self):
+        serialized_player = {
+            'first_name': self.player.first_name,
+            'last_name': self.player.last_name,
+            'date_of_birth': self.player.date_of_birth,
+            'gender': self.player.gender,
+            'ranking': self.player.ranking,
+            'id': self.player.id
+        }
+        return serialized_player
+
+    @staticmethod
+    def deserialize_player(serialized_player):
+        player = Player(first_name=serialized_player['first_name'],
+                        last_name=serialized_player['last_name'],
+                        date_of_birth=serialized_player['date_of_birth'],
+                        gender=serialized_player['gender'],
+                        ranking=serialized_player['ranking'],
+                        player_id=serialized_player['id'])
+        return player

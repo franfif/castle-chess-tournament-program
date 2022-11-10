@@ -21,7 +21,7 @@ class ReportController:
         return
 
     def global_report_options(self):
-        options = [Option('View all players', self.players_control.display_players),
+        options = [Option('View all players', self.players_control.show_players),
                    Option('View all tournaments', self.report_tournaments),
                    Option('Exit report menu', self.exit)]
         return options

@@ -13,10 +13,7 @@ class SingleTournamentController:
         self.base_view = BaseView()
         self.all_players = list(map(lambda x: x.player, self.players_control.players))
         if tournament_info is not None:
-            if isinstance(tournament_info, tuple):
-                self.tournament = Tournament(*tournament_info)
-            else:
-                self.tournament = self.get_tournament_from_db(tournament_info)
+            self.tournament = self.deserialize_tournament(tournament_info)
         else:
             self.tournament = Tournament(*self.get_tournament_info())
 
@@ -29,6 +26,76 @@ class SingleTournamentController:
         description = self.view.prompt_for_description()
         return name, venue, date_range, number_of_rounds, time_control, description
 
+    #
+    # Menu
+    #
+    def generic_tournament_menu(self, get_menu_options):
+        next_action = None
+        while next_action is None:
+            self.base_view.display_title('Tournament ' + self.tournament.name)
+            menu = get_menu_options()
+            menu_names = list(map(lambda x: x.name, menu))
+            to_do = self.base_view.select_from_list(menu_names)
+            next_action = menu[to_do].function()
+            self.tournaments_control.save_tournaments_to_db()
+        return
+
+    #
+    # Run Tournament Menu
+    #
+    def run(self):
+        self.generic_tournament_menu(self.run_tournament_options)
+
+    def run_tournament_options(self):
+        options = [Option('Edit tournament information', self.edit_tournament)]
+
+        if len(self.tournament.rounds) == 0:
+            options.append(Option('Add/Remove tournament players', self.add_remove_tournament_players))
+
+        if len(self.tournament.players) >= 2:
+            if self.tournament.round_started:
+                options.append(Option('End round', self.end_round))
+            elif len(self.tournament.rounds) < self.tournament.number_of_rounds:
+                options.append(Option('Start round', self.start_round))
+
+        if len(self.tournament.players) > 0:
+            options.append(Option('Show players', self.show_players))
+
+        options.append(Option('Show all rounds', self.show_rounds))
+        options.append(Option('Save and exit tournament', self.exit))
+        return options
+
+    #
+    # Edit Tournament Menu
+    #
+    def edit_tournament(self):
+        self.generic_tournament_menu(self.edit_tournament_options)
+
+    def edit_tournament_options(self):
+        options = [Option('Change tournament name', self.update_tournament_name),
+                   Option('Change venue', self.update_venue),
+                   Option('Change dates', self.update_dates),
+                   Option('Change number of rounds', self.update_number_of_rounds),
+                   Option('Change time control', self.update_time_control),
+                   Option('Change description', self.update_description),
+                   Option('Save and go back', self.exit)]
+        return options
+
+    #
+    # Report Menu
+    #
+    def run_reports(self):
+        self.generic_tournament_menu(self.report_options)
+
+    def report_options(self):
+        options = [Option('Show players', self.show_players),
+                   Option('Show rounds', self.show_rounds),
+                   Option('Back to tournament reports', self.exit)]
+        return options
+
+    #
+    # Run Tournament Methods
+    #
     def add_remove_tournament_players(self):
         while True:
             index = self.view.select_player(self.all_players, self.tournament.players)
@@ -69,10 +136,6 @@ class SingleTournamentController:
         # apply scores to round to end the round
         self.tournament.end_round(scores)
 
-    def end_tournament(self):
-        self.tournament.number_of_rounds = len(self.tournament.rounds)
-        self.view.notice_tournament_over()
-
     @staticmethod
     def attribute_score(winner_index):
         score = [0.5, 0.5]
@@ -81,66 +144,13 @@ class SingleTournamentController:
             score[1 - winner_index] = 0
         return score
 
-    def display_players(self):
-        self.players_control.display_players(self.tournament.players)
+    def end_tournament(self):
+        self.tournament.number_of_rounds = len(self.tournament.rounds)
+        self.view.notice_tournament_over()
 
-    def generic_tournament_menu(self, get_menu_options):
-        next_action = None
-        while next_action is None:
-            self.base_view.display_title('Tournament ' + self.tournament.name)
-            menu = get_menu_options()
-            menu_names = list(map(lambda x: x.name, menu))
-            to_do = self.base_view.select_from_list(menu_names)
-            next_action = menu[to_do].function()
-            self.tournaments_control.save_tournaments_to_db()
-        return
-
-    def run(self):
-        self.generic_tournament_menu(self.run_tournament_options)
-
-    def run_tournament_options(self):
-        options = [Option('Edit tournament information', self.edit_tournament)]
-
-        if len(self.tournament.rounds) == 0:
-            options.append(Option('Add/Remove tournament players', self.add_remove_tournament_players))
-
-        if len(self.tournament.players) >= 2:
-            if self.tournament.round_started:
-                options.append(Option('End round', self.end_round))
-            elif len(self.tournament.rounds) < self.tournament.number_of_rounds:
-                options.append(Option('Start round', self.start_round))
-
-        if len(self.tournament.players) > 0:
-            options.append(Option('Show players', self.display_players))
-
-        options.append(Option('Show all rounds', self.show_rounds))
-        options.append(Option('Show all matches', self.show_matches))
-
-        options.append(Option('Save and exit tournament', self.exit))
-        return options
-
-    def edit_tournament(self):
-        self.generic_tournament_menu(self.edit_tournament_options)
-
-    def edit_tournament_options(self):
-        options = [Option('Change tournament name', self.update_tournament_name),
-                   Option('Change venue', self.update_venue),
-                   Option('Change dates', self.update_dates),
-                   Option('Change number of rounds', self.update_number_of_rounds),
-                   Option('Change time control', self.update_time_control),
-                   Option('Change description', self.update_description),
-                   Option('Save and go back', self.exit)]
-        return options
-
-    def run_reports(self):
-        self.generic_tournament_menu(self.report_options)
-
-    def report_options(self):
-        options = [Option('Show players', self.display_players),
-                   Option('Show rounds', self.show_rounds),
-                   Option('Back to tournament reports', self.exit)]
-        return options
-
+    #
+    # Edit Tournament Methods
+    #
     def update_tournament_name(self):
         new_name = self.view.get_new_name(self.tournament.name)
         self.tournament.name = new_name
@@ -169,16 +179,22 @@ class SingleTournamentController:
                                                         self.tournament.description)
         self.tournament.description = new_description
 
+    #
+    # Report Methods
+    #
+    def show_players(self):
+        self.players_control.show_players(self.tournament.players)
+
     def show_rounds(self):
-        # display all rounds
         self.view.display_rounds(self.tournament.rounds)
 
-    def show_matches(self):
-        print('Showing matches')
-
-    def exit(self):
+    @staticmethod
+    def exit():
         return True
 
+    #
+    # Serialization - Deserialization Methods
+    #
     def serialize_tournament(self):
         serialized_tournament = {
             'name': self.tournament.name,
@@ -194,10 +210,10 @@ class SingleTournamentController:
         }
         return serialized_tournament
 
-    def get_tournament_from_db(self, serialized_tournament):
+    def deserialize_tournament(self, serialized_tournament):
         rounds = []
         for serialized_round in serialized_tournament['rounds']:
-            rounds.append(self.get_round_from_db(serialized_round))
+            rounds.append(self.deserialized_round(serialized_round))
         tournament = Tournament(name=serialized_tournament['name'],
                                 venue=serialized_tournament['venue'],
                                 date_range=serialized_tournament['date'],
@@ -211,7 +227,7 @@ class SingleTournamentController:
                                 tournament_id=serialized_tournament['id'])
         return tournament
 
-    def get_round_from_db(self, serialized_round):
+    def deserialized_round(self, serialized_round):
         matches = []
         for [[player1_id, score1], [player2_id, score2]] in serialized_round['matches']:
             player1 = next(x.player for x in self.players_control.players if x.player.id == player1_id)

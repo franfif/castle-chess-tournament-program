@@ -17,6 +17,9 @@ class TournamentsController:
         self.tournaments.append(tournament)
         self.save_tournaments_to_db()
 
+    #
+    # Database Linking Method
+    #
     def save_tournaments_to_db(self):
         serialized_tournaments = []
         for tournament in self.tournaments:
