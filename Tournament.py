@@ -28,17 +28,6 @@ class Tournament:
     def remove_player(self, player):
         self.players.remove(player)
 
-    # def get_tournament_players(self, list_of_players=None):
-    #     if list_of_players is None:
-    #         list_of_players = self.players
-    #     # try:
-    #     #     new_list = []
-    #     #     for i in list_of_players:
-    #     #         new_list.append(self.get_tournament_players(i))
-    #     #     return new_list
-    #     # except TypeError:
-    #     return list_of_players
-
     def start_new_round(self):
         this_round_number = len(self.rounds)
         if this_round_number < self.number_of_rounds:

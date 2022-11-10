@@ -34,7 +34,7 @@ class PlayerView:
 
     def get_new_date_of_birth(self, player_name, date_of_birth):
         print(f"{player_name}'s current date of birth: {date_of_birth}.")
-        return self.base_view.prompt_for_date(f"player's new date of birth")
+        return self.base_view.prompt_for_date("player's new date of birth")
 
     def get_new_gender(self, player_name, gender):
         print(f"{player_name}'s current gender: {gender}.")
@@ -42,7 +42,9 @@ class PlayerView:
 
     def get_new_ranking(self, ranking, player_name):
         print(f"{player_name}'s current ranking: {ranking}.")
-        return self.base_view.prompt_for_number(f"{player_name}'s new ranking", mini=RANKING_MIN_MAX[0], maxi=RANKING_MIN_MAX[1])
+        return self.base_view.prompt_for_number(f"{player_name}'s new ranking",
+                                                mini=RANKING_MIN_MAX[0],
+                                                maxi=RANKING_MIN_MAX[1])
 
     def select_player_ranking(self, players):
         players_to_select = list(map(lambda x: f'{x.get_full_name()} [ Ranking: {x.ranking} ]', players))

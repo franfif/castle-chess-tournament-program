@@ -7,7 +7,6 @@ class ReportController:
         self.players_control = players_control
         self.tournaments = tournaments_control.tournaments
         self.base_view = BaseView()
-        # self.view = ReportView()
 
     def run_reports(self):
         self.generic_report_menu(self.global_report_options())

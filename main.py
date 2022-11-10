@@ -13,6 +13,14 @@ class App:
         self.view = BaseView()
         self.reports = ReportController(self.players_control, self.tournaments_control)
 
+    # def run(self):
+    #     next_action = None
+    #     while next_action is None:
+    #         menu = self.new_app_options()
+    #         menu_names = list(map(lambda x: x.name, menu))
+    #         to_do = self.view.select_from_list(menu_names)
+    #         next_action = menu[to_do].function()
+
     def run(self):
         next_action = None
         while next_action is None:

@@ -30,4 +30,3 @@ class TournamentsController:
         for serialized_tournament in serialized_tournaments:
             tournaments.append(SingleTournamentController(self.players_control, self, serialized_tournament))
         return tournaments
-

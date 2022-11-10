@@ -26,7 +26,7 @@ class TournamentView:
         for i, player in enumerate(all_players):
             proposition = player.get_full_name()
             if player in tournament_players:
-                proposition += " [[ Selected ]]"
+                proposition += ' [[ Selected ]]'
             menu.append(proposition)
         return self.base_view.select_from_list(menu, proposition_zero='Add a new player', cancel_allowed=True)
 
@@ -42,49 +42,49 @@ class TournamentView:
         return first_day, last_day
 
     def prompt_for_number_rounds(self):
-        return self.base_view.prompt_for_number("number of rounds", mini=MINIMUM_OF_ROUNDS, default=DEFAULT_NUM_ROUNDS)
+        return self.base_view.prompt_for_number('number of rounds', mini=MINIMUM_OF_ROUNDS, default=DEFAULT_NUM_ROUNDS)
 
     def prompt_for_time_control(self):
         return self.base_view.select_from_list(TIME_CONTROLS)
 
     def prompt_for_description(self):
-        return self.base_view.prompt_for_text("tournament description")
+        return self.base_view.prompt_for_text('tournament description')
 
     def get_new_name(self, tournament_name):
-        print(f"The Tournament current name is {tournament_name}.")
-        return self.base_view.prompt_for_text(f"new tournament name")
+        print(f'The Tournament current name is {tournament_name}.')
+        return self.base_view.prompt_for_text('new tournament name')
 
     def get_new_venue(self, tournament_name, current_name):
-        print(f"The Tournament {tournament_name} current venue is {current_name}.")
-        return self.base_view.prompt_for_text(f"tournament new venue")
+        print(f'The Tournament {tournament_name} current venue is {current_name}.')
+        return self.base_view.prompt_for_text('tournament new venue')
 
     def get_new_date_range(self, tournament_name, current_date_range):
-        print(f"The Tournament {tournament_name} current dates are: {current_date_range}.")
+        print(f'The Tournament {tournament_name} current dates are: {current_date_range}.')
         first_day = self.base_view.prompt_for_date('new first day of the tournament')
         last_day = self.base_view.prompt_for_date('new last day of the tournament')
         return first_day, last_day
 
     def get_new_number_of_rounds(self, tournament_name, current_number):
-        print(f"The Tournament {tournament_name} current number of rounds is {current_number}.")
-        return self.base_view.prompt_for_number("new number of rounds",
+        print(f'The Tournament {tournament_name} current number of rounds is {current_number}.')
+        return self.base_view.prompt_for_number('new number of rounds',
                                                 mini=MINIMUM_OF_ROUNDS,
                                                 default=DEFAULT_NUM_ROUNDS)
 
     def get_new_time_control(self, tournament_name, current_time_control):
-        print(f"The Tournament {tournament_name} current time control is {TIME_CONTROLS[current_time_control]}.")
-        print("Select the new time control:")
+        print(f'The Tournament {tournament_name} current time control is {TIME_CONTROLS[current_time_control]}.')
+        print('Select the new time control:')
         return self.base_view.select_from_list(TIME_CONTROLS)
 
     def get_new_description(self, tournament_name, current_description):
-        print(f"The Tournament {tournament_name} current description is: \n{current_description}")
-        return self.base_view.prompt_for_text("new tournament description")
+        print(f'The Tournament {tournament_name} current description is: \n{current_description}')
+        return self.base_view.prompt_for_text('new tournament description')
 
     def get_new_last_name(self, player_name):
         return self.base_view.prompt_for_text(f"{player_name}'s new last name")
 
     def get_new_date_of_birth(self, player_name, date_of_birth):
         print(f"{player_name}'s current date of birth: {date_of_birth}.")
-        return self.base_view.prompt_for_date(f"player's new date of birth")
+        return self.base_view.prompt_for_date("player's new date of birth")
 
     def display_pairings(self, pairs):
         for player1, player2 in pairs:
