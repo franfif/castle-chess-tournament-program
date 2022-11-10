@@ -45,6 +45,7 @@ class SingleTournamentController:
             else:
                 # add player
                 self.tournament.add_player(self.all_players[index])
+            self.tournaments_control.save_tournaments_to_db()
 
     def start_round(self):
         pairs = self.tournament.start_new_round()
@@ -90,6 +91,7 @@ class SingleTournamentController:
             menu_names = list(map(lambda x: x.name, menu))
             to_do = self.base_view.select_from_list(menu_names)
             next_action = menu[to_do].function()
+            self.tournaments_control.save_tournaments_to_db()
         return
 
     def run_tournament_options(self):
@@ -120,6 +122,7 @@ class SingleTournamentController:
             menu_names = list(map(lambda x: x.name, menu))
             to_do = self.base_view.select_from_list(menu_names)
             next_action = menu[to_do].function()
+            self.tournaments_control.save_tournaments_to_db()
         return
 
     def edit_tournament_options(self):
