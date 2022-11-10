@@ -40,7 +40,7 @@ class SinglePlayerController:
                    Option('Change date of birth', self.update_date_of_birth),
                    Option('Change gender', self.update_gender),
                    Option('Change ranking', self.update_ranking),
-                   Option('Back', self.exit)]
+                   Option('Save and go back', self.exit)]
         return options
 
     def update_first_name(self):

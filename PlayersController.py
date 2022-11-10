@@ -12,17 +12,7 @@ class PlayersController:
         self.player_DB_Table = TableDB('players')
         self.players = self.get_players_from_db()
 
-    def get_player_info(self):
-        first_name = self.view.prompt_for_first_name()
-        last_name = self.view.prompt_for_last_name()
-        date_of_birth = self.view.prompt_for_date_of_birth()
-        gender = self.view.prompt_for_gender()
-        ranking = self.view.prompt_for_ranking()
-        return first_name, last_name, date_of_birth, gender, ranking
-
     def create_player(self, player_info=None):
-        if player_info is None:
-            player_info = self.get_player_info()
         player = SinglePlayerController(Player(*player_info))
         self.players.append(player)
         self.save_players_to_db()
@@ -57,6 +47,7 @@ class PlayersController:
             if pick is None:
                 break
             players[pick].edit_player()
+            self.save_players_to_db()
         return
 
     def save_players_to_db(self):
