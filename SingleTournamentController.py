@@ -116,10 +116,10 @@ class SingleTournamentController:
         return options
 
     def edit_tournament_info(self):
+        menu = self.edit_tournament_options()
+        menu_names = list(map(lambda x: x.name, menu))
         next_action = None
         while next_action is None:
-            menu = self.edit_tournament_options()
-            menu_names = list(map(lambda x: x.name, menu))
             to_do = self.base_view.select_from_list(menu_names)
             next_action = menu[to_do].function()
             self.tournaments_control.save_tournaments_to_db()
