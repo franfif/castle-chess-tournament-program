@@ -6,8 +6,9 @@ from Round import Round
 
 
 class SingleTournamentController:
-    def __init__(self, players_control, tournament_info=None):
+    def __init__(self, players_control, tournaments_control, tournament_info=None):
         self.players_control = players_control
+        self.tournaments_control = tournaments_control
         self.view = TournamentView()
         self.base_view = BaseView()
         self.all_players = list(map(lambda x: x.player, self.players_control.players))

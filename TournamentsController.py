@@ -14,7 +14,7 @@ class TournamentsController:
         self.tournaments = self.get_tournaments_from_db()
 
     def create_tournament(self, tournament_info=None):
-        tournament = SingleTournamentController(self.players_control, Tournament(*tournament_info))
+        tournament = SingleTournamentController(self.players_control, self, Tournament(*tournament_info))
         self.tournaments.append(tournament)
         self.save_tournaments_to_db()
 
@@ -28,6 +28,6 @@ class TournamentsController:
         serialized_tournaments = self.tournament_DB_Table.get_all_items()
         tournaments = []
         for serialized_tournament in serialized_tournaments:
-            tournaments.append(SingleTournamentController(self.players_control, serialized_tournament))
+            tournaments.append(SingleTournamentController(self.players_control, self, serialized_tournament))
         return tournaments
 
