@@ -68,8 +68,6 @@ class Tournament:
     def first_round_pairing(self):
         tournament_players = self.players.copy()
         tournament_players.sort(key=lambda x: x.ranking, reverse=True)
-        for player in tournament_players:
-            print(f'Player: {player.get_full_name()}, ranking: {player.ranking}')
         half = len(tournament_players) // 2
         first_half = tournament_players[:half]
         second_half = tournament_players[half:]
