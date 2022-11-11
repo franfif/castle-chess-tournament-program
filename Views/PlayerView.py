@@ -65,9 +65,14 @@ class PlayerView:
     #
     # Display Methods
     #
-    def show_players(self, players):
-        for player in players:
-            print(self.get_full_info_player(player))
+    def display_players(self, players):
+        if not players:
+            print(Message.NO_PLAYERS)
+        if isinstance(players, list):
+            for player in players:
+                print(self.get_full_info_player(player))
+        else:
+            print(self.get_full_info_player(players))
 
     @staticmethod
     def get_full_info_player(player):
@@ -75,10 +80,3 @@ class PlayerView:
                 f'DoB: {player.date_of_birth} - '
                 f'Gender: {player.gender} - '
                 f'Ranking: {player.ranking} ]')
-
-    #
-    # Notice Method
-    #
-    @staticmethod
-    def notice_no_players_to_show():
-        print('No players to show.')
