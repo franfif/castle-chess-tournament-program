@@ -119,13 +119,4 @@ class BaseView:
             for title in titles:
                 if isinstance(title, str):
                     print_line(title)
-                # elif callable(title):
-                #     print_line(title())
         print('~' * line_length)
-
-    #
-    # Notice Method
-    #
-    @staticmethod
-    def notice_no_tournaments_to_show():
-        print('No tournaments to show.')
