@@ -49,7 +49,7 @@ class PlayersController:
     #
     # Display Methods
     #
-    def show_players(self, players=None):
+    def get_players_in_preferred_order(self, players=None):
         """
         Get a list of players and fetch the order preference from the view.
         Call view to show the players in the given order
@@ -58,22 +58,21 @@ class PlayersController:
         """
         if players is None:
             players = list(map(lambda x: x.player, self.players))
-        if len(players) == 0:
-            self.view.notice_no_players_to_show()
+        if self.view.prompt_for_order_preference([Message.RANKING, Message.ALPHABETICAL]) == 0:
+            players = self.order_by_ranking(players)
         else:
-            if self.view.prompt_for_order_preference(['Ranking', 'Alphabetical']) == 0:
-                players = self.order_by_ranking(players)
-            else:
-                players = self.order_alphabetically(players)
-            self.view.show_players(players)
+            players = self.order_alphabetically(players)
+        return players
 
-    @staticmethod
-    def order_by_ranking(players):
+    def order_by_ranking(self, players=None):
+        if players is None:
+            players = list(map(lambda x: x.player, self.players))
         players.sort(key=lambda x: x.ranking, reverse=True)
         return players
 
-    @staticmethod
-    def order_alphabetically(players):
+    def order_alphabetically(self, players=None):
+        if players is None:
+            players = list(map(lambda x: x.player, self.players))
         players.sort(key=lambda x: (x.last_name, x.first_name))
         return players
 
