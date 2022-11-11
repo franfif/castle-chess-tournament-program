@@ -65,6 +65,9 @@ class BaseView:
         """
         if proposition_zero is not None:
             print(f'[0] ** {proposition_zero} **')
+        if len(lst) == 1 and proposition_zero is None:
+            input(f'Press Enter to {lst[0]}')
+            return 0
         for i, e in enumerate(lst):
             print(f'[{i + 1}] {e}')
         while True:
