@@ -18,18 +18,33 @@ class PlayersController:
         self.players.append(SinglePlayerController())
         self.save_players_to_db()
 
-    def edit_players(self, players=None):
-        next_action = None
-        while next_action is None:
-            if players is None:
-                players = self.players
-            player_info = list(map(lambda x: self.view.get_full_info_player(x.player), players))
-            pick = self.base_view.select_from_list(player_info, cancel_allowed=True)
-            if pick is None:
-                break
-            players[pick].edit_player_menu()
-            self.save_players_to_db()
-        return
+    def edit_players(self):
+        MenuManager.menu(get_options_method=self.edit_players_options,
+                         titles=Message.EDIT_PLAYERS_MENU,
+                         save_method=self.save_players_to_db)
+
+    def edit_players_options(self, players=None):
+        if players is None:
+            players = self.players
+
+        options = []
+        for player in players:
+            options.append(Option(self.view.get_full_info_player(player.player), player.edit_player_menu))
+        options.append(Option(Message.EXIT_MENU, MenuManager.exit))
+        return options
+
+    #
+    # Report Methods
+    #
+    def run_all_player_reports(self):
+        players = self.get_players_in_preferred_order()
+        MenuManager.menu(get_options_method=self.exit_only_option,
+                         titles=(Message.REPORT_MENU, Message.PLAYERS_TITLE),
+                         content=(self.view.display_players, players))
+
+    @staticmethod
+    def exit_only_option():
+        return [Option.exit_option()]
 
     #
     # Display Methods
