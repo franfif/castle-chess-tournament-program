@@ -8,6 +8,9 @@ class ReportController:
         self.tournaments_control = tournaments_control
         self.base_view = BaseView()
 
+    #
+    # Report Menu
+    #
     def run_reports(self):
         self.generic_report_menu(self.global_report_options())
 
@@ -26,11 +29,13 @@ class ReportController:
                    Option('Exit report menu', self.exit)]
         return options
 
+    #
+    # Tournament Report Menu and Options
+    #
     def report_tournaments(self):
         tournaments = self.tournaments_control.tournaments
         if len(tournaments) == 0:
-            # self.view.notice_no_tournaments_to_show()
-            pass
+            self.base_view.notice_no_tournaments_to_show()
         else:
             options = []
             for tournament in tournaments:
@@ -38,5 +43,6 @@ class ReportController:
             options.append(Option('Back home', self.exit))
             self.generic_report_menu(options)
 
-    def exit(self):
+    @staticmethod
+    def exit():
         return True

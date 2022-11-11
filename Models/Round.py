@@ -14,16 +14,25 @@ class Round:
         self.start_time = start_time
         self.end_time = end_time
 
+    #
+    # Set Methods
+    #
     def add_results(self, results):
         """
-        Add results for each match in the round and update TournamentPlayers' points
+        Add results for each match in the round
         :param results: list of lists of 2 scores
-        :return: None
+        :return: Nothing
         """
         for i, match in enumerate(self.matches):
             match[0][1] = results[i][0]
             match[1][1] = results[i][1]
 
+    def add_end_time(self):
+        self.end_time = datetime.datetime.now().strftime("%m/%d/%Y")
+
+    #
+    # Get Methods
+    #
     def get_pairs(self):
         return list(map(lambda x: [x[0][0], x[1][0]], self.matches))
 
@@ -32,9 +41,6 @@ class Round:
         for [player1, score1], [player2, score2] in self.matches:
             info.append([player1, score1, player2, score2])
         return info
-
-    def add_end_time(self):
-        self.end_time = datetime.datetime.now().strftime("%m/%d/%Y")
 
     def get_round_points(self, player):
         points = 0
@@ -51,6 +57,9 @@ class Round:
                 return False
         return True
 
+    #
+    # Serialization Method
+    #
     def serialize_round(self):
         serialized_matches = []
         for [[player1, score1], [player2, score2]] in self.matches:

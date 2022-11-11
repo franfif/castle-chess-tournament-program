@@ -8,6 +8,9 @@ class PlayerView:
     def __init__(self):
         self.base_view = BaseView()
 
+    #
+    # Original Input Methods
+    #
     def prompt_for_first_name(self):
         return self.base_view.prompt_for_text("player's first name")
 
@@ -17,7 +20,8 @@ class PlayerView:
     def prompt_for_date_of_birth(self):
         return self.base_view.prompt_for_date("player's date of birth")
 
-    def prompt_for_gender(self):
+    @staticmethod
+    def prompt_for_gender():
         gender = ''
         while gender not in GENDERS:
             gender = input("Enter the player's gender (F/M/X): ")
@@ -26,6 +30,9 @@ class PlayerView:
     def prompt_for_ranking(self):
         return self.base_view.prompt_for_number("player's ranking", mini=RANKING_MIN_MAX[0], maxi=RANKING_MIN_MAX[1])
 
+    #
+    # Update Input Methods
+    #
     def get_new_first_name(self, player_name):
         return self.base_view.prompt_for_text(f"{player_name}'s new first name")
 
@@ -46,36 +53,30 @@ class PlayerView:
                                                 mini=RANKING_MIN_MAX[0],
                                                 maxi=RANKING_MIN_MAX[1])
 
-    def select_player_ranking(self, players):
-        players_to_select = list(map(lambda x: f'{x.get_full_name()} [ Ranking: {x.ranking} ]', players))
-        pick = self.base_view.select_from_list(players_to_select)
-        return players[pick]
-
-    def select_player_full_info(self, players):
-        players_to_select = []
-        for player in players:
-            players_to_select.append(self.full_info_player(player))
-        pick = self.base_view.select_from_list(players_to_select, cancel_allowed=True)
-        if pick is None:
-            return None
-        return players[pick]
-
+    #
+    # Choice Input Method
+    #
     def prompt_for_order_preference(self, choices):
         print('How would you like to order the players?')
         return self.base_view.select_from_list(choices)
 
-    def show_player(self, player):
-        print(self.full_info_player(player))
-
+    #
+    # Display Methods
+    #
     def show_players(self, players):
         for player in players:
-            print(self.full_info_player(player))
+            print(self.get_full_info_player(player))
 
-    def full_info_player(self, player):
+    @staticmethod
+    def get_full_info_player(player):
         return (f'{player.get_full_name()}  [ '
                 f'DoB: {player.date_of_birth} - '
                 f'Gender: {player.gender} - '
                 f'Ranking: {player.ranking} ]')
 
-    def notice_no_players_to_show(self):
+    #
+    # Notice Method
+    #
+    @staticmethod
+    def notice_no_players_to_show():
         print('No players to show.')

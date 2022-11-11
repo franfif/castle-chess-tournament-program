@@ -100,7 +100,6 @@ class SingleTournamentController:
         while True:
             index = self.view.select_player(self.all_players, self.tournament.players)
             if index is None:
-                # stop the process
                 break
             elif index == -1:
                 # create new player and add it to tournament players
@@ -108,10 +107,8 @@ class SingleTournamentController:
                 self.all_players = list(map(lambda x: x.player, self.players_control.players))
                 self.tournament.add_player(self.all_players[index])
             elif self.all_players[index] in self.tournament.players:
-                # remove player
                 self.tournament.remove_player(self.all_players[index])
             else:
-                # add player
                 self.tournament.add_player(self.all_players[index])
             self.tournaments_control.save_tournaments_to_db()
 

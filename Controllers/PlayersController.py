@@ -21,7 +21,7 @@ class PlayersController:
         while next_action is None:
             if players is None:
                 players = self.players
-            player_info = list(map(lambda x: self.view.full_info_player(x.player), players))
+            player_info = list(map(lambda x: self.view.get_full_info_player(x.player), players))
             pick = self.base_view.select_from_list(player_info, cancel_allowed=True)
             if pick is None:
                 break

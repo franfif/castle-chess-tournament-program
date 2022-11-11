@@ -2,13 +2,19 @@ import datetime
 
 
 class BaseView:
-    def prompt_for_text(self, text_type):
+
+    #
+    # Input Methods
+    #
+    @staticmethod
+    def prompt_for_text(text_type):
         text = ''
         while len(text) < 1:
             text = input(f'Enter the {text_type}: ')
         return text
 
-    def prompt_for_date(self, date_type):
+    @staticmethod
+    def prompt_for_date(date_type):
         while True:
             try:
                 date = input(f'Enter the {date_type} (mm/dd/yyyy): ')
@@ -17,7 +23,8 @@ class BaseView:
             except ValueError:
                 print('Please enter a date in the format mm/dd/yyyy.')
 
-    def prompt_for_number(self, number_type, mini=None, maxi=None, default=None):
+    @staticmethod
+    def prompt_for_number(number_type, mini=None, maxi=None, default=None):
         instructions = f'Enter the {number_type}'
         instructions += f' (default = {default}): ' if default else ': '
         while True:
@@ -42,7 +49,11 @@ class BaseView:
                     else:
                         print(f'Please enter a number between {mini} and {maxi}.')
 
-    def select_from_list(self, lst, proposition_zero=None, cancel_allowed=False):
+    #
+    # Choice Input Method
+    #
+    @staticmethod
+    def select_from_list(lst, proposition_zero=None, cancel_allowed=False):
         """
         Display a list of propositions and get a number from the manager
         :param lst: list of strings to display
@@ -71,5 +82,16 @@ class BaseView:
             except ValueError:
                 continue
 
-    def display_title(self, title):
+    #
+    # Display Method
+    #
+    @staticmethod
+    def display_title(title):
         print(f'~~~~~~~~~\n{title}\n~~~~~~~~~')
+
+    #
+    # Notice Method
+    #
+    @staticmethod
+    def notice_no_tournaments_to_show():
+        print('No tournaments to show.')

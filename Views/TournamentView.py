@@ -10,26 +10,9 @@ class TournamentView:
     def __init__(self):
         self.base_view = BaseView()
 
-    def select_player(self, all_players, tournament_players):
-        """
-        Ask manager to select a player to add to or remove from the list
-        of players in the tournament, or to create a new player and add it to
-        the tournament. An empty answer stops the process
-        :param all_players: a list of all Players saved in the system
-        :param tournament_players: a list of Players part of the tournament
-        :return : the index of player in all_players to add to or remove from
-        the players in tournament.
-        If return -1, create a new player.
-        If return None, stop calling the function.
-        """
-        menu = []
-        for i, player in enumerate(all_players):
-            proposition = player.get_full_name()
-            if player in tournament_players:
-                proposition += ' [[ Selected ]]'
-            menu.append(proposition)
-        return self.base_view.select_from_list(menu, proposition_zero='Add a new player', cancel_allowed=True)
-
+    #
+    # Original Input Methods
+    #
     def prompt_for_tournament_name(self):
         return self.base_view.prompt_for_text('name of the tournament')
 
@@ -50,6 +33,9 @@ class TournamentView:
     def prompt_for_description(self):
         return self.base_view.prompt_for_text('tournament description')
 
+    #
+    # Update Input Methods
+    #
     def get_new_name(self, tournament_name):
         print(f'The Tournament current name is {tournament_name}.')
         return self.base_view.prompt_for_text('new tournament name')
@@ -79,16 +65,26 @@ class TournamentView:
         print(f'The Tournament {tournament_name} current description is: \n{current_description}')
         return self.base_view.prompt_for_text('new tournament description')
 
-    def get_new_last_name(self, player_name):
-        return self.base_view.prompt_for_text(f"{player_name}'s new last name")
-
-    def get_new_date_of_birth(self, player_name, date_of_birth):
-        print(f"{player_name}'s current date of birth: {date_of_birth}.")
-        return self.base_view.prompt_for_date("player's new date of birth")
-
-    def display_pairings(self, pairs):
-        for player1, player2 in pairs:
-            print(player1.get_full_name(), ' - ', player2.get_full_name())
+    #
+    # Choice Input Methods
+    #
+    def select_player(self, all_players, tournament_players):
+        """
+        Ask manager to select a player to add to or remove from the tournament,
+        or to create a new player and add it to
+        the tournament. An empty answer stops the process
+        :param all_players: a list of all Players saved in the system
+        :param tournament_players: a list of Players part of the tournament
+        :return : the index of player in all_players to add to or remove from
+        the players in tournament.
+        """
+        menu = []
+        for i, player in enumerate(all_players):
+            proposition = player.get_full_name()
+            if player in tournament_players:
+                proposition += ' [[ Selected ]]'
+            menu.append(proposition)
+        return self.base_view.select_from_list(menu, proposition_zero='Add a new player', cancel_allowed=True)
 
     def prompt_for_winner_index(self, pair):
         pair_of_names = list(map(lambda x: x.get_full_name(), pair))
@@ -97,6 +93,14 @@ class TournamentView:
         if winner_index == -1:
             return None
         return winner_index
+
+    #
+    # Display Methods
+    #
+    @staticmethod
+    def display_pairings(pairs):
+        for player1, player2 in pairs:
+            print(player1.get_full_name(), ' - ', player2.get_full_name())
 
     def display_rounds(self, rounds):
         if len(rounds) == 0:
@@ -108,7 +112,8 @@ class TournamentView:
                 for match_info in rnd.get_matches_info():
                     self.display_match(*match_info)
 
-    def display_match(self, player1, score1, player2, score2):
+    @staticmethod
+    def display_match(player1, score1, player2, score2):
         match_report = player1.get_full_name() + '  '
         if score1 == 0.5:
             match_report += '-TIE-'
@@ -117,8 +122,13 @@ class TournamentView:
         match_report += '  ' + player2.get_full_name()
         print(match_report)
 
-    def notice_no_more_pairings(self):
+    #
+    # Notice Methods
+    #
+    @staticmethod
+    def notice_no_more_pairings():
         print('All the players payed against each other, there is no more match to play in this tournament.')
 
-    def notice_tournament_over(self):
+    @staticmethod
+    def notice_tournament_over():
         print('The tournament is now over.')
