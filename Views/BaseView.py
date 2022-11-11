@@ -1,4 +1,6 @@
 import datetime
+import os
+from Models.Message import Message
 
 
 class BaseView:
@@ -89,8 +91,37 @@ class BaseView:
     # Display Method
     #
     @staticmethod
-    def display_title(title):
-        print(f'~~~~~~~~~\n{title}\n~~~~~~~~~')
+    def clear_screen():
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+    @staticmethod
+    def welcome_message():
+        BaseView.display_title((Message.PROGRAM_NAME, Message.LOGO_ASCII, Message.WELCOME))
+        input(Message.START_PROGRAM)
+
+    @staticmethod
+    def good_bye_message():
+        print(Message.GOOD_BYE)
+
+    @staticmethod
+    def display_title(titles):
+        BaseView.clear_screen()
+        line_length = 64
+
+        def print_line(header):
+            half = line_length // 2 - len(header) // 2
+            print(' ' * half + header)
+
+        print('~' * line_length)
+        if isinstance(titles, str):
+            print_line(titles)
+        elif isinstance(titles, tuple):
+            for title in titles:
+                if isinstance(title, str):
+                    print_line(title)
+                # elif callable(title):
+                #     print_line(title())
+        print('~' * line_length)
 
     #
     # Notice Method
