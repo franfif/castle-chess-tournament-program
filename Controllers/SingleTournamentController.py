@@ -46,7 +46,9 @@ class SingleTournamentController:
     # Run Tournament Menu
     #
     def run(self):
-        self.generic_tournament_menu(self.run_tournament_options)
+        MenuManager.menu(get_options_method=self.run_tournament_options,
+                         save_method=self.tournaments_control.save_tournaments_to_db,
+                         titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
 
     def run_tournament_options(self):
         options = [Option('Edit tournament information', self.edit_tournament)]
@@ -71,7 +73,9 @@ class SingleTournamentController:
     # Edit Tournament Menu
     #
     def edit_tournament(self):
-        self.generic_tournament_menu(self.edit_tournament_options)
+        MenuManager.menu(get_options_method=self.edit_tournament_options,
+                         save_method=self.tournaments_control.save_tournaments_to_db,
+                         titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
 
     def edit_tournament_options(self):
         options = [Option('Change tournament name', self.update_tournament_name),
@@ -87,7 +91,9 @@ class SingleTournamentController:
     # Report Menu
     #
     def run_reports(self):
-        self.generic_tournament_menu(self.report_options)
+        MenuManager.menu(get_options_method=self.report_options,
+                         save_method=self.tournaments_control.save_tournaments_to_db,
+                         titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
 
     def report_options(self):
         options = [Option('Show players', self.show_players),
@@ -117,9 +123,14 @@ class SingleTournamentController:
     def start_round(self):
         pairs = self.tournament.start_new_round()
         if pairs:
-            self.view.display_pairings(pairs)
+            MenuManager.menu(get_options_method=self.exit_only_option,
+                             save_method=self.tournaments_control.save_tournaments_to_db,
+                             titles=(Message.ONGOING_TOURNAMENT_MENU,
+                                     self.tournament.name,
+                                     Message.STARTING + self.tournament.rounds[-1].name),
+                             content=(self.view.display_pairings, pairs))
         else:
-            self.view.notice_no_more_pairings()
+            self.view.send_notice(Message.NO_MORE_PAIRINGS)
             self.end_tournament()
 
     def end_round(self):
@@ -128,6 +139,9 @@ class SingleTournamentController:
         # attribute points to each match in the round
         scores = []
         for i, pair in enumerate(pairs):
+            BaseView.display_title((Message.ONGOING_TOURNAMENT_MENU,
+                                    self.tournament.name,
+                                    Message.ENDING + self.tournament.rounds[-1].name))
             # for each pair, get the winner index from view
             winner_index = self.view.prompt_for_winner_index(pair)
             # collect scores for each pairs
@@ -145,7 +159,7 @@ class SingleTournamentController:
 
     def end_tournament(self):
         self.tournament.number_of_rounds = len(self.tournament.rounds)
-        self.view.notice_tournament_over()
+        self.view.send_notice(Message.TOURNAMENT_OVER)
 
     #
     # Edit Tournament Methods
@@ -182,10 +196,25 @@ class SingleTournamentController:
     # Report Methods
     #
     def show_players(self):
-        self.players_control.show_players(self.tournament.players)
+        players = self.players_control.get_players_in_preferred_order(self.tournament.players)
+        MenuManager.menu(get_options_method=self.exit_only_option,
+                         titles=(Message.REPORT_MENU,
+                                 Message.ONGOING_TOURNAMENT_MENU,
+                                 self.tournament.name,
+                                 Message.PLAYERS_TITLE),
+                         content=(self.players_control.view.display_players, players))
 
     def show_rounds(self):
-        self.view.display_rounds(self.tournament.rounds)
+        MenuManager.menu(get_options_method=self.exit_only_option,
+                         titles=(Message.REPORT_MENU,
+                                 Message.ONGOING_TOURNAMENT_MENU,
+                                 self.tournament.name,
+                                 Message.ROUNDS_TITLE),
+                         content=(self.view.display_rounds, self.tournament.rounds))
+
+    @staticmethod
+    def exit_only_option():
+        return [Option.exit_option()]
 
     @staticmethod
     def exit():
