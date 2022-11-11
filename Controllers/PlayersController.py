@@ -43,7 +43,7 @@ class PlayersController:
         if len(players) == 0:
             self.view.notice_no_players_to_show()
         else:
-            if self.view.prompt_for_order_preference(['ranking', 'alphabetical']) == 0:
+            if self.view.prompt_for_order_preference(['Ranking', 'Alphabetical']) == 0:
                 players = self.order_by_ranking(players)
             else:
                 players = self.order_alphabetically(players)
