@@ -106,11 +106,11 @@ class TournamentView:
         if len(rounds) == 0:
             print('There is no round to show')
         else:
-            print('  ## ROUNDS ##')
             for rnd in rounds:
                 print(f'  # {rnd.name} #')
                 for match_info in rnd.get_matches_info():
                     self.display_match(*match_info)
+                print('')
 
     @staticmethod
     def display_match(player1, score1, player2, score2):
@@ -123,12 +123,8 @@ class TournamentView:
         print(match_report)
 
     #
-    # Notice Methods
+    # Notice Method
     #
     @staticmethod
-    def notice_no_more_pairings():
-        print('All the players payed against each other, there is no more match to play in this tournament.')
-
-    @staticmethod
-    def notice_tournament_over():
-        print('The tournament is now over.')
+    def send_notice(message):
+        print(message)
