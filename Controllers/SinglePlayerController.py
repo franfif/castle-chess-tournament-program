@@ -2,6 +2,8 @@ from Views.PlayerView import PlayerView
 from Views.BaseView import BaseView
 from Models.Player import Player
 from Models.Option import Option
+from Models.Message import Message
+from Models.MenuManager import MenuManager
 
 
 class SinglePlayerController:
