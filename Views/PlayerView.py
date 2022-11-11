@@ -1,4 +1,6 @@
 from Views.BaseView import BaseView
+from Models.Message import Message
+
 
 GENDERS = ['F', 'M', 'X', 'f', 'm', 'x']
 RANKING_MIN_MAX = [1, 3000]
