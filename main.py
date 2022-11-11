@@ -15,32 +15,24 @@ class App:
         self.reports = ReportController(self.players_control, self.tournaments_control)
 
     def run(self):
-        self.generic_app_menu(self.app_options)
-        print('Thank you for playing! See you next time!')
-
-    def generic_app_menu(self, get_menu_options):
-        next_action = None
-        while next_action is None:
-            menu = get_menu_options()
-            menu_names = list(map(lambda x: x.name, menu))
-            to_do = self.view.select_from_list(menu_names)
-            next_action = menu[to_do].function()
-        return
+        self.view.welcome_message()
+        MenuManager.menu(get_options_method=self.app_options, titles=Message.MAIN_MENU)
+        self.view.good_bye_message()
 
     def app_options(self):
-        menu = [Option('Create tournament', self.create_tournament)]
+        menu = [Option('New tournament', self.create_tournament)]
 
         ongoing_tournaments = list(filter(lambda x: not x.tournament.has_ended(),
                                           self.tournaments_control.tournaments))
         for tournament in ongoing_tournaments:
-            menu.append(Option(f'Continue tournament {tournament.tournament.name}', tournament.run))
+            menu.append(Option(f'Open [ {tournament.tournament.name} ]', tournament.run))
 
-        menu.append(Option('Create players', self.create_player))
+        menu.append(Option('New player', self.create_player))
 
         if len(self.players_control.players) > 0:
             menu.append(Option('Edit players', self.edit_players))
 
-        menu.append(Option('View reports', self.view_reports))
+        menu.append(Option('Reports', self.view_reports))
 
         archived_tournaments = list(filter(lambda x: x.tournament.has_ended(),
                                            self.tournaments_control.tournaments))
@@ -64,7 +56,7 @@ class App:
         self.reports.run_reports()
 
     def edit_archived_tournaments(self):
-        self.generic_app_menu(self.archived_tournaments_options)
+        MenuManager.menu(get_options_method=self.archived_tournaments_options, titles=Message.ARCHIVED_TOURNAMENT_MENU)
 
     def archived_tournaments_options(self):
         archived_tournaments = list(filter(lambda x: x.tournament.has_ended(),
