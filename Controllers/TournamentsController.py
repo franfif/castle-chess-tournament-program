@@ -16,6 +16,7 @@ class TournamentsController:
         tournament = SingleTournamentController(self.players_control, self, tournament_info)
         self.tournaments.append(tournament)
         self.save_tournaments_to_db()
+        return tournament
 
     #
     # Database Linking Method

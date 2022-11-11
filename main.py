@@ -53,7 +53,8 @@ class App:
         self.players_control.create_player()
 
     def create_tournament(self):
-        self.tournaments_control.create_tournament()
+        tournament = self.tournaments_control.create_tournament()
+        tournament.run()
 
     def edit_players(self):
         self.players_control.edit_players()
