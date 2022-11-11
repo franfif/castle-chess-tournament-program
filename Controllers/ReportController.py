@@ -11,40 +11,31 @@ class ReportController:
         self.base_view = BaseView()
 
     #
-    # Report Menu
+    # Report Main Menu and Options
     #
     def run_reports(self):
-        self.generic_report_menu(self.global_report_options())
+        MenuManager.menu(get_options_method=self.main_report_options,
+                         titles=Message.REPORT_MENU)
 
-    def generic_report_menu(self, report_options):
-        menu = report_options
-        menu_names = list(map(lambda x: x.name, menu))
-        next_action = None
-        while next_action is None:
-            to_do = self.base_view.select_from_list(menu_names)
-            next_action = menu[to_do].function()
-        return
-
-    def global_report_options(self):
-        options = [Option('View all players', self.players_control.show_players),
-                   Option('View all tournaments', self.report_tournaments),
-                   Option('Exit report menu', self.exit)]
+    def main_report_options(self):
+        options = [Option('View all players', self.players_control.run_all_player_reports),
+                   Option('View all tournaments', self.run_tournament_reports),
+                   Option.exit_option()]
         return options
 
     #
     # Tournament Report Menu and Options
     #
-    def report_tournaments(self):
+    def run_tournament_reports(self):
+        MenuManager.menu(get_options_method=self.tournament_report_options,
+                         titles=(Message.REPORT_MENU, Message.TOURNAMENTS_TITLE))
+
+    def tournament_report_options(self):
         tournaments = self.tournaments_control.tournaments
         if len(tournaments) == 0:
-            self.base_view.notice_no_tournaments_to_show()
-        else:
-            options = []
-            for tournament in tournaments:
-                options.append(Option(tournament.tournament.name, tournament.run_reports))
-            options.append(Option('Back home', self.exit))
-            self.generic_report_menu(options)
-
-    @staticmethod
-    def exit():
-        return True
+            return [Option(Message.NO_TOURNAMENTS, MenuManager.exit)]
+        options = []
+        for tournament in tournaments:
+            options.append(Option(tournament.tournament.name, tournament.run_reports))
+        options.append(Option.exit_option())
+        return options
