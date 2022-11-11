@@ -12,8 +12,12 @@ class TournamentsController:
         self.tournament_DB_Table = TableDB('tournaments')
         self.tournaments = self.get_tournaments_from_db()
 
-    def create_tournament(self, tournament_info=None):
-        tournament = SingleTournamentController(self.players_control, self, tournament_info)
+    def create_tournament(self):
+        """
+        Create a new tournament and send it in return to run it directly if needed
+        :return: tournament
+        """
+        tournament = SingleTournamentController(self.players_control, self)
         self.tournaments.append(tournament)
         self.save_tournaments_to_db()
         return tournament
