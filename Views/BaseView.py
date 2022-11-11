@@ -76,7 +76,7 @@ class BaseView:
             try:
                 pick = input(f'Enter a number between {1 if proposition_zero is None else 0} '
                              f'and {len(lst)} to select a proposition'
-                             f'{" or hit Return to stop: " if cancel_allowed else ": "}')
+                             f'{" or press Enter to stop: " if cancel_allowed else ": "}')
                 if pick == '' and cancel_allowed:
                     return None
                 pick = int(pick) - 1
