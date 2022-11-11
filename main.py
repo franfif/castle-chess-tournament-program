@@ -1,9 +1,10 @@
-# from Tests.TestModel import TestPlayer, TestTournament
 from Controllers.PlayersController import PlayersController
 from Controllers.TournamentsController import TournamentsController
 from Views.BaseView import BaseView
 from Models.Option import Option
 from Controllers.ReportController import ReportController
+from Models.Message import Message
+from Models.MenuManager import MenuManager
 
 
 class App:
