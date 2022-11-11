@@ -2,6 +2,9 @@ from Views.PlayerView import PlayerView
 from DB.TableDB import TableDB
 from Views.BaseView import BaseView
 from Controllers.SinglePlayerController import SinglePlayerController
+from Models.Option import Option
+from Models.Message import Message
+from Models.MenuManager import MenuManager
 
 
 class PlayersController:
