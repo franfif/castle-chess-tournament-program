@@ -27,13 +27,9 @@ class SinglePlayerController:
     # Edit Player Menu
     #
     def edit_player_menu(self):
-        next_action = None
-        while next_action is None:
-            menu = self.edit_player_options()
-            menu_names = list(map(lambda x: x.name, menu))
-            to_do = self.base_view.select_from_list(menu_names)
-            next_action = menu[to_do].function()
-        return
+        MenuManager.menu(get_options_method=self.edit_player_options,
+                         titles=Message.EDIT_PLAYERS_MENU,
+                         content=(self.view.display_players, self.player))
 
     def edit_player_options(self):
         options = [Option('Change first name', self.update_first_name),
