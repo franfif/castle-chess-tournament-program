@@ -3,6 +3,8 @@ from Models.Tournament import Tournament
 from Models.Option import Option
 from Views.BaseView import BaseView
 from Models.Round import Round
+from Models.Message import Message
+from Models.MenuManager import MenuManager
 
 
 class SingleTournamentController:
