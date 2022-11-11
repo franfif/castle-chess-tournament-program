@@ -82,7 +82,7 @@ class TournamentView:
         for i, player in enumerate(all_players):
             proposition = player.get_full_name()
             if player in tournament_players:
-                proposition += ' [[ Selected ]]'
+                proposition += ' [[ Participant ]]'
             menu.append(proposition)
         return self.base_view.select_from_list(menu, proposition_zero='Add a new player', cancel_allowed=True)
 
