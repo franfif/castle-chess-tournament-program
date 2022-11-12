@@ -29,20 +29,6 @@ class SingleTournamentController:
         return name, venue, date_range, number_of_rounds, time_control, description
 
     #
-    # Menu
-    #
-    def generic_tournament_menu(self, get_menu_options):
-        next_action = None
-        while next_action is None:
-            self.base_view.display_title('Tournament ' + self.tournament.name)
-            menu = get_menu_options()
-            menu_names = list(map(lambda x: x.name, menu))
-            to_do = self.base_view.select_from_list(menu_names)
-            next_action = menu[to_do].function()
-            self.tournaments_control.save_tournaments_to_db()
-        return
-
-    #
     # Run Tournament Menu and Options
     #
     def run(self):
@@ -66,7 +52,7 @@ class SingleTournamentController:
             options.append(Option('Show players', self.show_players))
 
         options.append(Option('Show all rounds', self.show_rounds))
-        options.append(Option('Save and exit tournament', self.exit))
+        options.append(Option.exit_option())
         return options
 
     #
@@ -84,7 +70,7 @@ class SingleTournamentController:
                    Option('Change number of rounds', self.update_number_of_rounds),
                    Option('Change time control', self.update_time_control),
                    Option('Change description', self.update_description),
-                   Option('Save and go back', self.exit)]
+                   Option.exit_option()]
         return options
 
     #
@@ -93,12 +79,13 @@ class SingleTournamentController:
     def run_reports(self):
         MenuManager.menu(get_options_method=self.report_options,
                          save_method=self.tournaments_control.save_tournaments_to_db,
-                         titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
+                         titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name),
+                         content=(self.view.display_tournament_info, self.tournament))
 
     def report_options(self):
         options = [Option('Show players', self.show_players),
                    Option('Show rounds', self.show_rounds),
-                   Option('Back to tournament reports', self.exit)]
+                   Option.exit_option()]
         return options
 
     #
@@ -198,6 +185,13 @@ class SingleTournamentController:
     #
     # Report Tournament Methods
     #
+    def show_tournament_info(self):
+        MenuManager.menu(get_options_method=self.exit_only_option,
+                         titles=(Message.REPORT_MENU,
+                                 Message.ONGOING_TOURNAMENT_MENU,
+                                 self.tournament.name),
+                         content=(self.view.display_tournament_info, self.tournament))
+
     def show_players(self):
         players = self.players_control.get_players_in_preferred_order(self.tournament.players)
         MenuManager.menu(get_options_method=self.exit_only_option,
@@ -218,10 +212,6 @@ class SingleTournamentController:
     @staticmethod
     def exit_only_option():
         return [Option.exit_option()]
-
-    @staticmethod
-    def exit():
-        return True
 
     #
     # Serialization - Deserialization Methods
