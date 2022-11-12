@@ -86,12 +86,12 @@ class TournamentView:
             if player in tournament_players:
                 proposition += ' [[ Participant ]]'
             menu.append(proposition)
-        return self.base_view.select_from_list(menu, proposition_zero='Add a new player', cancel_allowed=True)
+        return self.base_view.select_from_list(menu, option_zero='Add a new player', cancel_allowed=True)
 
     def prompt_for_winner_index(self, pair):
         pair_of_names = list(map(lambda x: x.get_full_name(), pair))
         print('Who won?')
-        winner_index = self.base_view.select_from_list(pair_of_names, proposition_zero='Tie Game')
+        winner_index = self.base_view.select_from_list(pair_of_names, option_zero='Tie Game')
         if winner_index == -1:
             return None
         return winner_index

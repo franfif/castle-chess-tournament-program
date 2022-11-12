@@ -55,32 +55,32 @@ class BaseView:
     # Choice Input Method
     #
     @staticmethod
-    def select_from_list(lst, proposition_zero=None, cancel_allowed=False):
+    def select_from_list(lst, option_zero=None, cancel_allowed=False):
         """
         Display a list of propositions and get a number from the manager
         :param lst: list of strings to display
-        :param proposition_zero: string to display at the end of the propositions from list
+        :param option_zero: string to display at the end of the propositions from list
         :param cancel_allowed: bool to allow user to cancel and stop the choice process
         :return: index of the selected item
         or -1 for the proposition_zero
         or None to cancel the selection
         """
-        if proposition_zero is not None:
-            print(f'[0] ** {proposition_zero} **')
-        if len(lst) == 1 and proposition_zero is None:
+        if option_zero is not None:
+            print(f'[0] ** {option_zero} **')
+        if len(lst) == 1 and option_zero is None:
             input(f'Press Enter to {lst[0]}')
             return 0
         for i, e in enumerate(lst):
             print(f'[{i + 1}] {e}')
         while True:
             try:
-                pick = input(f'Enter a number between {1 if proposition_zero is None else 0} '
-                             f'and {len(lst)} to select a proposition'
+                pick = input(f'Enter a number between {1 if option_zero is None else 0} '
+                             f'and {len(lst)} to select an option'
                              f'{" or press Enter to stop: " if cancel_allowed else ": "}')
                 if pick == '' and cancel_allowed:
                     return None
                 pick = int(pick) - 1
-                if pick == -1 and proposition_zero is None:
+                if pick == -1 and option_zero is None:
                     continue
                 elif -1 <= pick < len(lst):
                     return pick
