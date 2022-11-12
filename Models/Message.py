@@ -30,7 +30,9 @@ class Message:
     #
     ALPHABETICAL = 'Alphabetical'
     RANKING = 'Ranking'
-    EXIT_MENU = '** Go back **'
+    SAVE_AND_EXIT_MENU = 'Save and go back'
+    EXIT_MENU = 'Go back'
+    LEAVE_APP_MENU = 'Leave the app'
 
     #
     # Notices
