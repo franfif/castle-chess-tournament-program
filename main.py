@@ -16,7 +16,8 @@ class App:
 
     def run(self):
         self.view.welcome_message()
-        MenuManager.menu(get_options_method=self.app_options, titles=Message.MAIN_MENU)
+        MenuManager.menu(get_options_method=self.app_options,
+                         titles=Message.MAIN_MENU)
         self.view.good_bye_message()
 
     def app_options(self):
@@ -56,7 +57,8 @@ class App:
         self.reports.run_reports()
 
     def edit_archived_tournaments(self):
-        MenuManager.menu(get_options_method=self.archived_tournaments_options, titles=Message.ARCHIVED_TOURNAMENT_MENU)
+        MenuManager.menu(get_options_method=self.archived_tournaments_options,
+                         titles=Message.ARCHIVED_TOURNAMENT_MENU)
 
     def archived_tournaments_options(self):
         archived_tournaments = list(filter(lambda x: x.tournament.has_ended(),
