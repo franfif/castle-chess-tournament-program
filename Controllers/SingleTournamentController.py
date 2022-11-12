@@ -107,7 +107,7 @@ class SingleTournamentController:
                 self.tournament.remove_player(all_players[index])
             else:
                 # add player to tournament
-                self.tournament.add_player(self.all_players[index])
+                self.tournament.add_player(all_players[index])
             self.tournaments_control.save_tournaments_to_db()
 
     def get_all_players(self):
