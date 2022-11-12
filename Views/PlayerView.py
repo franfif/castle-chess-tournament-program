@@ -72,7 +72,7 @@ class PlayerView:
             for player in players:
                 print(self.get_full_info_player(player))
         else:
-            print(self.get_full_info_player(players))
+            print(self.get_full_info_player(players), '\n')
 
     @staticmethod
     def get_full_info_player(player):
