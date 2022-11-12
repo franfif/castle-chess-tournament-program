@@ -15,6 +15,7 @@ class PlayersController:
         self.players = self.get_players_from_db()
 
     def create_player(self):
+        self.base_view.display_title(Message.CREATE_PLAYERS_MENU)
         self.players.append(SinglePlayerController())
         self.save_players_to_db()
 
