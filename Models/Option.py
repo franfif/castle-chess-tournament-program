@@ -8,5 +8,7 @@ class Option:
         self.function = function
 
     @staticmethod
-    def exit_option():
+    def exit_option(saving=False):
+        if saving:
+            return Option(Message.SAVE_AND_EXIT_MENU, MenuManager.exit)
         return Option(Message.EXIT_MENU, MenuManager.exit)

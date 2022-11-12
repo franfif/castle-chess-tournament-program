@@ -66,13 +66,8 @@ class App:
         options = []
         for tournament in archived_tournaments:
             options.append(Option(f'Tournament {tournament.tournament.name}', tournament.run))
-        options.append(Option('Back', self.exit))
+        options.append(Option.exit_option())
         return options
-
-    def exit(self):
-        self.players_control.save_players_to_db()
-        self.tournaments_control.save_tournaments_to_db()
-        return True
 
 
 app = App()

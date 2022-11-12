@@ -51,7 +51,7 @@ class SingleTournamentController:
             options.append(Option('Show players', self.show_players))
 
         options.append(Option('Show all rounds', self.show_rounds))
-        options.append(Option.exit_option())
+        options.append(Option.exit_option(saving=True))
         return options
 
     #
@@ -69,7 +69,7 @@ class SingleTournamentController:
                    Option('Change number of rounds', self.update_number_of_rounds),
                    Option('Change time control', self.update_time_control),
                    Option('Change description', self.update_description),
-                   Option.exit_option()]
+                   Option.exit_option(saving=True)]
         return options
 
     #
@@ -77,7 +77,6 @@ class SingleTournamentController:
     #
     def run_reports(self):
         MenuManager.menu(get_options_method=self.report_options,
-                         save_method=self.tournaments_control.save_tournaments_to_db,
                          titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name),
                          content=(self.view.display_tournament_info, self.tournament))
 
@@ -117,7 +116,6 @@ class SingleTournamentController:
         pairs = self.tournament.start_new_round()
         if pairs:
             MenuManager.menu(get_options_method=self.exit_only_option,
-                             save_method=self.tournaments_control.save_tournaments_to_db,
                              titles=(Message.ONGOING_TOURNAMENT_MENU,
                                      self.tournament.name,
                                      Message.STARTING + self.tournament.rounds[-1].name),

@@ -34,7 +34,7 @@ class PlayersController:
         options = []
         for player in players:
             options.append(Option(self.view.get_full_info_player(player.player), player.edit_player_menu))
-        options.append(Option(Message.EXIT_MENU, MenuManager.exit))
+        options.append(Option.exit_option(saving=True))
         return options
 
     #
