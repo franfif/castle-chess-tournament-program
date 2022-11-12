@@ -93,7 +93,8 @@ class SingleTournamentController:
     def add_remove_tournament_players(self):
         while True:
             all_players = self.get_all_players()
-            index = self.view.select_player(all_players, self.tournament.players)
+            titles = (Message.TOURNAMENTS_TITLE, self.tournament.name, Message.SELECT_PLAYERS)
+            index = self.view.select_player(all_players, self.tournament.players, titles)
             if index is None:
                 break
             elif index == -1:

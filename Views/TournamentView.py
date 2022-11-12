@@ -68,17 +68,19 @@ class TournamentView:
     #
     # Choice Input Methods
     #
-    def select_player(self, all_players, tournament_players):
+    def select_player(self, all_players, tournament_players, titles):
         """
         Ask manager to select a player to add to or remove from the tournament,
         or to create a new player and add it to
         the tournament. An empty answer stops the process
         :param all_players: a list of all Players saved in the system
         :param tournament_players: a list of Players part of the tournament
+        :param titles: a tuple of titles to display before the selection
         :return : the index of player in all_players to add to or remove from
         the players in tournament.
         """
         menu = []
+        self.base_view.display_title(titles)
         for i, player in enumerate(all_players):
             proposition = player.get_full_name()
             if player in tournament_players:
