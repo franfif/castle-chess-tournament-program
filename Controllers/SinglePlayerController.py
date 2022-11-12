@@ -37,7 +37,7 @@ class SinglePlayerController:
                    Option('Change date of birth', self.update_date_of_birth),
                    Option('Change gender', self.update_gender),
                    Option('Change ranking', self.update_ranking),
-                   Option('Save and go back', self.exit)]
+                   Option.exit_option()]
         return options
 
     #
@@ -62,10 +62,6 @@ class SinglePlayerController:
     def update_ranking(self):
         new_ranking = self.view.get_new_ranking(self.player.ranking, self.player.get_full_name())
         self.player.ranking = new_ranking
-
-    @staticmethod
-    def exit():
-        return True
 
     #
     # Serialization - Deserialization Methods
