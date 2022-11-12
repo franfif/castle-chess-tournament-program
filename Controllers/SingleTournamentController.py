@@ -138,6 +138,8 @@ class SingleTournamentController:
             scores.append(self.attribute_score(winner_index))
         # apply scores to round to end the round
         self.tournament.end_round(scores)
+        if self.tournament.number_of_rounds == len(self.tournament.rounds):
+            self.end_tournament()
 
     @staticmethod
     def attribute_score(winner_index):
