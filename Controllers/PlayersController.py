@@ -62,18 +62,18 @@ class PlayersController:
         if players is None:
             players = list(map(lambda x: x.player, self.players))
         if self.view.prompt_for_order_preference([Message.RANKING, Message.ALPHABETICAL]) == 0:
-            players = self.order_by_ranking(players)
+            players = self.sort_by_ranking(players)
         else:
-            players = self.order_alphabetically(players)
+            players = self.sort_alphabetically(players)
         return players
 
-    def order_by_ranking(self, players=None):
+    def sort_by_ranking(self, players=None):
         if players is None:
             players = list(map(lambda x: x.player, self.players))
         players.sort(key=lambda x: x.ranking, reverse=True)
         return players
 
-    def order_alphabetically(self, players=None):
+    def sort_alphabetically(self, players=None):
         if players is None:
             players = list(map(lambda x: x.player, self.players))
         players.sort(key=lambda x: (x.last_name, x.first_name))
