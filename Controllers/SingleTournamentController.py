@@ -43,7 +43,7 @@ class SingleTournamentController:
         return
 
     #
-    # Run Tournament Menu
+    # Run Tournament Menu and Options
     #
     def run(self):
         MenuManager.menu(get_options_method=self.run_tournament_options,
@@ -70,7 +70,7 @@ class SingleTournamentController:
         return options
 
     #
-    # Edit Tournament Menu
+    # Edit Tournament Menu and Options
     #
     def edit_tournament(self):
         MenuManager.menu(get_options_method=self.edit_tournament_options,
@@ -88,7 +88,7 @@ class SingleTournamentController:
         return options
 
     #
-    # Report Menu
+    # Report Menu and Options
     #
     def run_reports(self):
         MenuManager.menu(get_options_method=self.report_options,
@@ -115,8 +115,10 @@ class SingleTournamentController:
                 self.all_players = list(map(lambda x: x.player, self.players_control.players))
                 self.tournament.add_player(self.all_players[index])
             elif self.all_players[index] in self.tournament.players:
+                # remove player from tournament
                 self.tournament.remove_player(self.all_players[index])
             else:
+                # add player to tournament
                 self.tournament.add_player(self.all_players[index])
             self.tournaments_control.save_tournaments_to_db()
 
@@ -130,6 +132,7 @@ class SingleTournamentController:
                                      Message.STARTING + self.tournament.rounds[-1].name),
                              content=(self.view.display_pairings, pairs))
         else:
+            # no more pair possible, so end the tournament
             self.view.send_notice(Message.NO_MORE_PAIRINGS)
             self.end_tournament()
 
@@ -193,7 +196,7 @@ class SingleTournamentController:
         self.tournament.description = new_description
 
     #
-    # Report Methods
+    # Report Tournament Methods
     #
     def show_players(self):
         players = self.players_control.get_players_in_preferred_order(self.tournament.players)
