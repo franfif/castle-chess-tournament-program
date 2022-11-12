@@ -28,7 +28,7 @@ class Message:
     #
     ALPHABETICAL = 'Alphabetical'
     RANKING = 'Ranking'
-    EXIT_MENU = 'Exit far away'
+    EXIT_MENU = '** Go back **'
 
     #
     # Notices
