@@ -18,6 +18,9 @@ class PlayersController:
         self.players.append(SinglePlayerController())
         self.save_players_to_db()
 
+    #
+    # Edit Players Menu and Options
+    #
     def edit_players(self):
         MenuManager.menu(get_options_method=self.edit_players_options,
                          titles=Message.EDIT_PLAYERS_MENU,
@@ -34,7 +37,7 @@ class PlayersController:
         return options
 
     #
-    # Report Methods
+    # Report Menu and Options
     #
     def run_all_player_reports(self):
         players = self.get_players_in_preferred_order()
@@ -47,7 +50,7 @@ class PlayersController:
         return [Option.exit_option()]
 
     #
-    # Display Methods
+    # Sorting Methods
     #
     def get_players_in_preferred_order(self, players=None):
         """
