@@ -13,7 +13,6 @@ class SingleTournamentController:
         self.tournaments_control = tournaments_control
         self.view = TournamentView()
         self.base_view = BaseView()
-        self.all_players = list(map(lambda x: x.player, self.players_control.players))
         if tournament_info is not None:
             self.tournament = self.deserialize_tournament(tournament_info)
         else:
@@ -93,21 +92,25 @@ class SingleTournamentController:
     #
     def add_remove_tournament_players(self):
         while True:
-            index = self.view.select_player(self.all_players, self.tournament.players)
+            all_players = self.get_all_players()
+            index = self.view.select_player(all_players, self.tournament.players)
             if index is None:
                 break
             elif index == -1:
                 # create new player and add it to tournament players
                 self.players_control.create_player()
-                self.all_players = list(map(lambda x: x.player, self.players_control.players))
-                self.tournament.add_player(self.all_players[index])
-            elif self.all_players[index] in self.tournament.players:
+                all_players = self.get_all_players()
+                self.tournament.add_player(all_players[index])
+            elif all_players[index] in self.tournament.players:
                 # remove player from tournament
-                self.tournament.remove_player(self.all_players[index])
+                self.tournament.remove_player(all_players[index])
             else:
                 # add player to tournament
                 self.tournament.add_player(self.all_players[index])
             self.tournaments_control.save_tournaments_to_db()
+
+    def get_all_players(self):
+        return list(map(lambda x: x.player, self.players_control.players))
 
     def start_round(self):
         pairs = self.tournament.start_new_round()
