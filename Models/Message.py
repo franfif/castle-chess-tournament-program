@@ -21,7 +21,9 @@ class Message:
     PLAYERS_TITLE = 'Players'
     STARTING = 'Starting '
     ENDING = 'Ending '
-    EDIT_PLAYERS_MENU = "Edit Players"
+    CREATE_PLAYERS_MENU = 'Add a new player'
+    EDIT_PLAYERS_MENU = 'Edit players'
+    SELECT_PLAYERS = 'Select the participants'
 
     #
     # Menu Options
