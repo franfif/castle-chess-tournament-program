@@ -122,6 +122,16 @@ class TournamentView:
         match_report += '  ' + player2.get_full_name()
         print(match_report)
 
+    @staticmethod
+    def display_tournament_info(tournament):
+        print(f'Name: {tournament.name} \n'
+              f'Venue: {tournament.venue} \n'
+              f'Dates: {tournament.date_range[0]} - {tournament.date_range[1]} \n'
+              f'Number of rounds: {tournament.number_of_rounds} \n'
+              f'Number of rounds done: {len(tournament.rounds)} \n'
+              f'Time Control: {TIME_CONTROLS[tournament.time_control]} \n'
+              f'Description: {tournament.description} \n')
+
     #
     # Notice Method
     #
