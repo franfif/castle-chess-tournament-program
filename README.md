@@ -26,4 +26,4 @@ Order a new flake8 html report from the console:
 ```bash
 flake8 --format=html --htmldir=flake8_report
 ```
-Then open [/flake8_report/index.html">index.html](index.html) from the flake8_report repository:
+Then open [/flake8_report/index.html](index.html) from the flake8_report repository:
