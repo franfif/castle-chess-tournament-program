@@ -40,7 +40,7 @@ class App:
         if len(archived_tournaments) > 0:
             menu.append(Option('Archived tournaments', self.edit_archived_tournaments))
 
-        menu.append(Option('Save and Exit', self.exit))
+        menu.append(Option(Message.LEAVE_APP_MENU, MenuManager.exit))
         return menu
 
     def create_player(self):
