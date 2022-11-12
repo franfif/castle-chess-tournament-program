@@ -101,7 +101,7 @@ class BaseView:
 
     @staticmethod
     def good_bye_message():
-        print(Message.GOOD_BYE)
+        BaseView.display_title((Message.PROGRAM_NAME, Message.LOGO_ASCII, Message.GOOD_BYE))
 
     @staticmethod
     def display_title(titles):
