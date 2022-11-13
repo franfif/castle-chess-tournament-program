@@ -289,6 +289,7 @@ class SingleTournamentController:
                     end_time=serialized_round['end_time'])
         return rnd
 
-    def deserialized_tournament_system(self, serialized_tournament_system):
+    @staticmethod
+    def deserialized_tournament_system(serialized_tournament_system):
         if serialized_tournament_system == 'swiss_tournament_system':
             return SwissTournamentSystem()
