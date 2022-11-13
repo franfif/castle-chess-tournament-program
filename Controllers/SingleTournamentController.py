@@ -32,6 +32,7 @@ class SingleTournamentController:
     # Run Tournament Menu and Options
     #
     def run(self):
+        """Send a list of Options to MenuManager to allow user to run the tournament."""
         MenuManager.menu(get_options_method=self.run_tournament_options,
                          save_method=self.tournaments_control.save_tournaments_to_db,
                          titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
@@ -59,6 +60,7 @@ class SingleTournamentController:
     # Edit Tournament Menu and Options
     #
     def edit_tournament(self):
+        """Send edit Options to MenuManager to allow user to edit the tournament."""
         MenuManager.menu(get_options_method=self.edit_tournament_options,
                          save_method=self.tournaments_control.save_tournaments_to_db,
                          titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
@@ -77,6 +79,7 @@ class SingleTournamentController:
     # Report Menu and Options
     #
     def run_reports(self):
+        """Send tournament report options to the MenuManager."""
         MenuManager.menu(get_options_method=self.report_options,
                          titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name),
                          content=(self.view.display_tournament_info, self.tournament))
@@ -91,22 +94,27 @@ class SingleTournamentController:
     # Run Tournament Methods
     #
     def add_remove_tournament_players(self):
+        """Add and remove players from tournament according to user's choice."""
         while True:
             all_players = self.get_all_players()
             titles = (Message.TOURNAMENTS_TITLE, self.tournament.name, Message.SELECT_PLAYERS)
-            index = self.view.select_player(all_players, self.tournament.players, titles)
+            # Fetch selection from user
+            index = self.view.select_player(all_players=all_players,
+                                            tournament_players=self.tournament.players,
+                                            titles=titles)
             if index is None:
+                # User has not selected any player, stop the process
                 break
             elif index == -1:
-                # create new player and add it to tournament players
+                # Create new player and add it to tournament players
                 self.players_control.create_player()
                 all_players = self.get_all_players()
                 self.tournament.add_player(all_players[index])
             elif all_players[index] in self.tournament.players:
-                # remove player from tournament
+                # Remove player from tournament
                 self.tournament.remove_player(all_players[index])
             else:
-                # add player to tournament
+                # Add player to tournament
                 self.tournament.add_player(all_players[index])
             self.tournaments_control.save_tournaments_to_db()
 
@@ -114,8 +122,11 @@ class SingleTournamentController:
         return list(map(lambda x: x.player, self.players_control.players))
 
     def start_round(self):
+        """Display pairs for new round or end the tournament if no more pairs."""
+        # Get the pairs from the tournament
         pairs = self.tournament.start_new_round()
         if pairs:
+            # Display pairs to user
             MenuManager.menu(get_options_method=self.exit_only_option,
                              titles=(Message.ONGOING_TOURNAMENT_MENU,
                                      self.tournament.name,
@@ -127,9 +138,10 @@ class SingleTournamentController:
             self.end_tournament()
 
     def end_round(self):
-        # get the current round's pairs
+        """Fetch result for each match in the round and add them to the round instance."""
+        # Get the current round's pairs
         pairs = self.tournament.get_round_pairs()
-        # attribute points to each match in the round
+        # Attribute points to each match in the round
         scores = []
         for i, pair in enumerate(pairs):
             BaseView.display_title((Message.ONGOING_TOURNAMENT_MENU,
@@ -137,10 +149,11 @@ class SingleTournamentController:
                                     Message.ENDING + self.tournament.rounds[-1].name))
             # for each pair, get the winner index from view
             winner_index = self.view.prompt_for_winner_index(pair)
-            # collect scores for each pairs
+            # Collect scores for each pairs
             scores.append(self.attribute_score(winner_index))
-        # apply scores to round to end the round
+        # Apply scores to round to end the round
         self.tournament.end_round(scores)
+        # End tournament if this was the last round
         if self.tournament.number_of_rounds == len(self.tournament.rounds):
             self.end_tournament()
 
@@ -191,6 +204,7 @@ class SingleTournamentController:
     # Report Tournament Methods
     #
     def show_tournament_info(self):
+        """Send tournament info for MenuManager to display."""
         MenuManager.menu(get_options_method=self.exit_only_option,
                          titles=(Message.REPORT_MENU,
                                  Message.ONGOING_TOURNAMENT_MENU,
@@ -198,6 +212,7 @@ class SingleTournamentController:
                          content=(self.view.display_tournament_info, self.tournament))
 
     def show_players(self):
+        """Send tournament players for MenuManager to display."""
         players = self.players_control.get_players_in_preferred_order(self.tournament.players)
         MenuManager.menu(get_options_method=self.exit_only_option,
                          titles=(Message.REPORT_MENU,
@@ -207,6 +222,7 @@ class SingleTournamentController:
                          content=(self.players_control.view.display_players, players))
 
     def show_rounds(self):
+        """Send tournament rounds info for MenuManager to display."""
         MenuManager.menu(get_options_method=self.exit_only_option,
                          titles=(Message.REPORT_MENU,
                                  Message.ONGOING_TOURNAMENT_MENU,
@@ -222,6 +238,7 @@ class SingleTournamentController:
     # Serialization - Deserialization Methods
     #
     def serialize_tournament(self):
+        """Return this tournament as a serialized tournament."""
         serialized_tournament = {
             'name': self.tournament.name,
             'venue': self.tournament.venue,
@@ -237,7 +254,9 @@ class SingleTournamentController:
         return serialized_tournament
 
     def deserialize_tournament(self, serialized_tournament):
+        """Return a Tournament object from a serialized tournament."""
         rounds = []
+        # Get a list of Round objects from a list of serialized rounds
         for serialized_round in serialized_tournament['rounds']:
             rounds.append(self.deserialized_round(serialized_round))
 
@@ -257,6 +276,7 @@ class SingleTournamentController:
         return tournament
 
     def deserialized_round(self, serialized_round):
+        """Return a Round object from a serialized round."""
         matches = []
         for [[player1_id, score1], [player2_id, score2]] in serialized_round['matches']:
             player1 = next(x.player for x in self.players_control.players if x.player.id == player1_id)
