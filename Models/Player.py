@@ -12,4 +12,4 @@ class Player:
             self.id = player_id
 
     def get_full_name(self):
-        return self.first_name + ' ' + self.last_name
+        return self.last_name + ', ' + self.first_name
