@@ -27,6 +27,7 @@ class SinglePlayerController:
     # Edit Player Menu
     #
     def edit_player_menu(self):
+        """Send edit Options to MenuManager to allow user to edit the player."""
         MenuManager.menu(get_options_method=self.edit_player_options,
                          titles=Message.EDIT_PLAYERS_MENU,
                          content=(self.view.display_players, self.player))
@@ -67,6 +68,7 @@ class SinglePlayerController:
     # Serialization - Deserialization Methods
     #
     def serialize_player(self):
+        """Return this player as a serialized player."""
         serialized_player = {
             'first_name': self.player.first_name,
             'last_name': self.player.last_name,
@@ -79,6 +81,7 @@ class SinglePlayerController:
 
     @staticmethod
     def deserialize_player(serialized_player):
+        """Return a Player object from a serialized player."""
         player = Player(first_name=serialized_player['first_name'],
                         last_name=serialized_player['last_name'],
                         date_of_birth=serialized_player['date_of_birth'],

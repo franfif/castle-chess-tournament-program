@@ -35,6 +35,7 @@ class Tournament:
     # Update Rounds
     #
     def start_new_round(self):
+        """Return the pairs of the new round or an empty list."""
         this_round_number = len(self.rounds)
         if this_round_number < self.number_of_rounds:
             pairs = self.define_pairings(this_round_number)
@@ -45,6 +46,7 @@ class Tournament:
             return pairs
 
     def end_round(self, scores):
+        """Update round's end_time and results"""
         this_round = self.rounds[-1]
         this_round.add_end_time()
         this_round.add_results(scores)
@@ -61,6 +63,7 @@ class Tournament:
     # Serialization Method
     #
     def serialize_rounds(self):
+        """Return a list of this tournament's serialized rounds."""
         serialized_rounds = []
         for rnd in self.rounds:
             serialized_rounds.append(rnd.serialize_round())

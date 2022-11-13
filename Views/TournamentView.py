@@ -69,10 +69,7 @@ class TournamentView:
     # Choice Input Methods
     #
     def select_player(self, all_players, tournament_players, titles):
-        """
-        Ask manager to select a player to add to or remove from the tournament,
-        or to create a new player and add it to
-        the tournament. An empty answer stops the process
+        """Display all players for user to select or unselect, return selected list
         :param all_players: a list of all Players saved in the system
         :param tournament_players: a list of Players part of the tournament
         :param titles: a tuple of titles to display before the selection
@@ -89,6 +86,7 @@ class TournamentView:
         return self.base_view.select_from_list(menu, option_zero='Add a new player', cancel_allowed=True)
 
     def prompt_for_winner_index(self, pair):
+        """Display players of each match and return index of the winner."""
         pair_of_names = list(map(lambda x: x.get_full_name(), pair))
         print('Who won?')
         winner_index = self.base_view.select_from_list(pair_of_names, option_zero='Tie Game')

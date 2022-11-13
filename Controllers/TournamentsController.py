@@ -19,6 +19,7 @@ class TournamentsController:
         """
         tournament = SingleTournamentController(self.players_control, self)
         self.tournaments.append(tournament)
+        # Update the tournaments database table
         self.save_tournaments_to_db()
         return tournament
 
@@ -26,12 +27,14 @@ class TournamentsController:
     # Database Linking Method
     #
     def save_tournaments_to_db(self):
+        """Serialize all tournaments and send them to tournaments DB table."""
         serialized_tournaments = []
         for tournament in self.tournaments:
             serialized_tournaments.append(tournament.serialize_tournament())
         self.tournament_DB_Table.insert_multiple(serialized_tournaments)
 
     def get_tournaments_from_db(self):
+        """Fetch serialized tournaments from TinyDB file and return a list of SingleTournamentController objects."""
         serialized_tournaments = self.tournament_DB_Table.get_all_items()
         tournaments = []
         for serialized_tournament in serialized_tournaments:
