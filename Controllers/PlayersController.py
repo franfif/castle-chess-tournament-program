@@ -15,14 +15,19 @@ class PlayersController:
         self.players = self.get_players_from_db()
 
     def create_player(self):
-        self.base_view.display_title(Message.CREATE_PLAYERS_MENU)
-        self.players.append(SinglePlayerController())
+        # Display a title
+        self.base_view.display_titles(Message.CREATE_PLAYER_MENU)
+        # Initialize a new player
+        new_player = SinglePlayerController()
+        self.players.append(new_player)
+        # Update the players database table
         self.save_players_to_db()
 
     #
     # Edit Players Menu and Options
     #
     def edit_players(self):
+        """Send players to MenuManager to allow user to edit them."""
         MenuManager.menu(get_options_method=self.edit_players_options,
                          titles=Message.EDIT_PLAYERS_MENU,
                          save_method=self.save_players_to_db)
@@ -40,7 +45,8 @@ class PlayersController:
     #
     # Report Menu and Options
     #
-    def run_all_player_reports(self):
+    def run_all_players_report(self):
+        """Send all players information for the MenuManager to display."""
         players = self.get_players_in_preferred_order()
         MenuManager.menu(get_options_method=self.exit_only_option,
                          titles=(Message.REPORT_MENU, Message.PLAYERS_TITLE),
@@ -54,12 +60,7 @@ class PlayersController:
     # Sorting Methods
     #
     def get_players_in_preferred_order(self, players=None):
-        """
-        Get a list of players and fetch the order preference from the view.
-        Call view to show the players in the given order
-        :param players: a list of SinglePlayerControllers
-        :return : Nothing
-        """
+        """Fetch the players order preference from the view and return the sorted list of players."""
         if players is None:
             players = list(map(lambda x: x.player, self.players))
         if self.view.prompt_for_order_preference([Message.RANKING, Message.ALPHABETICAL]) == 0:
@@ -84,19 +85,14 @@ class PlayersController:
     # Database Linking Method
     #
     def save_players_to_db(self):
-        """
-        Fetch serialized players and send them to the tableDB manager
-        """
+        """Serialize all players and send them to players DB table."""
         serialized_players = []
         for player in self.players:
             serialized_players.append(player.serialize_player())
         self.player_DB_Table.insert_multiple(serialized_players)
 
     def get_players_from_db(self):
-        """
-        Fetch serialized players from TinyDB file and create SinglePlayerControllers
-        :return: list of SinglePlayerControllers
-        """
+        """Fetch serialized players from TinyDB file and return a list of SinglePlayerController objects."""
         serialized_players = self.player_DB_Table.get_all_items()
         players = []
         for serialized_player in serialized_players:

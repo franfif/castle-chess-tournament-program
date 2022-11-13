@@ -57,13 +57,11 @@ class BaseView:
     @staticmethod
     def select_from_list(lst, option_zero=None, cancel_allowed=False):
         """
-        Display a list of propositions and get a number from the manager
+        Display a list of options and get a number from the manager
         :param lst: list of strings to display
-        :param option_zero: string to display at the end of the propositions from list
-        :param cancel_allowed: bool to allow user to cancel and stop the choice process
-        :return: index of the selected item
-        or -1 for the proposition_zero
-        or None to cancel the selection
+        :param option_zero: string to display at the top of the options
+        :param cancel_allowed: boolean to allow user to cancel and stop the selection process
+        :return: index of the selected item or -1 for option_zero or None to cancel the selection
         """
         if option_zero is not None:
             print(f'[0] ** {option_zero} **')
