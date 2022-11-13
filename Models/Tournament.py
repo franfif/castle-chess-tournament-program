@@ -37,13 +37,14 @@ class Tournament:
     def start_new_round(self):
         """Return the pairs of the new round or an empty list."""
         this_round_number = len(self.rounds)
+        pairs = []
         if this_round_number < self.number_of_rounds:
-            pairs = self.define_pairings(this_round_number)
+            pairs = self.tournament_system.define_pairings(this_round_number, self.players.copy(), self.rounds)
             if pairs:
                 round_name = 'Round ' + str(len(self.rounds) + 1)
                 self.rounds.append(Round(name=round_name, pairings=pairs))
                 self.round_started = True
-            return pairs
+        return pairs
 
     def end_round(self, scores):
         """Update round's end_time and results"""
