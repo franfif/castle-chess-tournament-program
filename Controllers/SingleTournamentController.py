@@ -240,6 +240,7 @@ class SingleTournamentController:
     def serialize_tournament(self):
         """Return this tournament as a serialized tournament."""
         serialized_tournament = {
+            'tournament_system': self.tournament.tournament_system.serialize_tournament_system(),
             'name': self.tournament.name,
             'venue': self.tournament.venue,
             'date': self.tournament.date_range,
