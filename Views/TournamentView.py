@@ -79,13 +79,13 @@ class TournamentView:
         :return : the index of player in all_players to add to or remove from
         the players in tournament.
         """
+        self.base_view.display_titles(titles)
         menu = []
-        self.base_view.display_title(titles)
         for i, player in enumerate(all_players):
-            proposition = player.get_full_name()
+            option = player.get_full_name()
             if player in tournament_players:
-                proposition += ' [[ Participant ]]'
-            menu.append(proposition)
+                option += ' [[ Participant ]]'
+            menu.append(option)
         return self.base_view.select_from_list(menu, option_zero='Add a new player', cancel_allowed=True)
 
     def prompt_for_winner_index(self, pair):

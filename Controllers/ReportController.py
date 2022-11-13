@@ -18,7 +18,7 @@ class ReportController:
                          titles=Message.REPORT_MENU)
 
     def main_report_options(self):
-        options = [Option('View all players', self.players_control.run_all_player_reports),
+        options = [Option('View all players', self.players_control.run_all_players_report),
                    Option('View all tournaments', self.run_tournament_reports),
                    Option.exit_option()]
         return options

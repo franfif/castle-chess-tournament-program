@@ -144,10 +144,10 @@ class SingleTournamentController:
         # Attribute points to each match in the round
         scores = []
         for i, pair in enumerate(pairs):
-            BaseView.display_title((Message.ONGOING_TOURNAMENT_MENU,
-                                    self.tournament.name,
-                                    Message.ENDING + self.tournament.rounds[-1].name))
-            # for each pair, get the winner index from view
+            BaseView.display_titles((Message.ONGOING_TOURNAMENT_MENU,
+                                     self.tournament.name,
+                                     Message.ENDING + self.tournament.rounds[-1].name))
+            # For each pair, get the winner index from view
             winner_index = self.view.prompt_for_winner_index(pair)
             # Collect scores for each pairs
             scores.append(self.attribute_score(winner_index))
