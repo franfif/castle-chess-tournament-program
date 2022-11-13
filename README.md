@@ -11,19 +11,24 @@ To use this program, clone this project and run it through the console:
 ```bash
 python3 main.py
 ```
+- You can create a new tournament, or add new players in the system.
+
+
+- Once a tournament is created, you can add players to the tournament and start round the first round.
+
 ## Virtual environment
 
 Before using the application, please install all the packages as stated in [requirements.txt](requirements.txt)
 
-From the terminal, use the command `pip install -r requirements.txt`.
+From the terminal, use the command:
 
-## Run the application
-
-To use the application, run `python3 books_toscrape.py`.
+```
+pip install -r requirements.txt
+```
 
 ## Flake8 HTML Report
 Order a new flake8 html report from the console:
-```bash
+```
 flake8 --format=html --htmldir=flake8_report
 ```
-Then open [doc](/flake8_report/index.html) from the flake8_report repository:
+Then open [index.html]() from the [flake8_report repository](/flake8_report):
