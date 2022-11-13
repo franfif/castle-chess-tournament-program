@@ -2,8 +2,9 @@ from Models.Round import Round
 
 
 class Tournament:
-    def __init__(self, name, venue, date_range, number_of_rounds, time_control, description,
+    def __init__(self, tournament_system, name, venue, date_range, number_of_rounds, time_control, description,
                  rounds=None, players=None, round_started=False, tournament_id=None):
+        self.tournament_system = tournament_system
         self.name = name
         self.venue = venue
         self.date_range = date_range
@@ -55,61 +56,6 @@ class Tournament:
     def get_round_pairs(self, round_index=-1):
         pairs = self.rounds[round_index].get_pairs()
         return pairs
-
-    #
-    # Pairing Methods
-    #
-    def define_pairings(self, round_number):
-        if round_number == 0:
-            return self.first_round_pairing()
-        else:
-            return self.next_round_pairing()
-
-    def first_round_pairing(self):
-        tournament_players = self.players.copy()
-        tournament_players.sort(key=lambda x: x.ranking, reverse=True)
-        half = len(tournament_players) // 2
-        first_half = tournament_players[:half]
-        second_half = tournament_players[half:]
-        pairs = list(zip(first_half, second_half))
-        return pairs
-
-    def next_round_pairing(self):
-        tournament_players = self.players.copy()
-
-        def get_all_points(player_to_probe):
-            points = 0
-            for rnd in self.rounds:
-                points += rnd.get_round_points(player_to_probe)
-            return points
-
-        tournament_players.sort(key=lambda x: (get_all_points(x), x.ranking), reverse=True)
-
-        def get_next_adversary(p1, *players):
-            if not players:
-                return None
-            p2, *other_players = players
-            never_played = True
-            for rnd in self.rounds:
-                never_played = never_played and rnd.have_never_played(p1, p2)
-            if never_played:
-                return p2
-            else:
-                return get_next_adversary(p1, *other_players)
-
-        def get_all_pairs(players_left, new_pairs):
-            if not players_left:
-                return new_pairs
-            else:
-                player1 = players_left[0]
-                player2 = get_next_adversary(*players_left)
-                players_left.remove(player1)
-                if player2 is not None:
-                    players_left.remove(player2)
-                    new_pairs.append([player1, player2])
-                return get_all_pairs(players_left, new_pairs)
-
-        return get_all_pairs(tournament_players, [])
 
     #
     # Serialization Method

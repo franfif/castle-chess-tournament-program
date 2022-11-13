@@ -5,10 +5,11 @@ from Views.BaseView import BaseView
 from Models.Round import Round
 from Models.Message import Message
 from Models.MenuManager import MenuManager
+from Models.SwissTournamentSystem import SwissTournamentSystem
 
 
 class SingleTournamentController:
-    def __init__(self, players_control, tournaments_control, tournament_info=None):
+    def __init__(self, players_control, tournaments_control, tournament_system=None, tournament_info=None):
         self.players_control = players_control
         self.tournaments_control = tournaments_control
         self.view = TournamentView()
@@ -16,7 +17,7 @@ class SingleTournamentController:
         if tournament_info is not None:
             self.tournament = self.deserialize_tournament(tournament_info)
         else:
-            self.tournament = Tournament(*self.get_tournament_info())
+            self.tournament = Tournament(tournament_system, *self.get_tournament_info())
 
     def get_tournament_info(self):
         name = self.view.prompt_for_tournament_name()
@@ -239,7 +240,10 @@ class SingleTournamentController:
         rounds = []
         for serialized_round in serialized_tournament['rounds']:
             rounds.append(self.deserialized_round(serialized_round))
-        tournament = Tournament(name=serialized_tournament['name'],
+
+        tournament = Tournament(tournament_system=self.deserialized_tournament_system(
+            serialized_tournament['tournament_system']),
+                                name=serialized_tournament['name'],
                                 venue=serialized_tournament['venue'],
                                 date_range=serialized_tournament['date'],
                                 number_of_rounds=serialized_tournament['number_of_rounds'],
@@ -263,3 +267,7 @@ class SingleTournamentController:
                     start_time=serialized_round['start_time'],
                     end_time=serialized_round['end_time'])
         return rnd
+
+    def deserialized_tournament_system(self, serialized_tournament_system):
+        if serialized_tournament_system == 'swiss_tournament_system':
+            return SwissTournamentSystem()
