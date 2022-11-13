@@ -52,7 +52,7 @@ class SingleTournamentController:
         if len(self.tournament.players) > 0:
             options.append(Option(Message.SHOW_PLAYERS, self.show_players))
 
-        options.append(Option('Show all rounds', self.show_rounds))
+        options.append(Option(Message.SHOW_ROUNDS, self.show_rounds))
         options.append(Option.exit_option(saving=True))
         return options
 
