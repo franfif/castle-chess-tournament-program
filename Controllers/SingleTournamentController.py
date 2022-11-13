@@ -38,19 +38,19 @@ class SingleTournamentController:
                          titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
 
     def run_tournament_options(self):
-        options = [Option('Edit tournament information', self.edit_tournament)]
+        options = [Option(Message.EDIT_TOURNAMENT, self.edit_tournament)]
 
         if len(self.tournament.rounds) == 0:
-            options.append(Option('Add/Remove tournament players', self.add_remove_tournament_players))
+            options.append(Option(Message.ADD_REMOVE_TOURNAMENT_PLAYERS, self.add_remove_tournament_players))
 
         if len(self.tournament.players) >= 2:
             if self.tournament.round_started:
-                options.append(Option('End round', self.end_round))
+                options.append(Option(Message.END_TOURNAMENT_ROUND, self.end_round))
             elif len(self.tournament.rounds) < self.tournament.number_of_rounds:
-                options.append(Option('Start round', self.start_round))
+                options.append(Option(Message.START_TOURNAMENT_ROUND, self.start_round))
 
         if len(self.tournament.players) > 0:
-            options.append(Option('Show players', self.show_players))
+            options.append(Option(Message.SHOW_PLAYERS, self.show_players))
 
         options.append(Option('Show all rounds', self.show_rounds))
         options.append(Option.exit_option(saving=True))
@@ -66,12 +66,12 @@ class SingleTournamentController:
                          titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
 
     def edit_tournament_options(self):
-        options = [Option('Change tournament name', self.update_tournament_name),
-                   Option('Change venue', self.update_venue),
-                   Option('Change dates', self.update_dates),
-                   Option('Change number of rounds', self.update_number_of_rounds),
-                   Option('Change time control', self.update_time_control),
-                   Option('Change description', self.update_description),
+        options = [Option(Message.UPDATE_TOURNAMENT_NAME, self.update_tournament_name),
+                   Option(Message.UPDATE_VENUE, self.update_venue),
+                   Option(Message.UPDATE_DATES, self.update_dates),
+                   Option(Message.UPDATE_NUMBER_OF_ROUNDS, self.update_number_of_rounds),
+                   Option(Message.UPDATE_TIME_CONTROL, self.update_time_control),
+                   Option(Message.UPDATE_DESCRIPTION, self.update_description),
                    Option.exit_option(saving=True)]
         return options
 
@@ -85,8 +85,8 @@ class SingleTournamentController:
                          content=(self.view.display_tournament_info, self.tournament))
 
     def report_options(self):
-        options = [Option('Show players', self.show_players),
-                   Option('Show rounds', self.show_rounds),
+        options = [Option(Message.SHOW_PLAYERS, self.show_players),
+                   Option(Message.SHOW_ROUNDS, self.show_rounds),
                    Option.exit_option()]
         return options
 

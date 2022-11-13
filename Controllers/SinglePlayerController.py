@@ -32,11 +32,11 @@ class SinglePlayerController:
                          content=(self.view.display_players, self.player))
 
     def edit_player_options(self):
-        options = [Option('Change first name', self.update_first_name),
-                   Option('Change last name', self.update_last_name),
-                   Option('Change date of birth', self.update_date_of_birth),
-                   Option('Change gender', self.update_gender),
-                   Option('Change ranking', self.update_ranking),
+        options = [Option(Message.UPDATE_FIRST_NAME, self.update_first_name),
+                   Option(Message.UPDATE_LAST_NAME, self.update_last_name),
+                   Option(Message.UPDATE_DATE_OF_BIRTH, self.update_date_of_birth),
+                   Option(Message.UPDATE_GENDER, self.update_gender),
+                   Option(Message.UPDATE_RANKING, self.update_ranking),
                    Option.exit_option()]
         return options
 
