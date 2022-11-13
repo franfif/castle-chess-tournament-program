@@ -94,15 +94,15 @@ class BaseView:
 
     @staticmethod
     def welcome_message():
-        BaseView.display_title((Message.PROGRAM_NAME, Message.LOGO_ASCII, Message.WELCOME))
+        BaseView.display_titles((Message.PROGRAM_NAME, Message.LOGO_ASCII, Message.WELCOME))
         input(Message.START_PROGRAM)
 
     @staticmethod
     def good_bye_message():
-        BaseView.display_title((Message.PROGRAM_NAME, Message.LOGO_ASCII, Message.GOOD_BYE))
+        BaseView.display_titles((Message.PROGRAM_NAME, Message.LOGO_ASCII, Message.GOOD_BYE))
 
     @staticmethod
-    def display_title(titles):
+    def display_titles(titles):
         BaseView.clear_screen()
         line_length = 64
 
