@@ -133,9 +133,9 @@ class SingleTournamentController:
                                      Message.STARTING + self.tournament.rounds[-1].name),
                              content=(self.view.display_pairings, pairs))
         else:
-            # no more pair possible, so end the tournament
-            self.view.send_notice(Message.NO_MORE_PAIRINGS)
-            self.end_tournament()
+            # No more pairs possible, so end the tournament
+            self.tournament.number_of_rounds = len(self.tournament.rounds)
+            self.notice_end_tournament(Message.NO_MORE_PAIRINGS)
 
     def end_round(self):
         """Fetch result for each match in the round and add them to the round instance."""
@@ -155,7 +155,7 @@ class SingleTournamentController:
         self.tournament.end_round(scores)
         # End tournament if this was the last round
         if self.tournament.number_of_rounds == len(self.tournament.rounds):
-            self.end_tournament()
+            self.notice_end_tournament(Message.NO_MORE_ROUNDS)
 
     @staticmethod
     def attribute_score(winner_index):
@@ -165,9 +165,11 @@ class SingleTournamentController:
             score[1 - winner_index] = 0
         return score
 
-    def end_tournament(self):
-        self.tournament.number_of_rounds = len(self.tournament.rounds)
-        self.view.send_notice(Message.TOURNAMENT_OVER)
+    def notice_end_tournament(self, reason):
+        MenuManager.menu(get_options_method=self.exit_only_option,
+                         titles=(Message.ONGOING_TOURNAMENT_MENU,
+                                 self.tournament.name),
+                         content=(print, reason + Message.TOURNAMENT_OVER))
 
     #
     # Edit Tournament Methods
