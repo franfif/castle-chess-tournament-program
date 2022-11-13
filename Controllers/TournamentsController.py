@@ -15,11 +15,13 @@ class TournamentsController:
         self.tournaments = self.get_tournaments_from_db()
 
     def create_tournament(self):
-        """
-        Create a new tournament and send it in return to run it directly if needed
-        :return: tournament
-        """
-        tournament = SingleTournamentController(self.players_control, self)
+        """Create a new tournament and return it."""
+        # Display a title
+        self.base_view.display_titles(Message.CREATE_TOURNAMENT_MENU)
+        # Initialize a new tournament
+        tournament = SingleTournamentController(players_control=self.players_control,
+                                                tournaments_control=self,
+                                                tournament_system=SwissTournamentSystem())
         self.tournaments.append(tournament)
         # Update the tournaments database table
         self.save_tournaments_to_db()
@@ -40,5 +42,7 @@ class TournamentsController:
         serialized_tournaments = self.tournament_DB_Table.get_all_items()
         tournaments = []
         for serialized_tournament in serialized_tournaments:
-            tournaments.append(SingleTournamentController(self.players_control, self, serialized_tournament))
+            tournaments.append(SingleTournamentController(players_control=self.players_control,
+                                                          tournaments_control=self,
+                                                          tournament_info=serialized_tournament))
         return tournaments
