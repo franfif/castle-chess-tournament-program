@@ -11,12 +11,19 @@ To use this program, clone this project and run it through the console:
 ```bash
 python3 main.py
 ```
-- You can create a new tournament, or add new players in the system.
+Make sure to comply with the [package requirements](#package-requirements).
 
+- You can create a new tournament, or add new players in the system.
 
 - Once a tournament is created, you can add players to the tournament and start round the first round.
 
-## Virtual environment
+- Reports are available to show:
+  - All players in the system by alphabetical or ranking order
+  - All tournaments 
+    - All rounds executed in the tournament, with all matches
+    - Tournament players by alphabetical or ranking order
+
+## Package requirements
 
 Before using the application, please install all the packages as stated in [requirements.txt](requirements.txt)
 
@@ -31,4 +38,4 @@ Order a new flake8 html report from the console:
 ```
 flake8 --format=html --htmldir=flake8_report
 ```
-Then open [index.html]() from the [flake8_report repository](/flake8_report):
+Then open index.html from the [flake8_report repository](/flake8_report):
