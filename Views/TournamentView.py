@@ -131,10 +131,3 @@ class TournamentView:
               f'Number of rounds done: {len(tournament.rounds)} \n'
               f'Time Control: {TIME_CONTROLS[tournament.time_control]} \n'
               f'Description: {tournament.description} \n')
-
-    #
-    # Notice Method
-    #
-    @staticmethod
-    def send_notice(message):
-        print(message)
