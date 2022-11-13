@@ -12,7 +12,7 @@ class App:
         self.players_control = PlayersController()
         self.tournaments_control = TournamentsController(self.players_control)
         self.view = BaseView()
-        self.reports = ReportController(self.players_control, self.tournaments_control)
+        self.reports_control = ReportController(self.players_control, self.tournaments_control)
 
     def run(self):
         self.view.welcome_message()
@@ -25,8 +25,8 @@ class App:
 
         ongoing_tournaments = list(filter(lambda x: not x.tournament.has_ended(),
                                           self.tournaments_control.tournaments))
-        for tournament in ongoing_tournaments:
-            menu.append(Option(f'Open [ {tournament.tournament.name} ]', tournament.run))
+        for tournament_control in ongoing_tournaments:
+            menu.append(Option(f'Open [ {tournament_control.tournament.name} ]', tournament_control.run))
 
         menu.append(Option('New player', self.create_player))
 
@@ -54,7 +54,7 @@ class App:
         self.players_control.edit_players()
 
     def view_reports(self):
-        self.reports.run_reports()
+        self.reports_control.run_reports()
 
     def edit_archived_tournaments(self):
         MenuManager.menu(get_options_method=self.archived_tournaments_options,
