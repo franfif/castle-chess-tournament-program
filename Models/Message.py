@@ -3,7 +3,7 @@ class Message:
     # Greeting and Navigation Messages
     #
     PROGRAM_NAME = 'Castle Chess Tournament Manager'
-    with open('CastleChessLogo-ascii-art.txt') as f:
+    with open('img/CastleChessLogo-ascii-art.txt') as f:
         LOGO_ASCII = f.read()
     WELCOME = '~ Welcome! ~'
     START_PROGRAM = 'Press Enter to start...'
