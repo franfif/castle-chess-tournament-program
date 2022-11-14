@@ -62,8 +62,8 @@ class SingleTournamentController:
     def edit_tournament(self):
         """Send edit Options to MenuManager to allow user to edit the tournament."""
         MenuManager.menu(get_options_method=self.edit_tournament_options,
-                         save_method=self.tournaments_control.save_tournaments_to_db,
-                         titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name))
+                         titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name),
+                         content=(self.view.display_tournament_info, self.tournament))
 
     def edit_tournament_options(self):
         options = [Option(Message.UPDATE_TOURNAMENT_NAME, self.update_tournament_name),
@@ -82,7 +82,7 @@ class SingleTournamentController:
     def run_reports(self):
         """Send tournament report options to the MenuManager."""
         MenuManager.menu(get_options_method=self.report_options,
-                         titles=(Message.ONGOING_TOURNAMENT_MENU, self.tournament.name),
+                         titles=(Message.REPORT_MENU, Message.ONGOING_TOURNAMENT_MENU, self.tournament.name),
                          content=(self.view.display_tournament_info, self.tournament))
 
     def report_options(self):

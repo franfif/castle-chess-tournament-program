@@ -129,6 +129,7 @@ class TournamentView:
     @staticmethod
     def display_tournament_info(tournament):
         print(f'Name: {tournament.name} \n'
+              f'Tournament System: {tournament.tournament_system.NAME} \n'
               f'Venue: {tournament.venue} \n'
               f'Dates: {tournament.date_range[0]} - {tournament.date_range[1]} \n'
               f'Number of rounds: {tournament.number_of_rounds} \n'
