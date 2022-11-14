@@ -112,6 +112,8 @@ class TournamentView:
         else:
             for rnd in rounds:
                 print(f'  # {rnd.name} #')
+                print(f'Started on {rnd.start_time} - '
+                      f'{f"Ended on {rnd.end_time}" if rnd.end_time else "Not ended"}')
                 for match_info in rnd.get_matches_info():
                     self.display_match(*match_info)
                 print('')

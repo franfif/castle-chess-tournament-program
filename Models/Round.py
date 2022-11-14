@@ -1,9 +1,12 @@
 import datetime
 
 
+TIME_FORMAT = "%m/%d/%Y, %I:%M %p"
+
+
 class Round:
     def __init__(self, name, pairings=None, matches=None,
-                 start_time=datetime.datetime.now().strftime("%m/%d/%Y"), end_time=None):
+                 start_time=datetime.datetime.now().strftime(TIME_FORMAT), end_time=None):
         self.name = name
         if matches is None:
             matches = []
@@ -24,7 +27,7 @@ class Round:
             match[1][1] = results[i][1]
 
     def add_end_time(self):
-        self.end_time = datetime.datetime.now().strftime("%m/%d/%Y")
+        self.end_time = datetime.datetime.now().strftime(TIME_FORMAT)
 
     #
     # Get Methods
