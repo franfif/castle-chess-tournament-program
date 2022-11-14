@@ -1,5 +1,6 @@
 <h1 align="center">
 Castle Chess - Tournament Manager
+
 <img alt="castle chess logo" src="img/CastleChessLogo.png" width="224px"/><br/>
 </h1>
 
