@@ -1,7 +1,6 @@
 from Views.TournamentView import TournamentView
 from Models.Tournament import Tournament
 from Models.Option import Option
-from Views.BaseView import BaseView
 from Models.Round import Round
 from Models.Message import Message
 from Models.MenuManager import MenuManager
@@ -13,7 +12,6 @@ class SingleTournamentController:
         self.players_control = players_control
         self.tournaments_control = tournaments_control
         self.view = TournamentView()
-        self.base_view = BaseView()
         if tournament_info is not None:
             self.tournament = self.deserialize_tournament(tournament_info)
         else:
@@ -145,7 +143,7 @@ class SingleTournamentController:
         # Attribute points to each match in the round
         scores = []
         for i, pair in enumerate(pairs):
-            BaseView.display_titles((Message.ONGOING_TOURNAMENT_MENU,
+            self.view.display_titles((Message.ONGOING_TOURNAMENT_MENU,
                                      self.tournament.name,
                                      Message.ENDING + self.tournament.rounds[-1].name))
             # For each pair, get the winner index from view

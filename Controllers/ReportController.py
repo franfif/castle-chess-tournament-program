@@ -1,4 +1,3 @@
-from Views.BaseView import BaseView
 from Models.Option import Option
 from Models.MenuManager import MenuManager
 from Models.Message import Message
@@ -8,7 +7,6 @@ class ReportController:
     def __init__(self, players_control, tournaments_control):
         self.players_control = players_control
         self.tournaments_control = tournaments_control
-        self.base_view = BaseView()
 
     #
     # Report Main Menu and Options

@@ -6,68 +6,68 @@ TIME_CONTROLS = ['Bullet', 'Blitz', 'Rapid']
 DEFAULT_NUM_ROUNDS = 4
 
 
-class TournamentView:
+class TournamentView(BaseView):
     def __init__(self):
-        self.base_view = BaseView()
+        super().__init__()
 
     #
     # Original Input Methods
     #
     def prompt_for_tournament_name(self):
-        return self.base_view.prompt_for_text('name of the tournament')
+        return self.prompt_for_text('name of the tournament')
 
     def prompt_for_venue(self):
-        return self.base_view.prompt_for_text('name of the venue')
+        return self.prompt_for_text('name of the venue')
 
     def prompt_for_date_range(self):
-        first_day = self.base_view.prompt_for_date('first day of the tournament')
-        last_day = self.base_view.prompt_for_date('last day of the tournament')
+        first_day = self.prompt_for_date('first day of the tournament')
+        last_day = self.prompt_for_date('last day of the tournament')
         return first_day, last_day
 
     def prompt_for_number_rounds(self):
-        return self.base_view.prompt_for_number('number of rounds', mini=MINIMUM_OF_ROUNDS, default=DEFAULT_NUM_ROUNDS)
+        return self.prompt_for_number('number of rounds', mini=MINIMUM_OF_ROUNDS, default=DEFAULT_NUM_ROUNDS)
 
     def prompt_for_time_control(self):
-        return self.base_view.select_from_list(TIME_CONTROLS)
+        return self.select_from_list(TIME_CONTROLS)
 
     def prompt_for_description(self):
-        return self.base_view.prompt_for_text('tournament description')
+        return self.prompt_for_text('tournament description')
 
     #
     # Update Input Methods
     #
     def get_new_name(self, tournament_name):
         print(f'The Tournament current name is {tournament_name}.')
-        return self.base_view.prompt_for_text('new tournament name')
+        return self.prompt_for_text('new tournament name')
 
     def get_new_venue(self, tournament_name, current_name):
         print(f'The Tournament {tournament_name} current venue is {current_name}.')
-        return self.base_view.prompt_for_text('tournament new venue')
+        return self.prompt_for_text('tournament new venue')
 
     def get_new_date_range(self, tournament_name, current_date_range):
         print(f'The Tournament {tournament_name} current dates are: {current_date_range}.')
-        first_day = self.base_view.prompt_for_date('new first day of the tournament')
-        last_day = self.base_view.prompt_for_date('new last day of the tournament')
+        first_day = self.prompt_for_date('new first day of the tournament')
+        last_day = self.prompt_for_date('new last day of the tournament')
         return first_day, last_day
 
     def get_new_number_of_rounds(self, tournament_name, current_number):
         print(f'The Tournament {tournament_name} current number of rounds is {current_number}.')
-        return self.base_view.prompt_for_number('new number of rounds',
-                                                mini=MINIMUM_OF_ROUNDS,
-                                                default=DEFAULT_NUM_ROUNDS)
+        return self.prompt_for_number('new number of rounds',
+                                      mini=MINIMUM_OF_ROUNDS,
+                                      default=DEFAULT_NUM_ROUNDS)
 
     def get_new_time_control(self, tournament_name, current_time_control):
         print(f'The Tournament {tournament_name} current time control is {TIME_CONTROLS[current_time_control]}.')
         print('Select the new time control:')
-        return self.base_view.select_from_list(TIME_CONTROLS)
+        return self.select_from_list(TIME_CONTROLS)
 
     def complete_description(self, tournament_name, current_description):
         print(f'The Tournament {tournament_name} current description is: \n{current_description}')
-        return self.base_view.prompt_for_text('description complement to add to the current description')
+        return self.prompt_for_text('description complement to add to the current description')
 
     def get_new_description(self, tournament_name, current_description):
         print(f'The Tournament {tournament_name} current description is: \n{current_description}')
-        return self.base_view.prompt_for_text('new tournament description')
+        return self.prompt_for_text('new tournament description')
 
     #
     # Choice Input Methods
@@ -80,20 +80,20 @@ class TournamentView:
         :return : the index of player in all_players to add to or remove from
         the players in tournament.
         """
-        self.base_view.display_titles(titles)
+        self.display_titles(titles)
         menu = []
         for i, player in enumerate(all_players):
             option = player.get_full_name()
             if player in tournament_players:
                 option += ' [[ Participant ]]'
             menu.append(option)
-        return self.base_view.select_from_list(menu, option_zero='Add a new player', cancel_allowed=True)
+        return self.select_from_list(menu, option_zero='Add a new player', cancel_allowed=True)
 
     def prompt_for_winner_index(self, pair):
         """Display players of each match and return index of the winner."""
         pair_of_names = list(map(lambda x: x.get_full_name(), pair))
         print('Who won?')
-        winner_index = self.base_view.select_from_list(pair_of_names, option_zero='Tie Game')
+        winner_index = self.select_from_list(pair_of_names, option_zero='Tie Game')
         if winner_index == -1:
             return None
         return winner_index

@@ -1,6 +1,5 @@
 from Views.PlayerView import PlayerView
 from DB.TableDB import TableDB
-from Views.BaseView import BaseView
 from Controllers.SinglePlayerController import SinglePlayerController
 from Models.Option import Option
 from Models.Message import Message
@@ -10,13 +9,12 @@ from Models.MenuManager import MenuManager
 class PlayersController:
     def __init__(self):
         self.view = PlayerView()
-        self.base_view = BaseView()
         self.player_DB_Table = TableDB('players')
         self.players = self.get_players_from_db()
 
     def create_player(self):
         # Display a title
-        self.base_view.display_titles(Message.CREATE_PLAYER_MENU)
+        self.view.display_titles(Message.CREATE_PLAYER_MENU)
         # Initialize a new player
         new_player = SinglePlayerController()
         self.players.append(new_player)
