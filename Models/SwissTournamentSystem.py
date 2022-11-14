@@ -1,5 +1,6 @@
 class SwissTournamentSystem:
     NAME = 'Swiss Tournament System'
+
     #
     # Pairing Methods - Swiss Tournament System
     #
