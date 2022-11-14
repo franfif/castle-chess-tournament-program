@@ -71,7 +71,8 @@ class SingleTournamentController:
                    Option(Message.UPDATE_DATES, self.update_dates),
                    Option(Message.UPDATE_NUMBER_OF_ROUNDS, self.update_number_of_rounds),
                    Option(Message.UPDATE_TIME_CONTROL, self.update_time_control),
-                   Option(Message.UPDATE_DESCRIPTION, self.update_description),
+                   Option(Message.INCREMENT_DESCRIPTION, self.increment_description),
+                   Option(Message.RESET_DESCRIPTION, self.reset_description),
                    Option.exit_option(saving=True)]
         return options
 
@@ -197,7 +198,12 @@ class SingleTournamentController:
                                                           self.tournament.time_control)
         self.tournament.time_control = new_time_control
 
-    def update_description(self):
+    def increment_description(self):
+        new_description = self.view.complete_description(self.tournament.name,
+                                                         self.tournament.description)
+        self.tournament.description += '\n' + new_description
+
+    def reset_description(self):
         new_description = self.view.get_new_description(self.tournament.name,
                                                         self.tournament.description)
         self.tournament.description = new_description

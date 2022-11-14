@@ -61,6 +61,10 @@ class TournamentView:
         print('Select the new time control:')
         return self.base_view.select_from_list(TIME_CONTROLS)
 
+    def complete_description(self, tournament_name, current_description):
+        print(f'The Tournament {tournament_name} current description is: \n{current_description}')
+        return self.base_view.prompt_for_text('description complement to add to the current description')
+
     def get_new_description(self, tournament_name, current_description):
         print(f'The Tournament {tournament_name} current description is: \n{current_description}')
         return self.base_view.prompt_for_text('new tournament description')

@@ -56,7 +56,8 @@ class Message:
     UPDATE_DATES = 'Change dates'
     UPDATE_NUMBER_OF_ROUNDS = 'Change number of rounds'
     UPDATE_TIME_CONTROL = 'Change time control'
-    UPDATE_DESCRIPTION = 'Change description'
+    RESET_DESCRIPTION = 'Reset description'
+    INCREMENT_DESCRIPTION = 'Add to description'
 
     #
     # Notices
