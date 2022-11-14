@@ -28,6 +28,7 @@ class TournamentView(BaseView):
         return self.prompt_for_number('number of rounds', mini=MINIMUM_OF_ROUNDS, default=DEFAULT_NUM_ROUNDS)
 
     def prompt_for_time_control(self):
+        print('Select the time control:')
         return self.select_from_list(TIME_CONTROLS)
 
     def prompt_for_description(self):
