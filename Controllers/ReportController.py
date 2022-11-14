@@ -25,15 +25,23 @@ class ReportController:
     # Tournament Report Menu and Options
     #
     def run_tournament_reports(self):
-        MenuManager.menu(get_options_method=self.tournament_report_options,
-                         titles=(Message.REPORT_MENU, Message.TOURNAMENTS_TITLE))
+        tournaments = self.tournaments_control.tournaments
+        if len(tournaments) == 0:
+            MenuManager.menu(get_options_method=self.exit_only_option,
+                             titles=(Message.REPORT_MENU, Message.TOURNAMENTS_TITLE),
+                             content=(print, Message.NO_TOURNAMENTS))
+        else:
+            MenuManager.menu(get_options_method=self.tournament_report_options,
+                             titles=(Message.REPORT_MENU, Message.TOURNAMENTS_TITLE))
 
     def tournament_report_options(self):
         tournaments = self.tournaments_control.tournaments
-        if len(tournaments) == 0:
-            return [Option(Message.NO_TOURNAMENTS, MenuManager.exit)]
         options = []
         for tournament in tournaments:
             options.append(Option(tournament.tournament.name, tournament.run_reports))
         options.append(Option.exit_option())
         return options
+
+    @staticmethod
+    def exit_only_option():
+        return [Option.exit_option()]
