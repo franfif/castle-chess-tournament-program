@@ -27,7 +27,7 @@ class MenuManager:
             menu = get_options_method()
             menu_names = list(map(lambda x: x.name, menu))
             to_do = BaseView.select_from_list(menu_names)
-            next_action = menu[to_do].function()
+            next_action = menu[to_do].callback()
             if save_method is not None:
                 save_method()
         return

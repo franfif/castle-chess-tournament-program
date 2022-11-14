@@ -3,9 +3,9 @@ from Models.Message import Message
 
 
 class Option:
-    def __init__(self, name, function):
+    def __init__(self, name, callback):
         self.name = name
-        self.function = function
+        self.callback = callback
 
     @staticmethod
     def exit_option(saving=False):
