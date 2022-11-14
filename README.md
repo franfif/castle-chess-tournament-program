@@ -16,18 +16,18 @@ Make sure to comply with the [package requirements](#package-requirements).
 ## What you can do with this program
 In this application, you can:
 - Create a new tournament
-> 🔀 You can run multiple tournaments simultaneously!
+  > 🔀 You can run multiple tournaments simultaneously!
 - Manage a tournament:
   - Edit the tournament information
   - Add and Remove players to/from the tournament
   - Start a round
-  > 🏁 See all the pairings for this new round!
+    > 🏁 See all the pairings for this new round!
   - End a round
-  > 📝 Input all the results for the round into the system
+    > 📝 Input all the results for the round into the system
   - See all ended and ongoing rounds, with all matches and results
 - Add new players in the system
 - Edit players, including their ranking
-> 💾 All edits to a player will affect the tournaments they participate in
+  > 💾 All edits to a player will affect the tournaments they participate in
 - Reports are available to show:
   - All players in the system by alphabetical or ranking order
   - All tournaments, including:
