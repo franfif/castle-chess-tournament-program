@@ -1,5 +1,5 @@
 from Models.Option import Option
-from Models.MenuManager import MenuManager
+from Controllers.MenuManager import MenuManager
 from Models.Message import Message
 
 

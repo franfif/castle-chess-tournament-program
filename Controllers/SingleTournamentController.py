@@ -3,8 +3,8 @@ from Models.Tournament import Tournament
 from Models.Option import Option
 from Models.Round import Round
 from Models.Message import Message
-from Models.MenuManager import MenuManager
-from Models.SwissTournamentSystem import SwissTournamentSystem
+from Controllers.MenuManager import MenuManager
+from Controllers.SwissTournamentSystem import SwissTournamentSystem
 
 
 class SingleTournamentController:

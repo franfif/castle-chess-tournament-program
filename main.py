@@ -4,7 +4,7 @@ from Views.BaseView import BaseView
 from Models.Option import Option
 from Controllers.ReportController import ReportController
 from Models.Message import Message
-from Models.MenuManager import MenuManager
+from Controllers.MenuManager import MenuManager
 
 
 class App:

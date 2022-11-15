@@ -3,7 +3,7 @@ from DB.TableDB import TableDB
 from Views.BaseView import BaseView
 from Controllers.SingleTournamentController import SingleTournamentController
 from Models.Message import Message
-from Models.SwissTournamentSystem import SwissTournamentSystem
+from Controllers.SwissTournamentSystem import SwissTournamentSystem
 
 
 class TournamentsController:

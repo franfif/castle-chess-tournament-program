@@ -3,7 +3,7 @@ from DB.TableDB import TableDB
 from Controllers.SinglePlayerController import SinglePlayerController
 from Models.Option import Option
 from Models.Message import Message
-from Models.MenuManager import MenuManager
+from Controllers.MenuManager import MenuManager
 
 
 class PlayersController:
