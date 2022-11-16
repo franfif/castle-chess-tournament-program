@@ -1,9 +1,9 @@
-from Views.TournamentView import TournamentView
-from DB.TableDB import TableDB
-from Views.BaseView import BaseView
-from Controllers.SingleTournamentController import SingleTournamentController
-from Models.Message import Message
-from Controllers.SwissTournamentSystem import SwissTournamentSystem
+from views.tournament_view import TournamentView
+from db.table_db import TableDB
+from views.base_view import BaseView
+from controllers.single_tournament_controller import SingleTournamentController
+from models.message import Message
+from controllers.swiss_tournament_system import SwissTournamentSystem
 
 
 class TournamentsController:
@@ -31,7 +31,7 @@ class TournamentsController:
     # Database Linking Method
     #
     def save_tournaments_to_db(self):
-        """Serialize all tournaments and send them to tournaments DB table."""
+        """Serialize all tournaments and send them to tournaments db table."""
         serialized_tournaments = []
         for tournament in self.tournaments:
             serialized_tournaments.append(tournament.serialize_tournament())

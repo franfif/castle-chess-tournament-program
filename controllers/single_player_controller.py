@@ -1,8 +1,8 @@
-from Views.PlayerView import PlayerView
-from Models.Player import Player
-from Models.Option import Option
-from Models.Message import Message
-from Controllers.MenuManager import MenuManager
+from views.player_view import PlayerView
+from models.player import Player
+from models.option import Option
+from models.message import Message
+from controllers.menu_manager import MenuManager
 
 
 class SinglePlayerController:

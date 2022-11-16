@@ -1,9 +1,9 @@
-from Views.PlayerView import PlayerView
-from DB.TableDB import TableDB
-from Controllers.SinglePlayerController import SinglePlayerController
-from Models.Option import Option
-from Models.Message import Message
-from Controllers.MenuManager import MenuManager
+from views.player_view import PlayerView
+from db.table_db import TableDB
+from controllers.single_player_controller import SinglePlayerController
+from models.option import Option
+from models.message import Message
+from controllers.menu_manager import MenuManager
 
 
 class PlayersController:
@@ -83,7 +83,7 @@ class PlayersController:
     # Database Linking Method
     #
     def save_players_to_db(self):
-        """Serialize all players and send them to players DB table."""
+        """Serialize all players and send them to players db table."""
         serialized_players = []
         for player in self.players:
             serialized_players.append(player.serialize_player())

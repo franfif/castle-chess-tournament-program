@@ -1,10 +1,10 @@
-from Controllers.PlayersController import PlayersController
-from Controllers.TournamentsController import TournamentsController
-from Views.BaseView import BaseView
-from Models.Option import Option
-from Controllers.ReportController import ReportController
-from Models.Message import Message
-from Controllers.MenuManager import MenuManager
+from controllers.players_controller import PlayersController
+from controllers.tournaments_controller import TournamentsController
+from views.base_view import BaseView
+from models.option import Option
+from controllers.report_controller import ReportController
+from models.message import Message
+from controllers.menu_manager import MenuManager
 
 
 class App:

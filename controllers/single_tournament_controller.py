@@ -1,10 +1,10 @@
-from Views.TournamentView import TournamentView
-from Models.Tournament import Tournament
-from Models.Option import Option
-from Models.Round import Round
-from Models.Message import Message
-from Controllers.MenuManager import MenuManager
-from Controllers.SwissTournamentSystem import SwissTournamentSystem
+from views.tournament_view import TournamentView
+from models.tournament import Tournament
+from models.option import Option
+from models.round import Round
+from models.message import Message
+from controllers.menu_manager import MenuManager
+from controllers.swiss_tournament_system import SwissTournamentSystem
 
 
 class SingleTournamentController:

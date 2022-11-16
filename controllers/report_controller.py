@@ -1,6 +1,6 @@
-from Models.Option import Option
-from Controllers.MenuManager import MenuManager
-from Models.Message import Message
+from models.option import Option
+from controllers.menu_manager import MenuManager
+from models.message import Message
 
 
 class ReportController:

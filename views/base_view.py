@@ -1,6 +1,6 @@
 import datetime
 import os
-from Models.Message import Message
+from models.message import Message
 
 
 class BaseView:
