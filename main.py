@@ -33,7 +33,8 @@ class App:
         if len(self.players_control.players) > 0:
             menu.append(Option('Edit players', self.edit_players))
 
-        menu.append(Option('Reports', self.view_reports))
+        if len(self.tournaments_control.tournaments) > 0 or len(self.players_control.players) > 0:
+            menu.append(Option('Reports', self.view_reports))
 
         archived_tournaments = list(filter(lambda x: x.tournament.has_ended(),
                                            self.tournaments_control.tournaments))
